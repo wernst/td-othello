@@ -3,7 +3,7 @@
 
 import string
 from Direction import directions
-EMPTY_VAL = 0
+EMPTY_VAL = " "
 BLACK_VAL = "B"
 WHITE_VAL = "W"
 ROWS = 8
@@ -131,7 +131,7 @@ class Board(object):
         self.updateScore(counter)
 
 
- 
+
     def updateScore(self, points):
         if self.black_turn:
             self.black_score += points
