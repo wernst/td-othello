@@ -1,6 +1,7 @@
 """An Othello Game"""
 
-import string
+import string, copy
+import numpy as np
 from Board import Board
 
 class Othello(object):
@@ -11,12 +12,15 @@ class Othello(object):
     #initializes game board
     def start(self):
         self.game_board = Board()
+        self.black_score = 2
+        self.white_score = 2
 
     #Gets valid moves and places a tile on the board
     def setTile(self, row, col):
         self.game_board.updateValidMoves()
-        self.game_board.addTile(row, col)
-
+        points = self.game_board.addTile(row, col)
+        self.updateScore(points)
+        self.game_board.switchTurns()
     #Updates an input string to board coordinates
     def moveToCoords(self, move):
         move = move.upper()
@@ -47,6 +51,25 @@ class Othello(object):
 
         return True
 
+    def updateScore(self, points):
+        if self.game_board.black_turn:
+            self.black_score += points
+            self.white_score -= (points-1)
+        else:
+            self.white_score += points
+            self.black_score -= (points-1)
+
+    def getNNInputs(self):
+        nn_inputs = {}
+        for coord in self.game_board.valid_moves.keys():
+            board_copy = copy.deepcopy(self.game_board)
+            board_copy.addTile(coord[0], coord[1])
+            board_vector = board_copy.boardToVector()
+            nn_inputs[coord] = board_vector
+        print(nn_inputs)
+
+
+
 
     #plays the game
     def play(self):
@@ -67,9 +90,11 @@ class Othello(object):
                     break
 
             #print score
-            print("Black - {}\tWhite - {}").format(self.game_board.black_score, self.game_board.white_score)
+            print("Black - {}\tWhite - {}").format(self.black_score, self.white_score)
             #print board
+            self.getNNInputs()
             print(self.game_board)
+
 
             #print turn
             if self.game_board.black_turn:
@@ -95,13 +120,13 @@ class Othello(object):
 
 
         #Game Over
-        print("Black - {}\tWhite - {}").format(self.game_board.black_score, self.game_board.white_score)
+        print("Black - {}\tWhite - {}").format(self.black_score, self.white_score)
         print(self.game_board)
 
         #Check score
-        if(self.game_board.black_score > self.game_board.white_score):
+        if(self.black_score > self.white_score):
             print("Black Wins!")
-        elif(self.game_board.black_score < self.game_board.white_score):
+        elif(self.black_score < self.white_score):
             print("White Wins!")
-        elif(self.game_board.black_score == self.game_board.white_score):
+        elif(self.black_score == self.white_score):
             print("It's a tie!")

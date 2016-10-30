@@ -2,6 +2,7 @@
 
 
 import string
+import numpy as np
 from Direction import directions
 EMPTY_VAL = " "
 BLACK_VAL = "B"
@@ -28,14 +29,13 @@ class Board(object):
 
         self.valid_moves = {}
         self.black_turn = True
-        self.black_score = 2
-        self.white_score = 2
+
 
 
     """Valid move: adjacent to other color, same color on that diagonal/row/col"""
     #Updates our current memory of valid moves
     def updateValidMoves(self):
-        self.valid_moves = {}
+        self.valid_moves.clear()
         for i in range(len(self.board)):
             for j in range(len(self.board[i])):
                 if self.board[i][j] == EMPTY_VAL:
@@ -92,17 +92,19 @@ class Board(object):
 
 
 
-    #Place a piece on the board
+    #Place a piece on the board, return score change
     def addTile(self, row, col):
+        score_change = 0
         if (row, col) in self.valid_moves.keys():
             if self.black_turn:
                 self.board[row][col] = BLACK_VAL
             else:
                 self.board[row][col] = WHITE_VAL
-            self.updateBoard(row, col)
-            self.switchTurns()
+            score_change = self.updateBoard(row, col)
         else:
             print("INVALID MOVE")
+
+        return score_change
 
     #Updates the board after a move (flips tiles and changes score)
     def updateBoard(self, row, col):
@@ -128,17 +130,23 @@ class Board(object):
                     else:
                         self.board[curr_row][curr_col] = WHITE_VAL
                         counter+=1
-        self.updateScore(counter)
+        return counter
+
+    def boardToVector(self):
+        vector_input = []
+        for row in self.board:
+            for item in row:
+                if item == EMPTY_VAL:
+                    vector_input.append(0)
+                elif item == BLACK_VAL:
+                    vector_input.append(1)
+                elif item == WHITE_VAL:
+                    vector_input.append(-1)
+
+        vector = np.array(vector_input)
+        return vector
 
 
-
-    def updateScore(self, points):
-        if self.black_turn:
-            self.black_score += points
-            self.white_score -= (points-1)
-        else:
-            self.white_score += points
-            self.black_score -= (points-1)
 
 
 
