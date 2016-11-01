@@ -12,13 +12,15 @@ def main():
     global nn
     global bwins
     global wwins
-    for i in range(1000):
+    for i in range(10):
         play0()
     print "black wins: %d", bwins
     print "white wins: %d", wwins
 
 #plays game with two agents
 def play0():
+    global bwins
+    global wwins
     game = Othello()
     wMatrix1cp = nn.wMatrix1
     wMatrix2cp = nn.wMatrix2
