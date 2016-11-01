@@ -5,10 +5,17 @@ from Player import Player
 from NeuralNetwork import NeuralNetwork
 
 nn = NeuralNetwork(10, 0.1, 0.1, 0.9)
+bwins = 0
+wwins = 0
 
 def main():
     global nn
-    play0()
+    global bwins
+    global wwins
+    for i in range(1000):
+        play0()
+    print "black wins: %d", bwins
+    print "white wins: %d", wwins
 
 #plays game with two agents
 def play0():
@@ -30,10 +37,6 @@ def play0():
             #check for winner
             game.game_board.updateValidMoves()
             if game.game_board.valid_moves == {}:
-                #game is over, update matrix and reset elegibility matrix
-                nn.reset()
-                nn.wMatrix1 = wMatrix1cp
-                nn.wMatrix2 = wMatrix2cp
                 break
 
         #print score
@@ -64,10 +67,24 @@ def play0():
 
     #Check score
     if(game.black_score > game.white_score):
+        #game is over, update matrix and reset elegibility matrix
+        bwins += 1
+        nn.reset()
+        nn.wMatrix1 = wMatrix1cp
+        nn.wMatrix2 = wMatrix2cp
         print("Black Wins!")
     elif(game.black_score < game.white_score):
+        #game is over, update matrix and reset elegibility matrix
+        wwins += 1
+        nn.reset()
+        nn.wMatrix1 = wMatrix1cp
+        nn.wMatrix2 = wMatrix2cp
         print("White Wins!")
     elif(game.black_score == game.white_score):
+        #game is over, update matrix and reset elegibility matrix
+        nn.reset()
+        nn.wMatrix1 = wMatrix1cp
+        nn.wMatrix2 = wMatrix2cp
         print("It's a tie!")
 
 
