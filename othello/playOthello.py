@@ -2,16 +2,21 @@
 
 from Othello import Othello
 from Player import Player
+from NeuralNetwork import NeuralNetwork
 
+nn = NeuralNetwork(10, 0.1, 0.1, 0.9)
 
 def main():
-    play2()
+    global nn
+    play0()
 
 #plays game with two agents
 def play0():
     game = Othello()
-    black_player = Player("neural network goes here", game, True)
-    white_player = Player("neural network goes here", game, False)
+    wMatrix1cp = nn.wMatrix1
+    wMatrix2cp = nn.wMatrix2
+    black_player = Player(nn, game, True)
+    white_player = Player(nn, game, False)
     while True:
         game.game_board.updateValidMoves()
 
@@ -25,6 +30,10 @@ def play0():
             #check for winner
             game.game_board.updateValidMoves()
             if game.game_board.valid_moves == {}:
+                #game is over, update matrix and reset elegibility matrix
+                nn.reset()
+                nn.wMatrix1 = wMatrix1cp
+                nn.wMatrix2 = wMatrix2cp
                 break
 
         #print score
@@ -36,10 +45,16 @@ def play0():
         #print turn
         if game.game_board.black_turn:
             print("Black's Turn")
-            black_player.makeMove()
+            pstateVector = black_player.getBoardVector()
+            black_player.makeMove(wMatrix1cp, wMatrix2cp)
+            cstateVector = black_player.getBoardVector()
+            nn.train(wMatrix1cp, wMatrix2cp, pstateVector, 0, cstateVector) #need to check that this is done by reference
         else:
             print("White's Turn")
-            white_player.makeMove()
+            pstateVector = white_player.getBoardVector()
+            white_player.makeMove(wMatrix1cp, wMatrix2cp)
+            pstateVector = white_player.getBoardVector()
+            nn.train(wMatrix1cp, wMatrix2cp, pstateVector, 0, cstateVector) #need to check that this is done by reference
 
         print("\n==========================================================\n")
 
