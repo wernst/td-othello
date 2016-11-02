@@ -6,19 +6,23 @@ from Othello import Othello
 from Player import Player
 from NeuralNetwork import NeuralNetwork
 
-nn = NeuralNetwork(10, 1.0, 0.5, 0.5)
+nn = NeuralNetwork(10, 0.7, 0.9, 0.2)
 
 
 def main():
     global nn
+    nn.load("nn1.pk1")
+    play0()
     nn.learn()
-    print("black wins: {} white wins {}").format(nn.bwin, nn.wwin)
+    play0()
+    nn.save("nn1.pk1")
+    #print("black wins: {} white wins {}").format(nn.bwin, nn.wwin)
 
 #plays game with two agents
 def play0():
     game = Othello()
-    black_player = Player("neural network goes here", game, True)
-    white_player = Player("neural network goes here", game, False)
+    black_player = Player(nn, game, True)
+    white_player = Player(None, game, False, "random")
     while True:
         game.game_board.updateValidMoves()
 

@@ -1,5 +1,6 @@
 """Neural Network for TD-Othello"""
 
+import math
 import numpy as np
 from Othello import Othello
 from Player import Player
@@ -18,29 +19,29 @@ class NeuralNetwork(object):
         self.numHidLayers = numHidLayers
         self.gamma = gamma #gamma used in calculating reward return
         self.ld = ld #used to determine how much you rely on pass
-        self.bwin = 0
-        self.wwin = 0
+
+    """Save our weight matrix into a loadable files, prevents retraining"""
+    def save(self, filename):
+        with open(filename, "wb") as f:
+            pickle.dump(self, f)
+
+    """Load our Weight Matrix into out layer variable"""
+    def load(self, filename):
+        with open(filename, "rb") as f:
+            self = pickle.load(f)
 
     def getValue(self, stateVec):
         stateVec.transpose()
         hiddenOutput = np.dot(stateVec, self.wMatrix1)
-        outputValue = np.dot(hiddenOutput, self.wMatrix2)
+        hiddenOut = self.sigmoid(hiddenOutput)
+        outputValue = np.dot(hiddenOut, self.wMatrix2)
+        outputValue = self.sigmoid(outputValue)
         return outputValue
 
     def getHidSum(self, stateVec):
         stateVec.transpose()
         hidSum = np.dot(stateVec, self.wMatrix1)
         return hidSum
-
-    """Save our weight matrix into a loadable files, prevents retraining"""
-    def save(self, filename):
-        with open(filename, "wb") as f:
-            pickle.dump(self.wMatrix1, f)
-
-    """Load our Weight Matrix into out layer variable"""
-    def load(self, filename):
-        with open(filename, "rb") as f:
-            self.wMatrix1 = pickle.load(f)
 
     """ Determines how much of a reward to apply """
     def delta(self, pstateValue, reward, stateValue):
@@ -54,34 +55,35 @@ class NeuralNetwork(object):
 
         delta = self.delta(pstateValue, reward, cstateValue)
         delta = delta.item(0)
-
-        hideSum = np.dot(state, self.wMatrix1)
-        hide = self.sigmoid(hideSum)
-
-        helpValue = ((1-cstateValue) * cstateValue)
-        helperNumArray = np.dot(self.oneMinus(hide), hide.T)
-        helperNum = helperNumArray.item(0)
-        helperNum2 = helperNum * self.wMatrix2
-        finalHelper = np.dot(state.T, helperNum2.T)
-
-        self.eMatrix2 = np.add(np.multiply(self.ld, self.eMatrix2), np.multiply(helpValue,hide.T))
-        self.eMatrix1 = np.add(np.multiply(self.ld, self.eMatrix1), finalHelper)
-
         learningVal = self.learningRate * delta
         forgetE = self.gamma * self.ld
 
         self.wMatrix2 = np.add(self.wMatrix2, np.multiply(learningVal, self.eMatrix2))
         self.wMatrix1 = np.add(self.wMatrix1, np.multiply(learningVal, self.eMatrix1))
+
+        hideSum = np.dot(state, self.wMatrix1)
+        hide = self.sigmoid(hideSum)
+
+        helpValue = self.getValue(state)
+        helpValue = (1-helpValue)*(helpValue);
+
+        helperNumArray = np.dot(self.oneMinus(hide), hide.T)
+        helperNum = helperNumArray.item(0)
+        helperNum2 = helperNum * self.wMatrix2
+        finalHelper = np.dot(state.T, helperNum2.T)
+
         self.eMatrix1 = np.multiply(forgetE, self.eMatrix1)
         self.eMatrix2 = np.multiply(forgetE, self.eMatrix2)
+        self.eMatrix2 = np.add(self.eMatrix2, np.multiply(helpValue,hide.T))
+        self.eMatrix1 = np.add(self.eMatrix1, finalHelper)
 
     """Basic structure of our lean iteration function, going to be implemented elsewhere"""
     #This can actually be moved to the play class.
-    def learn(self, num_episode = 100):
-        game = Othello()
-        black_player = Player(self, game, True)
-        white_player = Player(self, game, False)
+    def learn(self, num_episode = 400):
         for i in range(num_episode):
+            game = Othello()
+            black_player = Player(self, game, True)
+            white_player = Player(self, game, False)
             while True:
                 game.game_board.updateValidMoves()
 
@@ -108,13 +110,11 @@ class NeuralNetwork(object):
 
             if(game.black_score > game.white_score):
                 #game is over, update matrix and reset elegibility matrix
-                self.bwin += 1
                 self.train(pstateVector, 1, cstateVector)
                 self.reset()
 
             elif(game.black_score < game.white_score):
                 #game is over, update matrix and reset elegibility matrix
-                self.wwin += 1
                 self.train(pstateVector, 0, cstateVector)
                 self.reset()
 
@@ -125,7 +125,7 @@ class NeuralNetwork(object):
 
 
     def sigmoid(self, x):
-        return 1/ 1 + np.exp(-x)
+        return (1/ (1 + np.exp(-x)))
 
     def oneMinus(self, x):
         return np.subtract(1, x)
