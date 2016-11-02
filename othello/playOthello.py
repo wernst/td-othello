@@ -6,7 +6,7 @@ from Othello import Othello
 from Player import Player
 from NeuralNetwork import NeuralNetwork
 
-nn = NeuralNetwork(10, 1.0, 0.5, 0.5)
+nn = NeuralNetwork(30, 1.0, 0.7, 0.5)
 
 
 def main():

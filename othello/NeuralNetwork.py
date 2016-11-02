@@ -20,11 +20,23 @@ class NeuralNetwork(object):
         self.bwin = 0
         self.wwin = 0
 
+    def sigmoid(self, x):
+        print(x)
+        return 1/ 1 + np.exp(-x)
+
     def getValue(self, stateVec):
         stateVec.transpose()
-        hiddenOutput = np.dot(stateVec, self.wMatrix1)
-        outputValue = np.dot(hiddenOutput, self.wMatrix2)
+        z2 = np.dot(stateVec, self.wMatrix1)
+        a2 = self.sigmoid(z2)
+        z3 = np.dot(a2, self.wMatrix2)
+        outputValue = self.sigmoid(z3)
         return outputValue
+
+    # def getValuePrime2(self, stateVec):
+    #     J = numdifftools.Jacobian(lambda z: getValue(z.reshape(stateVec.shape), B, C).ravel())
+    # return J(A.ravel()).reshape(A.shape)
+    # def getValuePrime1(self):
+    #     pass
 
     def getHidSum(self, stateVec):
         stateVec.transpose()
@@ -51,28 +63,24 @@ class NeuralNetwork(object):
         pstateValue = self.getValue(pstate)
         cstateValue = self.getValue(state)
 
-        delta = self.delta(pstate, reward, state)
+        #not sure about the partial derivative
+        # print(self.eMatrix2)
+        # print(self.eMatrix2.shape)
+        test = np.array([pstateValue]*self.eMatrix2.shape[0]).T
+        # print(test)
+        self.eMatrix2 = np.multiply((self.gamma * self.ld), self.eMatrix2)
+        self.eMatrix1 = np.multiply((self.gamma * self.ld), self.eMatrix1)
+        delta = self.delta(pstateValue, 0, cstateValue)
+        #print(delta)
 
-        #hidSum = self.getHidSum(state);
-        #hide = self.sigmoid(hidSum)
-        pstateMatrix = np.matrix(np.repeat(pstate.T, 10, axis = 1))
+        self.wMatrix2 +=  np.multiply((self.learningRate * delta), self.wMatrix2)
+        self.wMatrix1 +=  np.multiply((self.learningRate * delta), self.wMatrix1)
 
-        self.eMatrix1 = pstateMatrix
-      	self.eMatrix2 = np.matrix(np.random.randn(10, 1) / np.sqrt(100))
-        #self.eMatrix1 = self.ld * self.eMatrix1 + ((1 - nextStateVal) * nextStateVal * (1 - hide) * hide)
-
-        print(self.eMatrix2.shape)
-        print(self.wMatrix2.shape)
-        print(self.eMatrix1.shape)
-        print(self.wMatrix1.shape)
-        self.wMatrix2 +=  self.learningRate * delta * self.eMatrix2
-        self.wMatrix1 +=  self.learningRate * delta * self.eMatrix1
-        #self.eMatrix1 *= (self.gamma * self.ld)
-        #self.eMatrix2 *= (self.gamma * self.ld)
-
+        print("W1: {}").format(self.wMatrix1)
+        print("W2: {}").format(self.wMatrix2)
     """Basic structure of our lean iteration function, going to be implemented elsewhere"""
     #This can actually be moved to the play class.
-    def learn(self, num_episode = 100):
+    def learn(self, num_episode = 50):
         game = Othello()
         black_player = Player(self, game, True)
         white_player = Player(self, game, False)
@@ -119,8 +127,7 @@ class NeuralNetwork(object):
                 self.reset()
 
 
-    def sigmoid(self, x):
-        return 1/ 1 + np.exp(-x);
+
 
     def reset(self):
         self.eMatrix1 = np.zeros((64, 1))
