@@ -5,6 +5,7 @@ from Othello import Othello
 from Player import Player
 import pickle
 
+
 class NeuralNetwork(object):
 
     """Initialize neural Network Parameters"""
@@ -51,24 +52,28 @@ class NeuralNetwork(object):
         pstateValue = self.getValue(pstate)
         cstateValue = self.getValue(state)
 
-        delta = self.delta(pstate, reward, state)
+        delta = self.delta(pstateValue, reward, cstateValue)
+        delta = delta.item(0)
 
-        #hidSum = self.getHidSum(state);
-        #hide = self.sigmoid(hidSum)
-        pstateMatrix = np.matrix(np.repeat(pstate.T, 10, axis = 1))
+        hideSum = np.dot(state, self.wMatrix1)
+        hide = self.sigmoid(hideSum)
 
-        self.eMatrix1 = pstateMatrix
-      	self.eMatrix2 = np.matrix(np.random.randn(10, 1) / np.sqrt(100))
-        #self.eMatrix1 = self.ld * self.eMatrix1 + ((1 - nextStateVal) * nextStateVal * (1 - hide) * hide)
+        helpValue = ((1-cstateValue) * cstateValue)
+        helperNumArray = np.dot(self.oneMinus(hide), hide.T)
+        helperNum = helperNumArray.item(0)
+        helperNum2 = helperNum * self.wMatrix2
+        finalHelper = np.dot(state.T, helperNum2.T)
 
-        print(self.eMatrix2.shape)
-        print(self.wMatrix2.shape)
-        print(self.eMatrix1.shape)
-        print(self.wMatrix1.shape)
-        self.wMatrix2 +=  self.learningRate * delta * self.eMatrix2
-        self.wMatrix1 +=  self.learningRate * delta * self.eMatrix1
-        #self.eMatrix1 *= (self.gamma * self.ld)
-        #self.eMatrix2 *= (self.gamma * self.ld)
+        self.eMatrix2 = np.add(np.multiply(self.ld, self.eMatrix2), np.multiply(helpValue,hide.T))
+        self.eMatrix1 = np.add(np.multiply(self.ld, self.eMatrix1), finalHelper)
+
+        learningVal = self.learningRate * delta
+        forgetE = self.gamma * self.ld
+
+        self.wMatrix2 = np.add(self.wMatrix2, np.multiply(learningVal, self.eMatrix2))
+        self.wMatrix1 = np.add(self.wMatrix1, np.multiply(learningVal, self.eMatrix1))
+        self.eMatrix1 = np.multiply(forgetE, self.eMatrix1)
+        self.eMatrix2 = np.multiply(forgetE, self.eMatrix2)
 
     """Basic structure of our lean iteration function, going to be implemented elsewhere"""
     #This can actually be moved to the play class.
@@ -120,7 +125,10 @@ class NeuralNetwork(object):
 
 
     def sigmoid(self, x):
-        return 1/ 1 + np.exp(-x);
+        return 1/ 1 + np.exp(-x)
+
+    def oneMinus(self, x):
+        return np.subtract(1, x)
 
     def reset(self):
         self.eMatrix1 = np.zeros((64, 1))
