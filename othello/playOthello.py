@@ -1,31 +1,24 @@
 """Plays othello game"""
+# -*- coding: utf-8 -*-
+
 
 from Othello import Othello
 from Player import Player
 from NeuralNetwork import NeuralNetwork
 
-nn = NeuralNetwork(10, 0.1, 0.1, 0.9)
-bwins = 0
-wwins = 0
+nn = NeuralNetwork(10, 1.0, 0.5, 0.5)
+
 
 def main():
     global nn
-    global bwins
-    global wwins
-    for i in range(10):
-        play0()
-    print "black wins: %d", bwins
-    print "white wins: %d", wwins
+    nn.learn()
+    print("black wins: {} white wins {}").format(nn.bwin, nn.wwin)
 
 #plays game with two agents
 def play0():
-    global bwins
-    global wwins
     game = Othello()
-    wMatrix1cp = nn.wMatrix1
-    wMatrix2cp = nn.wMatrix2
-    black_player = Player(nn, game, True)
-    white_player = Player(nn, game, False)
+    black_player = Player("neural network goes here", game, True)
+    white_player = Player("neural network goes here", game, False)
     while True:
         game.game_board.updateValidMoves()
 
@@ -50,16 +43,10 @@ def play0():
         #print turn
         if game.game_board.black_turn:
             print("Black's Turn")
-            pstateVector = black_player.getBoardVector()
-            black_player.makeMove(wMatrix1cp, wMatrix2cp)
-            cstateVector = black_player.getBoardVector()
-            nn.train(wMatrix1cp, wMatrix2cp, pstateVector, 0, cstateVector) #need to check that this is done by reference
+            black_player.makeMove()
         else:
             print("White's Turn")
-            pstateVector = white_player.getBoardVector()
-            white_player.makeMove(wMatrix1cp, wMatrix2cp)
-            pstateVector = white_player.getBoardVector()
-            nn.train(wMatrix1cp, wMatrix2cp, pstateVector, 0, cstateVector) #need to check that this is done by reference
+            white_player.makeMove()
 
         print("\n==========================================================\n")
 
@@ -69,26 +56,11 @@ def play0():
 
     #Check score
     if(game.black_score > game.white_score):
-        #game is over, update matrix and reset elegibility matrix
-        bwins += 1
-        nn.reset()
-        nn.wMatrix1 = wMatrix1cp
-        nn.wMatrix2 = wMatrix2cp
         print("Black Wins!")
     elif(game.black_score < game.white_score):
-        #game is over, update matrix and reset elegibility matrix
-        wwins += 1
-        nn.reset()
-        nn.wMatrix1 = wMatrix1cp
-        nn.wMatrix2 = wMatrix2cp
         print("White Wins!")
     elif(game.black_score == game.white_score):
-        #game is over, update matrix and reset elegibility matrix
-        nn.reset()
-        nn.wMatrix1 = wMatrix1cp
-        nn.wMatrix2 = wMatrix2cp
         print("It's a tie!")
-
 
 #plays game with one user, one agent
 def play1(player_black):

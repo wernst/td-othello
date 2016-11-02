@@ -7,14 +7,14 @@ class Player(object):
         self.game = game
         self.is_black = is_black
 
-    def makeMove(self, wMatrix1cp, wMatrix2cp):
+    def makeMove(self):
         nn_inputs = self.getNNInputs()
 
         if self.is_black:
             max_key = nn_inputs.keys()[0]
             max_val = -1000
-            for coord, possible_move in nn_inputs.items():
-                nn_output = self.nn.getValue(nn_inputs[coord], wMatrix1cp, wMatrix2cp)
+            for coord in nn_inputs.keys():
+                nn_output = self.nn.getValue(nn_inputs[coord])
                 if nn_output > max_val:
                     max_key = coord
                     max_val = nn_output
@@ -23,8 +23,8 @@ class Player(object):
         else:
             min_key = nn_inputs.keys()[0]
             min_val = 1000
-            for coord, possible_move in nn_inputs.items():
-                nn_output = self.nn.getValue(nn_inputs[coord], wMatrix1cp, wMatrix2cp)
+            for coord in nn_inputs.keys():
+                nn_output = self.nn.getValue(nn_inputs[coord])
                 if nn_output < min_val:
                     min_key = coord
                     min_val = nn_output
