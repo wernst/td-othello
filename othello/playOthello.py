@@ -6,24 +6,25 @@ from Othello import Othello
 from Player import Player
 from NeuralNetwork import NeuralNetwork
 
-<<<<<<< HEAD
-nn = NeuralNetwork(30, 1.0, 0.7, 0.5)
-=======
 nn = NeuralNetwork(10, 0.7, 0.9, 0.2)
->>>>>>> 63281d70f588380c4f142f3f030484cbc697d951
+bWin = 0
+wWin = 0
 
 
 def main():
-    global nn
+    global nn, bWin, wWin
     nn.load("nn1.pk1")
-    play0()
-    nn.learn()
-    play0()
-    nn.save("nn1.pk1")
+    for i in xrange(500):
+        play0()
+    print("Black Wins: {} White wins: {}").format(bWin, wWin)
+    # nn.learn()
+    # play0()
+    # nn.save("nn1.pk1")
     #print("black wins: {} white wins {}").format(nn.bwin, nn.wwin)
 
 #plays game with two agents
 def play0():
+    global bWin, wWin
     game = Othello()
     black_player = Player(nn, game, True)
     white_player = Player(None, game, False, "random")
@@ -32,10 +33,10 @@ def play0():
 
         #if no valid moves, switch turns and check for winner
         if game.game_board.valid_moves == {}:
-            if game.game_board.black_turn:
-                print("Black cannot make any valid moves")
-            else:
-                print("White's cannot make any valid moves")
+            # if game.game_board.black_turn:
+            #     print("Black cannot make any valid moves")
+            # else:
+            #     print("White's cannot make any valid moves")
             game.game_board.switchTurns()
             #check for winner
             game.game_board.updateValidMoves()
@@ -43,32 +44,34 @@ def play0():
                 break
 
         #print score
-        print("Black - {}\tWhite - {}").format(game.black_score, game.white_score)
+        #print("Black - {}\tWhite - {}").format(game.black_score, game.white_score)
         #print board
-        print(game.game_board)
+        #print(game.game_board)
 
 
         #print turn
         if game.game_board.black_turn:
-            print("Black's Turn")
+            #print("Black's Turn")
             black_player.makeMove()
         else:
-            print("White's Turn")
+            #print("White's Turn")
             white_player.makeMove()
 
-        print("\n==========================================================\n")
+        #print("\n==========================================================\n")
 
     #Game Over
-    print("Black - {}\tWhite - {}").format(game.black_score, game.white_score)
-    print(game.game_board)
+    # print("Black - {}\tWhite - {}").format(game.black_score, game.white_score)
+    # print(game.game_board)
 
     #Check score
     if(game.black_score > game.white_score):
-        print("Black Wins!")
+        bWin +=1
+        # print("Black Wins!")
     elif(game.black_score < game.white_score):
-        print("White Wins!")
-    elif(game.black_score == game.white_score):
-        print("It's a tie!")
+        wWin +=1
+        # print("White Wins!")
+    #elif(game.black_score == game.white_score):
+        # print("It's a tie!")
 
 #plays game with one user, one agent
 def play1(player_black):
