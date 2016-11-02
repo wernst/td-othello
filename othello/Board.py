@@ -143,7 +143,7 @@ class Board(object):
                 elif item == WHITE_VAL:
                     vector_input.append(-1)
 
-        vector = np.array(vector_input)
+        vector = np.matrix(np.array(vector_input))
         return vector
 
 

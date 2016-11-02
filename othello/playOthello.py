@@ -1,11 +1,18 @@
 """Plays othello game"""
+# -*- coding: utf-8 -*-
+
 
 from Othello import Othello
 from Player import Player
+from NeuralNetwork import NeuralNetwork
+
+nn = NeuralNetwork(10, 1.0, 0.5, 0.5)
 
 
 def main():
-    play2()
+    global nn
+    nn.learn()
+    print("black wins: {} white wins {}").format(nn.bwin, nn.wwin)
 
 #plays game with two agents
 def play0():
@@ -54,7 +61,6 @@ def play0():
         print("White Wins!")
     elif(game.black_score == game.white_score):
         print("It's a tie!")
-
 
 #plays game with one user, one agent
 def play1(player_black):
