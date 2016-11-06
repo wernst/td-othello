@@ -40,7 +40,7 @@ class Player(object):
             nn_inputs = self.getNNInputs()
 
             if self.is_black:
-                max_key = nn_inputs.keys()[0]
+                max_key = None
                 max_val = -1000
                 for coord in nn_inputs.keys():
                     nn_output = self.nn.getValue(nn_inputs[coord])
@@ -50,7 +50,7 @@ class Player(object):
                 self.game.setTile(*max_key)
 
             else:
-                min_key = nn_inputs.keys()[0]
+                min_key = None
                 min_val = 1000
                 for coord in nn_inputs.keys():
                     nn_output = self.nn.getValue(nn_inputs[coord])

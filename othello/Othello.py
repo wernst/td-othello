@@ -52,9 +52,10 @@ class Othello(object):
         return True
 
     def updateScore(self, points):
-        if self.game_board.black_turn:
-            self.black_score += points
-            self.white_score -= (points-1)
-        else:
-            self.white_score += points
-            self.black_score -= (points-1)
+        if points > 0:
+            if self.game_board.black_turn:
+                self.black_score += points
+                self.white_score -= (points-1)
+            else:
+                self.white_score += points
+                self.black_score -= (points-1)

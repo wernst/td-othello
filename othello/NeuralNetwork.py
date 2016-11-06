@@ -4,15 +4,16 @@ import numpy as np
 from Othello import Othello
 from Player import Player
 import pickle, sys
+from numba import autojit
 
 inputUnits = 64
 class NeuralNetwork(object):
 
     """Initialize neural Network Parameters"""
     def __init__(self, numHidLayers, gamma, ld, learningRate):
-        self.wMatrix1 = np.random.randn(inputUnits, numHidLayers) / np.sqrt(inputUnits) # Weight Matrix at the Heart of the Neural Network
+        self.wMatrix1 = np.random.uniform(-0.5, 0.5, (inputUnits, numHidLayers)) # Weight Matrix at the Heart of the Neural Network
         self.eMatrix1 = np.zeros((inputUnits, numHidLayers)) # eligility traces for each of the inputs of our Weight Matrix
-        self.wMatrix2 = np.random.randn(numHidLayers, 1) / np.sqrt(numHidLayers) # Weight Matrix at the Heart of the Neural Network
+        self.wMatrix2 = np.random.uniform(-0.5, 0.5,(numHidLayers, 1)) # Weight Matrix at the Heart of the Neural Network
         self.eMatrix2 = np.zeros((numHidLayers, 1)) # eligility traces for each of the inputs of our Weight Matrix
         self.learningRate = learningRate
         self.numHidLayers = numHidLayers
@@ -21,12 +22,15 @@ class NeuralNetwork(object):
         self.bwin = 0
         self.wwin = 0
 
+    @autojit
     def sigmoid(self, x):
         return 1/(1+np.exp(-1*x))
 
+    @autojit
     def sigmoid_prime(self, x):
         return self.sigmoid(x)*(1-self.sigmoid(x))
 
+    @autojit
     def getValue(self, stateVec):
         z2 = self.calcHiddenSum(stateVec)
         a2 = self.sigmoid(z2)
@@ -35,13 +39,16 @@ class NeuralNetwork(object):
 
         return outputValue
 
+    @autojit
     def calcHiddenSum(self, stateVec):
         stateVec.transpose()
         return np.dot(stateVec, self.wMatrix1)
 
+    @autojit
     def calcOutputSum(self, hiddenVec):
         return np.dot(hiddenVec, self.wMatrix2)
 
+    @autojit
     def calcGradientMatrix2(self, stateVec):
         hiddenSum = self.calcHiddenSum(stateVec)
         hiddenVec = self.sigmoid(hiddenSum)
@@ -56,6 +63,7 @@ class NeuralNetwork(object):
 
         return gradMatrix
 
+    @autojit
     def calcGradientMatrix1(self, stateVec):
         hiddenSum = self.calcHiddenSum(stateVec)
         #print("hidden sum: {}").format(hiddenSum[0,0])
@@ -95,12 +103,18 @@ class NeuralNetwork(object):
     """Save our weight matrix into a loadable files, prevents retraining"""
     def save(self, filename):
         with open(filename, "wb") as f:
-            pickle.dump(self.wMatrix1, f)
+            pickle.dump(self, f)
 
     """Load our Weight Matrix into out layer variable"""
     def load(self, filename):
         with open(filename, "rb") as f:
-            self.wMatrix1 = pickle.load(f)
+            # print(self.wMatrix1)
+            # print("-------------")
+            nn = pickle.load(f)
+            self.wMatrix1 = nn.wMatrix1
+            self.eMatrix1 = nn.eMatrix1
+            self.wMatrix2 = nn.wMatrix2
+            self.eMatrix2 = nn.eMatrix2
 
     """ Determines how much of a reward to apply """
     def delta(self, pstateValue, reward, stateValue):
@@ -109,6 +123,7 @@ class NeuralNetwork(object):
         return (reward + (self.gamma * stateValue) - pstateValue)
 
     """Single Timestep in the reinforcement Learning"""
+    @autojit
     def train(self, pstate, reward, state):
         pstateValue = self.getValue(pstate)
         cstateValue = self.getValue(state)
@@ -142,8 +157,9 @@ class NeuralNetwork(object):
         #print("W2: {}").format(self.wMatrix2)
     """Basic structure of our lean iteration function, going to be implemented elsewhere"""
     #This can actually be moved to the play class.
-    def learn(self, num_episode = 300):
+    def learn(self, num_episode = 2000):
         for i in xrange(num_episode):
+            print(i)
             game = Othello()
             black_player = Player(self, game, True)
             white_player = Player(self, game, False)
@@ -185,9 +201,8 @@ class NeuralNetwork(object):
 
             elif(game.black_score == game.white_score):
                 #game is over, update matrix and reset elegibility matrix
-                self.train(pstateVector, 0, cstateVector)
+                self.train(pstateVector, 0.5, cstateVector)
                 self.reset()
-
 
 
 

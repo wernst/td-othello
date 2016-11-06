@@ -1,26 +1,116 @@
 """Plays othello game"""
-# -*- coding: utf-8 -*-
 
 
 from Othello import Othello
 from Player import Player
 from NeuralNetwork import NeuralNetwork
+from Board import Board
+import numpy as np
 
-nn = NeuralNetwork(10, 0.7, 0.9, 0.2)
+nn = NeuralNetwork(50, 1.0, 0.9, 0.01)
 bWin = 0
 wWin = 0
 
 
 def main():
+
+
+
+
+
+
+
+    runGames("nn2000.pk1", 200)
+
+
+
+#===============================================================================
+#Testing
+#===============================================================================
+def learn(nn_file):
+    global nn
+    nn.learn()
+    nn.save(nn_file)
+
+def runGames(nn_file, iterations):
     global nn, bWin, wWin
-    nn.load("nn1.pk1")
-    for i in xrange(500):
+    nn.load(nn_file)
+    for i in xrange(iterations):
+        print(i)
         play0()
-    print("Black Wins: {} White wins: {}").format(bWin, wWin)
-    # nn.learn()
-    # play0()
-    # nn.save("nn1.pk1")
-    #print("black wins: {} white wins {}").format(nn.bwin, nn.wwin)
+    print("black wins: {}").format(bWin)
+    print("white wins: {}").format(wWin)
+
+def testBoardState(nn_file):
+    state = [[" ", "W", "W", "W", "B", "B", " ", " "],
+            ["W", "W", "W", "W", "W", "B", "W", " "],
+            ["W", "B", "W", "B", "W", "B", "W", "B"],
+            ["B", "B", "W", "W", "B", "W", "B", "W"],
+            ["B", "W", "W", "W", "B", "B", "W", "B"],
+            ["W", "W", "W", "W", "W", "B", "W", "B"],
+            ["W", "B", "W", "B", "W", "B", "W", "B"],
+            ["B", "B", "W", "W", "B", "W", "B", "W"]]
+
+    state_vec = np.matrix([0, -1, -1, -1, 1, 1, 0, 0,
+                        -1, -1, -1, -1, -1, 1, -1, 0,
+                        -1, 1, -1, 1, -1, 1, -1, 1,
+                        1, 1, -1, -1, 1, -1, 1, -1,
+                        1, -1, -1, -1, 1, 1, -1, 1,
+                        -1, -1, -1, -1, -1, 1, -1, 1,
+                        -1, 1, -1, 1, -1, 1, -1, 1,
+                        1, 1, -1, -1, 1, -1, 1, -1])
+     board = Board(state)
+    print(board)
+    print(nn.wMatrix1)
+    print("-------------")
+    nn.load(nn_file)
+    print(nn.wMatrix1)
+    for i in range(5):
+
+        #print(nn.wMatrix1)
+        board_vector = board.boardToVector()
+        print(nn.getValue(board_vector))
+        # print(nn.getValue(state_vec))
+
+
+def getNNInputs(state):
+    nn_inputs = {}
+    for coord in self.game.game_board.valid_moves.keys():
+        board_copy = copy.deepcopy(self.game.game_board)
+        board_copy.addTile(coord[0], coord[1])
+        board_vector = board_copy.boardToVector()
+        nn_inputs[coord] = board_vector
+    return nn_inputs
+
+
+def prototypePresention():
+    while(True):
+        nn_type = raw_input("(1) For Random NeuralNetwork, (2) For Pre-Trained NerualNetwork, (q) to quit\n")
+        if(nn_type == "1"):
+            nn = NeuralNetwork(16, 0.7, 0.9, 0.5)
+        elif(nn_type == "2"):
+            nn.load("nn1000.pk1")
+        else:
+            break
+        game_type = raw_input("(1) For Random Opponent, (2) Human Player\n")
+        if(game_type == "1"):
+            print "Starting Computer vs Computer Games"
+            for i in xrange(200):
+                print i
+                play0()
+            print("Black Wins: {} White wins: {}").format(bWin, wWin)
+            bwin = 0
+            wwin = 0
+        else:
+            print "Starting User vs Computer Games"
+            play1(True)
+
+
+#===============================================================================
+#Playing
+#===============================================================================
+
+
 
 #plays game with two agents
 def play0():
@@ -76,7 +166,7 @@ def play0():
 #plays game with one user, one agent
 def play1(player_black):
     game = Othello()
-    agent = Player("neural network goes here", game, not player_black)
+    agent = Player(nn, game, not player_black)
     while True:
         game.game_board.updateValidMoves()
 
