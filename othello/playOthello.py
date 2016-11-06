@@ -13,13 +13,6 @@ wWin = 0
 
 
 def main():
-
-
-
-
-
-
-
     runGames("nn2000.pk1", 200)
 
 
@@ -27,11 +20,14 @@ def main():
 #===============================================================================
 #Testing
 #===============================================================================
+
+#trains neural network
 def learn(nn_file):
     global nn
     nn.learn()
     nn.save(nn_file)
 
+#runs a certain number of game iterations
 def runGames(nn_file, iterations):
     global nn, bWin, wWin
     nn.load(nn_file)
@@ -41,6 +37,7 @@ def runGames(nn_file, iterations):
     print("black wins: {}").format(bWin)
     print("white wins: {}").format(wWin)
 
+#Tests a board state (input inside the function)
 def testBoardState(nn_file):
     state = [[" ", "W", "W", "W", "B", "B", " ", " "],
             ["W", "W", "W", "W", "W", "B", "W", " "],
@@ -59,7 +56,7 @@ def testBoardState(nn_file):
                         -1, -1, -1, -1, -1, 1, -1, 1,
                         -1, 1, -1, 1, -1, 1, -1, 1,
                         1, 1, -1, -1, 1, -1, 1, -1])
-     board = Board(state)
+    board = Board(state)
     print(board)
     print(nn.wMatrix1)
     print("-------------")
