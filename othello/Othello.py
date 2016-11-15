@@ -37,6 +37,11 @@ class Othello(object):
             str_moves.append(row+col)
         return str_moves
 
+    def validMoveStringify(self, move):
+        row = string.ascii_uppercase[move[0]]
+        col = str(move[1]+1)
+        return row+col
+
     #Validates user input
     def validateMoveInput(self, move):
         #too long or too short

@@ -23,10 +23,10 @@ class Board(object):
                 for j in range(COLS):
                     self.board[i].append(EMPTY_VAL)
 
-            self.board[3][3] = BLACK_VAL
-            self.board[4][4] = BLACK_VAL
-            self.board[3][4] = WHITE_VAL
-            self.board[4][3] = WHITE_VAL
+            self.board[3][3] = WHITE_VAL
+            self.board[4][4] = WHITE_VAL
+            self.board[3][4] = BLACK_VAL
+            self.board[4][3] = BLACK_VAL
 
             self.valid_moves = {}
             self.black_turn = True
@@ -146,10 +146,13 @@ class Board(object):
             for item in row:
                 if item == EMPTY_VAL:
                     vector_input.append(0)
+                    #vector_input.append(0)
                 elif item == BLACK_VAL:
                     vector_input.append(1)
+                    #vector_input.append(0)
                 elif item == WHITE_VAL:
                     vector_input.append(-1)
+                    #vector_input.append(1)
 
         vector = np.matrix(np.array(vector_input))
         return vector

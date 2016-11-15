@@ -10,11 +10,14 @@ class Player(object):
         self.is_black = is_black
         self.type = player_type
 
-    def makeMove(self):
+    def makeMove(self, index = None):
         nn_inputs = self.getNNInputs()
 
         if self.type == "random":
-            rand = random.randrange(0, len(nn_inputs.keys()))
+            if index == None:
+                rand = random.randrange(0, len(nn_inputs.keys()))
+            else:
+                rand = index
             if self.is_black:
                 max_key = nn_inputs.keys()[rand]
                 max_val = -1000

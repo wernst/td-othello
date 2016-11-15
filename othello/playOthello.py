@@ -6,25 +6,34 @@ from Player import Player
 from NeuralNetwork import NeuralNetwork
 from Board import Board
 import numpy as np
+import random
 
-nn = NeuralNetwork(50, 1.0, 0.9, 0.01)
+nn = NeuralNetwork(50, 1.0, 0.9, 0.001)
 bWin = 0
 wWin = 0
 
 
 def main():
-    runGames("nn2000.pk1", 200)
-
-
+    global nn
+    #learn("nn1.pk1", 1)
+    #runGames("nn1000bugfix4.pk1", 200)
+    #testBoardState("nn2000bugfix3.pk1")
+    runGameWithOutput("nn1.pk1")
+    # m1 = np.matrix([[1,2,3],[4,5,6]])
+    # m2 = np.matrix([[7,8],[9,10],[11,12]])
+    # m3 = np.multiply((2*3), m2)
+    # m1 += m1
+    # # m4 = 2*m1
+    # print(m1)
 
 #===============================================================================
 #Testing
 #===============================================================================
 
 #trains neural network
-def learn(nn_file):
+def learn(nn_file, episodes=1000):
     global nn
-    nn.learn()
+    nn.learn(episodes)
     nn.save(nn_file)
 
 #runs a certain number of game iterations
@@ -36,6 +45,12 @@ def runGames(nn_file, iterations):
         play0()
     print("black wins: {}").format(bWin)
     print("white wins: {}").format(wWin)
+
+
+def runGameWithOutput(nn_file):
+    global nn
+    nn.load(nn_file)
+    playVerbose()
 
 #Tests a board state (input inside the function)
 def testBoardState(nn_file):
@@ -56,18 +71,23 @@ def testBoardState(nn_file):
                         -1, -1, -1, -1, -1, 1, -1, 1,
                         -1, 1, -1, 1, -1, 1, -1, 1,
                         1, 1, -1, -1, 1, -1, 1, -1])
-    board = Board(state)
+    state2 = [[" ", "W", "W", "W", "W", "W", "W", "W"],
+            ["W", "W", "W", "W", "W", "W", "W", "W"],
+            ["W", "W", "W", "W", "W", "W", "W", "W"],
+            ["W", "W", "W", "W", "W", "W", "W", "W"],
+            ["W", "W", "W", "W", "W", "W", "W", "W"],
+            ["W", "W", "W", "W", "W", "W", "W", "W"],
+            ["W", "W", "W", "W", "W", "W", "W", "W"],
+            ["B", "W", "W", "W", "W", "W", "W", "W"]]
+    board = Board(state2)
     print(board)
-    print(nn.wMatrix1)
-    print("-------------")
+    #print(nn.wMatrix1)
+    #print("-------------")
     nn.load(nn_file)
-    print(nn.wMatrix1)
-    for i in range(5):
-
-        #print(nn.wMatrix1)
-        board_vector = board.boardToVector()
-        print(nn.getValue(board_vector))
-        # print(nn.getValue(state_vec))
+    #print(nn.wMatrix1)
+    board_vector = board.boardToVector()
+    value = nn.getValue(board_vector)
+    print(value)
 
 
 def getNNInputs(state):
@@ -107,6 +127,95 @@ def prototypePresention():
 #Playing
 #===============================================================================
 
+
+def playVerbose():
+    continue_play = False
+    game = Othello()
+    black_player = Player(nn, game, True)
+    white_player = Player(None, game, False, "random")
+    #white_player = Player(None, game, False, "greedy")
+    while True:
+        game.game_board.updateValidMoves()
+
+        #if no valid moves, switch turns and check for winner
+        if game.game_board.valid_moves == {}:
+            if game.game_board.black_turn:
+                print("Black cannot make any valid moves")
+            else:
+                print("White's cannot make any valid moves")
+            game.game_board.switchTurns()
+            #check for winner
+            game.game_board.updateValidMoves()
+            if game.game_board.valid_moves == {}:
+                break
+
+        #print score
+        print("Black - {}\tWhite - {}").format(game.black_score, game.white_score)
+        #print board
+        print(game.game_board)
+
+        #if coninuing play
+        if continue_play:
+            if game.game_board.black_turn:
+                black_player.makeMove()
+            else:
+                white_player.makeMove()
+
+        #if not coninuing play
+        else:
+            #print turn
+            if game.game_board.black_turn:
+                print("Black's Turn")
+            else:
+                print("White's Turn")
+
+            rand = None
+            #print valid moves
+            if game.game_board.black_turn:
+                print("Black's Turn")
+                print("Valid Moves: {}").format(game.validMovesStringify())
+                for k, v in black_player.getNNInputs().items():
+                    print("{}: {}").format(game.validMoveStringify(k), nn.getValue(np.matrix(v)))
+
+            else:
+                print("White's Turn")
+                # print("Valid Moves: {}").format(game.validMovesStringify())
+                # rand = random.randrange(0, len(game.game_board.valid_moves.keys()))
+                # print("Random index: {}").format(rand)
+                print("Valid Moves: {}").format(game.validMovesStringify())
+                for k, v in black_player.getNNInputs().items():
+                    print("{}: {}").format(game.validMoveStringify(k), nn.getValue(np.matrix(v)))
+
+            command = raw_input("n to next (default), c to play game, q to quit: ")
+            if command == "n" or command == "":
+                if game.game_board.black_turn:
+                    black_player.makeMove()
+                else:
+                    white_player.makeMove(rand)
+            elif command == "c":
+                continue_play = True
+                if game.game_board.black_turn:
+                    black_player.makeMove()
+                else:
+                    white_player.makeMove(rand)
+            elif command == "q":
+                break
+            else:
+                print("not a valid command, try again")
+
+            print("\n==========================================================\n")
+
+    #Game Over
+    print("Black - {}\tWhite - {}").format(game.black_score, game.white_score)
+    print(game.game_board)
+
+    #Check score
+    if(game.black_score > game.white_score):
+        print("Black Wins!")
+    elif(game.black_score < game.white_score):
+        print("White Wins!")
+    elif(game.black_score == game.white_score):
+        print("It's a tie!")
 
 
 #plays game with two agents
