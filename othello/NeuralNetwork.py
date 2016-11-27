@@ -1,7 +1,7 @@
 """Neural Network for TD-Othello"""
 
 import numpy as np
-np.set_printoptions(threshold='nan')
+np.set_printoptions(threshold='nan', precision=5)
 from Othello import Othello
 from Player import Player
 import pickle, sys
@@ -62,57 +62,82 @@ class NeuralNetwork(object):
     def calcOutputSum(self, hiddenVec):
         return np.dot(hiddenVec, self.wMatrix2)
 
+    # @autojit
+    # def calcGradientMatrix2(self, stateVec):
+    #     hiddenSum = self.calcHiddenSum(stateVec)
+    #     hiddenVec = self.sigmoid(hiddenSum)
+    #     outputSum = self.calcOutputSum(hiddenVec)
+    #     #outputValue = self.sigmoid(outputSum)
+    #     outputDelta = self.sigmoid_prime(outputSum)
+    #
+    #     gradMatrix = np.zeros((1, self.numHidLayers))
+    #     for i, v in np.ndenumerate(gradMatrix):
+    #         gradMatrix[i] = outputDelta * hiddenVec[i]
+    #
+    #
+    #     return gradMatrix.T
+
     @autojit
-    def calcGradientMatrix2(self, stateVec):
+    def calcGradientMatrix2_2(self, stateVec):
         hiddenSum = self.calcHiddenSum(stateVec)
         hiddenVec = self.sigmoid(hiddenSum)
         outputSum = self.calcOutputSum(hiddenVec)
         #outputValue = self.sigmoid(outputSum)
         outputDelta = self.sigmoid_prime(outputSum)
 
-        gradMatrix = np.zeros((1, self.numHidLayers))
-        for i, v in np.ndenumerate(gradMatrix):
-            gradMatrix[i] = outputDelta * hiddenVec[i]
+        gradMatrix = outputDelta * hiddenVec
 
 
-        return gradMatrix
 
-    @autojit
-    def calcGradientMatrix1(self, stateVec):
+        return gradMatrix.T
+
+    # @autojit
+    # def calcGradientMatrix1(self, stateVec):
+    #     hiddenSum = self.calcHiddenSum(stateVec)
+    #     #print("hidden sum: {}").format(hiddenSum[0,0])
+    #     #print(self.sigmoid_prime(hiddenSum[0,0]))
+    #     hiddenDeltas = np.zeros((1, self.numHidLayers))
+    #     for i, v in np.ndenumerate(hiddenDeltas):
+    #         hiddenDeltas[i] = self.sigmoid_prime(hiddenSum[i])
+    #
+    #     # print("hidden deltas: {}").format(hiddenDeltas)
+    #     # print(self.wMatrix1.shape)
+    #     # print(hiddenDeltas.shape)
+    #
+    #     gradMatrix = np.zeros((inputUnits, self.numHidLayers))
+    #
+    #     for i, v in np.ndenumerate(gradMatrix):
+    #         gradMatrix[i] = stateVec.transpose()[i[0], 0] * hiddenDeltas[0,i[1]]
+    #
+    #     return gradMatrix
+
+
+    #@autojit
+    def calcGradientMatrix1_2(self, stateVec):
         hiddenSum = self.calcHiddenSum(stateVec)
-        #print("hidden sum: {}").format(hiddenSum[0,0])
-        #print(self.sigmoid_prime(hiddenSum[0,0]))
-        hiddenDeltas = np.zeros((1, self.numHidLayers))
-        for i, v in np.ndenumerate(hiddenDeltas):
-            hiddenDeltas[i] = self.sigmoid_prime(hiddenSum[i])
+        hiddenVec = self.sigmoid(hiddenSum)
+        outputSum = self.calcOutputSum(hiddenVec)
+        #outputValue = self.sigmoid(outputSum)
+        outputDelta = self.sigmoid_prime(outputSum)
+        # print(outputDelta)
+        # print(hiddenSum)
+        # print(hiddenSum[0])
 
-        # print("hidden deltas: {}").format(hiddenDeltas)
-        # print(self.wMatrix1.shape)
-        # print(hiddenDeltas.shape)
 
-        gradMatrix = np.zeros((inputUnits, self.numHidLayers))
+        hiddenVecPrime = np.empty([1, self.numHidLayers])
+        for index, value in np.ndenumerate(hiddenSum):
+            hiddenVecPrime[index] = self.sigmoid_prime(value)
 
-        for i, v in np.ndenumerate(gradMatrix):
-            gradMatrix[i] = stateVec.transpose()[i[0], 0] * hiddenDeltas[0,i[1]]
+        deltaMatrix = np.empty([1, self.numHidLayers])
+        for index, value in np.ndenumerate(hiddenVecPrime):
+            deltaMatrix[index] = outputDelta[0,0] * self.wMatrix2.T[index] * value
+
+        gradMatrix = ((stateVec.T)*deltaMatrix)
+
 
         return gradMatrix
 
 
-
-
-
-
-
-
-
-
-
-
-    # def getValuePrime2(self, stateVec):
-    #     J = numdifftools.Jacobian(lambda z: getValue(z.reshape(stateVec.shape), B, C).ravel())
-    # return J(A.ravel()).reshape(A.shape)
-    # def getValuePrime1(self):
-    #     pass
 
     """Save our weight matrix into a loadable files, prevents retraining"""
     def save(self, filename):
@@ -131,14 +156,17 @@ class NeuralNetwork(object):
             self.eMatrix2 = nn.eMatrix2
 
     """ Determines how much of a reward to apply """
-    def delta(self, pValue, reward, cValue):
+    def delta(self, pValue, reward, cValue, game_over):
         # Core Error Calculation, returns the reward of the current state
         #print(pstateValue)
-        return (reward + (self.gamma * cValue) - pValue)
+        if not game_over:
+            return (reward + (self.gamma * cValue) - pValue)
+        else:
+            return reward - pValue
 
     """Single Timestep in the reinforcement Learning"""
     @autojit
-    def train(self, pstate, reward, state):
+    def train(self, pstate, reward, state, game_over):
         rewardMatrix = np.matrix([reward]*self.numHidLayers)
         pHiddenOutput = self.sigmoid(self.calcHiddenSum(pstate))
         cHiddenOutput = self.sigmoid(self.calcHiddenSum(state))
@@ -152,83 +180,92 @@ class NeuralNetwork(object):
         # print(self.eMatrix2.shape)
         #test = np.array([pstateValue]*self.eMatrix2.shape[0]).T
         # print(test)
-        gradientMatrix2 = self.calcGradientMatrix2(pstate)
+        gradientMatrix2 = self.calcGradientMatrix2_2(state)
+
+
         #print(gradientMatrix2)
-        gradientMatrix1 = self.calcGradientMatrix1(pstate)
+        gradientMatrix1 = self.calcGradientMatrix1_2(state)
+
+
 
         # print(self.gamma)
         # print(self.ld)
         # print()
 
-
-        self.eMatrix2 = self.gamma * self.ld * self.eMatrix2 + gradientMatrix2.transpose()
+        self.eMatrix2 = self.gamma * self.ld * self.eMatrix2 + gradientMatrix2
         self.eMatrix1 = self.gamma * self.ld * self.eMatrix1 + gradientMatrix1
 
 
-        delta2 = self.delta(pstateValue, reward, cstateValue)
-        delta1 = self.delta(pHiddenOutput, rewardMatrix, cHiddenOutput)
+
+        delta = self.delta(pstateValue, reward, cstateValue, game_over)
+        # delta1 = self.delta(pHiddenOutput, rewardMatrix, cHiddenOutput)
         #print(delta)
         #print(self.eMatrix2)
         #print(self.wMatrix2)
 
-        self.wMatrix2 +=  np.multiply((self.learningRate * delta2), self.eMatrix2)
-        self.wMatrix1 +=  np.multiply((self.learningRate * delta1), self.eMatrix1)
+        self.wMatrix2 +=  np.multiply((self.learningRate * delta), self.eMatrix2)
+        self.wMatrix1 +=  np.multiply((self.learningRate * delta), self.eMatrix1)
 
         #print(self.wMatrix2)
-
-        #print("W1: {}").format(self.wMatrix1)
-        #print("W2: {}").format(self.wMatrix2)
+        # print("W1: {}").format(self.wMatrix1)
+        # print("W2: {}").format(self.wMatrix2)
     """Basic structure of our lean iteration function, going to be implemented elsewhere"""
     #This can actually be moved to the play class.
-    def learn(self, num_episode = 1000):
+    def learn(self, num_episode = 1000, p_type = "nn"):
         for i in xrange(num_episode):
             print(i)
             game = Othello()
-            black_player = Player(self, game, True)
-            white_player = Player(self, game, False)
-            while True:
-                game.game_board.updateValidMoves()
+            black_player = Player(self, game, True, p_type)
+            white_player = Player(self, game, False, p_type)
 
-                #if no valid moves, switch turns and check for winner
-                if game.game_board.valid_moves == {}:
-                    game.game_board.switchTurns()
-                    #check for winner
-                    game.game_board.updateValidMoves()
-                    if game.game_board.valid_moves == {}:
-                        break
+            game.game_board.updateValidMoves()
+            # print("Valid Moves: {}").format(game.validMovesStringify())
+            # for k, v in black_player.getNNInputs().items():
+            #     print("{}: {}").format(game.validMoveStringify(k), self.getValue(np.matrix(v)))
+
+            while True:
                 #print turn
                 if game.game_board.black_turn:
                     #print("Black's Turn")
                     pstateVector = black_player.getBoardVector()
                     black_player.makeMove()
                     cstateVector = black_player.getBoardVector()
-                    self.train(pstateVector, 0, cstateVector) #need to check that this is done by reference
+
                 else:
                     #print("White's Turn")
                     pstateVector = white_player.getBoardVector()
                     white_player.makeMove()
                     cstateVector = white_player.getBoardVector()
-                    self.train(pstateVector, 0, cstateVector) #need to check that this is done by reference
+
+                if game.isGameOver():
+                    break
+                else:
+                    self.train(pstateVector, 0, cstateVector, False)
 
             if(game.black_score > game.white_score):
                 #game is over, update matrix and reset elegibility matrix
                 self.bwin += 1
-                self.train(pstateVector, 1, cstateVector)
+                self.train(pstateVector, 1, cstateVector, True)
                 self.reset()
+                # print("black wins")
 
             elif(game.black_score < game.white_score):
                 #game is over, update matrix and reset elegibility matrix
                 self.wwin += 1
-                self.train(pstateVector, 0, cstateVector)
+                self.train(pstateVector, 0, cstateVector, True)
                 self.reset()
+                # print("white wins")
+
 
             elif(game.black_score == game.white_score):
                 #game is over, update matrix and reset elegibility matrix
-                self.train(pstateVector, 0.5, cstateVector)
+                self.train(pstateVector, 0.5, cstateVector, True)
                 self.reset()
+                # print("tie")
 
 
-
+        print("black wins: {}").format(self.bwin)
+        print("white wins: {}").format(self.wwin)
     def reset(self):
         self.eMatrix2 = np.zeros((self.numHidLayers, 1))
         self.eMatrix1 = np.zeros((inputUnits, self.numHidLayers))

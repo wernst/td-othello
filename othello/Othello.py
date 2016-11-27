@@ -64,3 +64,16 @@ class Othello(object):
             else:
                 self.white_score += points
                 self.black_score -= (points-1)
+
+    def isGameOver(self):
+        self.game_board.updateValidMoves()
+
+
+        if self.game_board.valid_moves == {}:
+            self.game_board.switchTurns()
+            #check for winner
+            self.game_board.updateValidMoves()
+            if self.game_board.valid_moves == {}:
+                return True
+
+        return False

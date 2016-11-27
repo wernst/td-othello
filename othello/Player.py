@@ -39,6 +39,45 @@ class Player(object):
                 self.game.setTile(*best_move)
 
 
+        elif self.type == "nn_random":
+            nn_inputs = self.getNNInputs()
+
+            if self.is_black:
+                #generate random number
+                #decider = int.from_bytes(os.urandom(8), byteorder="big") / ((1 << 64) - 1)
+                decider = random.random()
+                if(decider > .5):
+                    rand = random.randrange(0, len(nn_inputs.keys()))
+                    max_key = nn_inputs.keys()[rand]
+                    self.game.setTile(*max_key)
+                else:
+                    max_key = None
+                    max_val = -1000
+                    for coord in nn_inputs.keys():
+                        nn_output = self.nn.getValue(nn_inputs[coord])
+                        if nn_output > max_val:
+                            max_key = coord
+                            max_val = nn_output
+                    self.game.setTile(*max_key)
+
+            else:
+                #generate random number
+                #decider = int.from_bytes(os.urandom(8), byteorder="big") / ((1 << 64) - 1)
+                decider = random.random()
+                if(decider > .5):
+                    rand = random.randrange(0, len(nn_inputs.keys()))
+                    min_key = nn_inputs.keys()[rand]
+                    self.game.setTile(*min_key)
+                else:
+                    min_key = None
+                    min_val = 1000
+                    for coord in nn_inputs.keys():
+                        nn_output = self.nn.getValue(nn_inputs[coord])
+                        if nn_output < min_val:
+                            min_key = coord
+                            min_val = nn_output
+                    self.game.setTile(*min_key)
+
         elif self.type == "nn":
             nn_inputs = self.getNNInputs()
 
@@ -79,6 +118,7 @@ class Player(object):
 
     def getNNInputs(self):
         nn_inputs = {}
+        
         for coord in self.game.game_board.valid_moves.keys():
             board_copy = copy.deepcopy(self.game.game_board)
             board_copy.addTile(coord[0], coord[1])

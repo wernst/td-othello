@@ -7,44 +7,45 @@ from NeuralNetwork import NeuralNetwork
 from Board import Board
 import numpy as np
 import random
+import sys
 
-nn = NeuralNetwork(50, 1.0, 0.9, 0.001)
+#sys.path.append("/anaconda/bin")
+nn = NeuralNetwork(50, 1.0, 0.9, 0.01)
 bWin = 0
 wWin = 0
+ties = 0
 
 
 def main():
     global nn
-    #learn("nn1.pk1", 1)
-    #runGames("nn1000bugfix4.pk1", 200)
-    #testBoardState("nn2000bugfix3.pk1")
-    runGameWithOutput("nn1.pk1")
-    # m1 = np.matrix([[1,2,3],[4,5,6]])
-    # m2 = np.matrix([[7,8],[9,10],[11,12]])
-    # m3 = np.multiply((2*3), m2)
-    # m1 += m1
-    # # m4 = 2*m1
-    # print(m1)
+
+    #learn("nn20000_nnrand.pk1", 20000, "nn_random")
+    #runGames("nn20000_nnrand.pk1", 1000)
+    #testBoardState("nn500.pk1")
+    #runGameWithOutput("nn20000_nnrand.pk1")
+
 
 #===============================================================================
 #Testing
 #===============================================================================
 
 #trains neural network
-def learn(nn_file, episodes=1000):
+def learn(nn_file, episodes=1000, p_type="nn"):
     global nn
-    nn.learn(episodes)
+    nn.learn(episodes, p_type)
     nn.save(nn_file)
 
 #runs a certain number of game iterations
 def runGames(nn_file, iterations):
-    global nn, bWin, wWin
+    global nn, bWin, wWin, ties
     nn.load(nn_file)
     for i in xrange(iterations):
         print(i)
         play0()
     print("black wins: {}").format(bWin)
     print("white wins: {}").format(wWin)
+    print("ties: {}").format(ties)
+    print("\nwin pct: {}").format(bWin/(iterations*1.0))
 
 
 def runGameWithOutput(nn_file):
@@ -79,7 +80,15 @@ def testBoardState(nn_file):
             ["W", "W", "W", "W", "W", "W", "W", "W"],
             ["W", "W", "W", "W", "W", "W", "W", "W"],
             ["B", "W", "W", "W", "W", "W", "W", "W"]]
-    board = Board(state2)
+    state3 = [[" ", "B", "B", "B", "B", "B", "B", "B"],
+            ["B", "B", "B", "B", "B", "B", "B", "B"],
+            ["B", "B", "B", "B", "B", "B", "B", "B"],
+            ["B", "B", "B", "B", "B", "B", "B", "B"],
+            ["B", "B", "B", "B", "B", "B", "B", "B"],
+            ["B", "B", "B", "B", "B", "B", "B", "B"],
+            ["B", "B", "B", "B", "B", "B", "B", "B"],
+            ["W", "B", "B", "B", "B", "B", "B", "B"]]
+    board = Board(state3)
     print(board)
     #print(nn.wMatrix1)
     #print("-------------")
@@ -88,17 +97,6 @@ def testBoardState(nn_file):
     board_vector = board.boardToVector()
     value = nn.getValue(board_vector)
     print(value)
-
-
-def getNNInputs(state):
-    nn_inputs = {}
-    for coord in self.game.game_board.valid_moves.keys():
-        board_copy = copy.deepcopy(self.game.game_board)
-        board_copy.addTile(coord[0], coord[1])
-        board_vector = board_copy.boardToVector()
-        nn_inputs[coord] = board_vector
-    return nn_inputs
-
 
 def prototypePresention():
     while(True):
@@ -220,7 +218,7 @@ def playVerbose():
 
 #plays game with two agents
 def play0():
-    global bWin, wWin
+    global bWin, wWin, ties
     game = Othello()
     black_player = Player(nn, game, True)
     white_player = Player(None, game, False, "random")
@@ -266,7 +264,8 @@ def play0():
     elif(game.black_score < game.white_score):
         wWin +=1
         # print("White Wins!")
-    #elif(game.black_score == game.white_score):
+    elif(game.black_score == game.white_score):
+        ties+=1
         # print("It's a tie!")
 
 #plays game with one user, one agent
