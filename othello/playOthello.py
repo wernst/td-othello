@@ -20,9 +20,9 @@ def main():
     global nn
 
     #learn("nn20000_nnrand.pk1", 20000, "nn_random")
-    #runGames("nn20000_nnrand.pk1", 1000)
+    #runGames("nn5000_nnrand.pk1", 200)
     #testBoardState("nn500.pk1")
-    #runGameWithOutput("nn20000_nnrand.pk1")
+    #runGameWithOutput("nn5000_nnrand.pk1")
 
 
 #===============================================================================
@@ -97,6 +97,17 @@ def testBoardState(nn_file):
     board_vector = board.boardToVector()
     value = nn.getValue(board_vector)
     print(value)
+
+
+def getNNInputs(state):
+    nn_inputs = {}
+    for coord in self.game.game_board.valid_moves.keys():
+        board_copy = copy.deepcopy(self.game.game_board)
+        board_copy.addTile(coord[0], coord[1])
+        board_vector = board_copy.boardToVector()
+        nn_inputs[coord] = board_vector
+    return nn_inputs
+
 
 def prototypePresention():
     while(True):
