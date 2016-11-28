@@ -103,14 +103,12 @@ class Board(object):
     #Place a piece on the board, return score change
     def addTile(self, row, col):
         score_change = 0
-        if (row, col) in self.valid_moves.keys():
-            if self.black_turn:
-                self.board[row][col] = BLACK_VAL
-            else:
-                self.board[row][col] = WHITE_VAL
-            score_change = self.updateBoard(row, col)
+        if self.black_turn:
+            self.board[row][col] = BLACK_VAL
         else:
-            print("INVALID MOVE")
+            self.board[row][col] = WHITE_VAL
+        score_change = self.updateBoard(row, col)
+
 
         return score_change
 

@@ -18,9 +18,13 @@ class Othello(object):
     #Gets valid moves and places a tile on the board
     def setTile(self, row, col):
         self.game_board.updateValidMoves()
-        points = self.game_board.addTile(row, col)
-        self.updateScore(points)
-        self.game_board.switchTurns()
+        if (row, col) in self.game_board.valid_moves.keys():
+            points = self.game_board.addTile(row, col)
+            self.updateScore(points)
+            self.game_board.switchTurns()
+        else:
+            print("INVALID MOVE")
+
     #Updates an input string to board coordinates
     def moveToCoords(self, move):
         move = move.upper()

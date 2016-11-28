@@ -23,6 +23,8 @@ def main():
     #runGames("nn5000_nnrand.pk1", 200)
     #testBoardState("nn500.pk1")
     #runGameWithOutput("nn5000_nnrand.pk1")
+    nn.load("nn5000_nnrand.pk1")
+    play1(True)
 
 
 #===============================================================================
