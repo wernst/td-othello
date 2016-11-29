@@ -219,9 +219,9 @@ class NeuralNetwork(object):
             white_player = Player(self, game, False, p_type)
 
             game.game_board.updateValidMoves()
-            # print("Valid Moves: {}").format(game.validMovesStringify())
-            # for k, v in black_player.getNNInputs().items():
-            #     print("{}: {}").format(game.validMoveStringify(k), self.getValue(np.matrix(v)))
+            print("Valid Moves: {}").format(game.validMovesStringify())
+            for k, v in black_player.getNNInputs().items():
+                print("{}: {}").format(game.validMoveStringify(k), self.getValue(np.matrix(v)))
 
             while True:
                 #print turn
@@ -247,21 +247,21 @@ class NeuralNetwork(object):
                 self.bwin += 1
                 self.train(pstateVector, 1, cstateVector, True)
                 self.reset()
-                # print("black wins")
+                print("black wins\n")
 
             elif(game.black_score < game.white_score):
                 #game is over, update matrix and reset elegibility matrix
                 self.wwin += 1
                 self.train(pstateVector, 0, cstateVector, True)
                 self.reset()
-                # print("white wins")
+                print("white wins\n")
 
 
             elif(game.black_score == game.white_score):
                 #game is over, update matrix and reset elegibility matrix
                 self.train(pstateVector, 0.5, cstateVector, True)
                 self.reset()
-                # print("tie")
+                print("tie\n")
 
 
         print("black wins: {}").format(self.bwin)

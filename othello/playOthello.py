@@ -19,12 +19,12 @@ ties = 0
 def main():
     global nn
 
-    #learn("nn20000_nnrand.pk1", 20000, "nn_random")
-    #runGames("nn5000_nnrand.pk1", 200)
+    #learn("nn2000_nnrand.pk1", 2000, "nn_random")
+    #runGames("nn2000_nnrand.pk1", 200)
     #testBoardState("nn500.pk1")
-    #runGameWithOutput("nn5000_nnrand.pk1")
-    nn.load("nn5000_nnrand.pk1")
-    play1(True)
+    runGameWithOutput("nn5000_nnrand.pk1")
+    #nn.load("nn5000_nnrand.pk1")
+    #play1(True)
 
 
 #===============================================================================
@@ -143,7 +143,7 @@ def playVerbose():
     continue_play = False
     game = Othello()
     black_player = Player(nn, game, True)
-    white_player = Player(None, game, False, "random")
+    white_player = Player(None, game, False, "alphabeta")
     #white_player = Player(None, game, False, "greedy")
     while True:
         game.game_board.updateValidMoves()
@@ -284,7 +284,7 @@ def play0():
 #plays game with one user, one agent
 def play1(player_black):
     game = Othello()
-    agent = Player(nn, game, not player_black)
+    agent = Player(nn, game, not player_black, "alphabeta")
     while True:
         game.game_board.updateValidMoves()
 
