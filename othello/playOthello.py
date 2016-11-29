@@ -19,8 +19,13 @@ ties = 0
 def main():
     global nn
 
+<<<<<<< HEAD
     #learn("nn2000_nnrand.pk1", 2000, "nn_random")
     #runGames("nn2000_nnrand.pk1", 200)
+=======
+    #learn("nn20000_nnrand.pk1", 20000, "nn_random")
+    #runGames("nn5000_nnrand.pk1", 100)
+>>>>>>> 36216d4a32d84c0797db2022bbaab839b3a3dd6f
     #testBoardState("nn500.pk1")
     runGameWithOutput("nn5000_nnrand.pk1")
     #nn.load("nn5000_nnrand.pk1")
@@ -32,7 +37,7 @@ def main():
 #===============================================================================
 
 #trains neural network
-def learn(nn_file, episodes=1000, p_type="nn"):
+def learn(nn_file, episodes=1000, p_type="nn_random"):
     global nn
     nn.learn(episodes, p_type)
     nn.save(nn_file)
@@ -143,7 +148,11 @@ def playVerbose():
     continue_play = False
     game = Othello()
     black_player = Player(nn, game, True)
+<<<<<<< HEAD
     white_player = Player(None, game, False, "alphabeta")
+=======
+    white_player = Player(None, game, False, "pos_values")
+>>>>>>> 36216d4a32d84c0797db2022bbaab839b3a3dd6f
     #white_player = Player(None, game, False, "greedy")
     while True:
         game.game_board.updateValidMoves()
@@ -234,7 +243,7 @@ def play0():
     global bWin, wWin, ties
     game = Othello()
     black_player = Player(nn, game, True)
-    white_player = Player(None, game, False, "random")
+    white_player = Player(None, game, False, "pos_values")
     while True:
         game.game_board.updateValidMoves()
 
