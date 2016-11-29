@@ -78,6 +78,25 @@ class Player(object):
                             min_val = nn_output
                     self.game.setTile(*min_key)
 
+        elif self.type == "pos_values":
+            board_inputs = self.getNNInputs()
+            board_values = [[100, -25, 10, 5, 5, 10, -25, 100],
+                                [-25, -25, 2, 2, 2, 2, -25, -25],
+                                [10, 2, 5, 1, 1, 5, 2, 10],
+                                [5, 2, 1, 2, 2, 1, 2, 5],
+                                [5, 2, 1, 2, 2, 1, 2, 5],
+                                [10, 2, 5, 1, 1, 5, 2, 10],
+                                [-25, -25, 2, 2, 2, 2, -25, -25],
+                                [100, -25, 10, 5, 5, 10, -25, 100]]
+            max_key = None
+            max_value = -1000
+            for coord in board_inputs.keys():
+                if board_values[coord[0]][coord[1]] > max_value:
+                    max_key = coord
+                    max_value = board_values[coord[0]][coord[1]]
+            self.game.setTile(*max_key)
+
+
         elif self.type == "nn":
             nn_inputs = self.getNNInputs()
 
@@ -114,11 +133,9 @@ class Player(object):
 
         return best_move
 
-
-
     def getNNInputs(self):
         nn_inputs = {}
-        
+
         for coord in self.game.game_board.valid_moves.keys():
             board_copy = copy.deepcopy(self.game.game_board)
             board_copy.addTile(coord[0], coord[1])

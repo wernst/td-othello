@@ -7,15 +7,16 @@ from Player import Player
 import pickle, sys
 from numba import autojit
 
+
 inputUnits = 64
 class NeuralNetwork(object):
 
     """Initialize neural Network Parameters"""
     def __init__(self, numHidLayers, gamma, ld, learningRate):
-        self.wMatrix1 = np.random.uniform(-0.5, 0.5, (inputUnits, numHidLayers)) # Weight Matrix at the Heart of the Neural Network
-        self.eMatrix1 = np.zeros((inputUnits, numHidLayers)) # eligility traces for each of the inputs of our Weight Matrix
-        self.wMatrix2 = np.random.uniform(-0.5, 0.5,(numHidLayers, 1)) # Weight Matrix at the Heart of the Neural Network
-        self.eMatrix2 = np.zeros((numHidLayers, 1)) # eligility traces for each of the inputs of our Weight Matrix
+        self.wMatrix1 = np.random.uniform(-0.5, 0.5, (inputUnits, numHidLayers)).astype(np.float32) # Weight Matrix at the Heart of the Neural Network
+        self.eMatrix1 = np.zeros((inputUnits, numHidLayers)).astype(np.float32) # eligility traces for each of the inputs of our Weight Matrix
+        self.wMatrix2 = np.random.uniform(-0.5, 0.5,(numHidLayers, 1)).astype(np.float32) # Weight Matrix at the Heart of the Neural Network
+        self.eMatrix2 = np.zeros((numHidLayers, 1)).astype(np.float32) # eligility traces for each of the inputs of our Weight Matrix
         self.learningRate = learningRate
         self.numHidLayers = numHidLayers
         self.gamma = gamma #gamma used in calculating reward return
