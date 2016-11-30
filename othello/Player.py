@@ -119,7 +119,7 @@ class Player(object):
                 self.game.setTile(*min_key)
 
         elif self.type == "alphabeta":
-            max_depth = 5
+            max_depth = 6
             game_copy = copy.deepcopy(self.game)
             move = None
             score, move = self.alphabeta(game_copy, 0, max_depth, -1000, 1000, move, self.is_black)
@@ -174,7 +174,7 @@ class Player(object):
                         game_copy = copy.deepcopy(game)
                         game_copy.setTile(*move)
                         new_v, new_move = self.alphabeta(game_copy, depth+1, max_depth, alpha, beta, move, True)
-                        
+
                         #update if better move
                         if v > new_v:
                             v = new_v

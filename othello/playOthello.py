@@ -8,9 +8,11 @@ from Board import Board
 import numpy as np
 import random
 import sys
+import Tkinter
 
 #sys.path.append("/anaconda/bin")
-nn = NeuralNetwork(50, 1.0, 0.9, 0.01)
+nn = NeuralNetwork(50, 1.0, 0.9, 0.001)
+nn2 = NeuralNetwork(50, 1.0, 0.9, 0.001)
 bWin = 0
 wWin = 0
 ties = 0
@@ -18,18 +20,9 @@ ties = 0
 
 def main():
     global nn
-
-<<<<<<< HEAD
-    #learn("nn2000_nnrand.pk1", 2000, "nn_random")
-    #runGames("nn2000_nnrand.pk1", 200)
-=======
-    #learn("nn20000_nnrand.pk1", 20000, "nn_random")
-    #runGames("nn5000_nnrand.pk1", 100)
->>>>>>> 36216d4a32d84c0797db2022bbaab839b3a3dd6f
-    #testBoardState("nn500.pk1")
-    runGameWithOutput("nn5000_nnrand.pk1")
-    #nn.load("nn5000_nnrand.pk1")
-    #play1(True)
+    #playGui()
+    #learn("nn10.pk1", 10, "nn_random")
+    #runGames("nn50000_nnrand", 200)
 
 
 #===============================================================================
@@ -41,6 +34,12 @@ def learn(nn_file, episodes=1000, p_type="nn_random"):
     global nn
     nn.learn(episodes, p_type)
     nn.save(nn_file)
+
+def continue_learn(nn_file_in, nn_file_out, episodes, p_type):
+    global nn
+    nn.load(nn_file_in)
+    nn.learn(episodes, p_type)
+    nn.save(nn_file_out)
 
 #runs a certain number of game iterations
 def runGames(nn_file, iterations):
@@ -143,16 +142,14 @@ def prototypePresention():
 #Playing
 #===============================================================================
 
-
+def playGui():
+    top = Tkinter.Tk()
+    top.mainloop()
 def playVerbose():
     continue_play = False
     game = Othello()
     black_player = Player(nn, game, True)
-<<<<<<< HEAD
-    white_player = Player(None, game, False, "alphabeta")
-=======
-    white_player = Player(None, game, False, "pos_values")
->>>>>>> 36216d4a32d84c0797db2022bbaab839b3a3dd6f
+    white_player = Player(nn, game, False, "pos_values")
     #white_player = Player(None, game, False, "greedy")
     while True:
         game.game_board.updateValidMoves()
@@ -243,7 +240,7 @@ def play0():
     global bWin, wWin, ties
     game = Othello()
     black_player = Player(nn, game, True)
-    white_player = Player(None, game, False, "pos_values")
+    white_player = Player(None, game, False, "random")
     while True:
         game.game_board.updateValidMoves()
 
