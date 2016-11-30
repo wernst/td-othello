@@ -1,4 +1,4 @@
-import string, copy, random
+import string, copy, random, sys
 
 
 class Player(object):
@@ -8,29 +8,22 @@ class Player(object):
         self.is_black = is_black
         self.type = player_type
 
-    def makeMove(self):
+    def makeMove(self, index = None):
         nn_inputs = self.getNNInputs()
 
         if self.type == "random":
-            rand = random.randrange(0, len(nn_inputs.keys()))
+            if index == None:
+                rand = random.randrange(0, len(nn_inputs.keys()))
+            else:
+                rand = index
             if self.is_black:
                 max_key = nn_inputs.keys()[rand]
                 max_val = -1000
-                # for coord, possible_move in nn_inputs.items():
-                #     nn_output = 1
-                #     if nn_output > max_val:
-                #         max_key = coord
-                #         max_val = nn_output
                 self.game.setTile(*max_key)
 
             else:
                 min_key = nn_inputs.keys()[rand]
                 min_val = 1000
-                # for coord, possible_move in nn_inputs.items():
-                #     nn_output = nn_output()
-                #     if nn_output < min_val:
-                #         min_key = coord
-                #         min_val = nn_output
                 self.game.setTile(*min_key)
 
 
@@ -43,27 +36,161 @@ class Player(object):
                 best_move = self.calcMaxScore(nn_inputs)
                 self.game.setTile(*best_move)
 
+        elif self.type == "nn_random":
+            nn_inputs = self.getNNInputs()
+
+            if self.is_black:
+                #generate random number
+                #decider = int.from_bytes(os.urandom(8), byteorder="big") / ((1 << 64) - 1)
+                decider = random.random()
+                if(decider > .5):
+                    rand = random.randrange(0, len(nn_inputs.keys()))
+                    max_key = nn_inputs.keys()[rand]
+                    self.game.setTile(*max_key)
+                else:
+                    max_key = None
+                    max_val = -1000
+                    for coord in nn_inputs.keys():
+                        nn_output = self.nn.getValue(nn_inputs[coord])
+                        if nn_output > max_val:
+                            max_key = coord
+                            max_val = nn_output
+                    self.game.setTile(*max_key)
+
+            else:
+                #generate random number
+                #decider = int.from_bytes(os.urandom(8), byteorder="big") / ((1 << 64) - 1)
+                decider = random.random()
+                if(decider > .5):
+                    rand = random.randrange(0, len(nn_inputs.keys()))
+                    min_key = nn_inputs.keys()[rand]
+                    self.game.setTile(*min_key)
+                else:
+                    min_key = None
+                    min_val = 1000
+                    for coord in nn_inputs.keys():
+                        nn_output = self.nn.getValue(nn_inputs[coord])
+                        if nn_output < min_val:
+                            min_key = coord
+                            min_val = nn_output
+                    self.game.setTile(*min_key)
+
+        elif self.type == "pos_values":
+            board_inputs = self.getNNInputs()
+            board_values = [[100, -25, 10, 5, 5, 10, -25, 100],
+                                [-25, -25, 2, 2, 2, 2, -25, -25],
+                                [10, 2, 5, 1, 1, 5, 2, 10],
+                                [5, 2, 1, 2, 2, 1, 2, 5],
+                                [5, 2, 1, 2, 2, 1, 2, 5],
+                                [10, 2, 5, 1, 1, 5, 2, 10],
+                                [-25, -25, 2, 2, 2, 2, -25, -25],
+                                [100, -25, 10, 5, 5, 10, -25, 100]]
+            max_key = None
+            max_value = -1000
+            for coord in board_inputs.keys():
+                if board_values[coord[0]][coord[1]] > max_value:
+                    max_key = coord
+                    max_value = board_values[coord[0]][coord[1]]
+            self.game.setTile(*max_key)
+
 
         elif self.type == "nn":
+            nn_inputs = self.getNNInputs()
+
             if self.is_black:
-                max_key = nn_inputs.keys()[rand]
+                max_key = None
                 max_val = -1000
-                # for coord, possible_move in nn_inputs.items():
-                #     nn_output = 1
-                #     if nn_output > max_val:
-                #         max_key = coord
-                #         max_val = nn_output
+                for coord in nn_inputs.keys():
+                    nn_output = self.nn.getValue(nn_inputs[coord])
+                    if nn_output > max_val:
+                        max_key = coord
+                        max_val = nn_output
                 self.game.setTile(*max_key)
 
             else:
-                min_key = nn_inputs.keys()[rand]
+                min_key = None
                 min_val = 1000
-                # for coord, possible_move in nn_inputs.items():
-                #     nn_output = nn_output()
-                #     if nn_output < min_val:
-                #         min_key = coord
-                #         min_val = nn_output
+                for coord in nn_inputs.keys():
+                    nn_output = self.nn.getValue(nn_inputs[coord])
+                    if nn_output < min_val:
+                        min_key = coord
+                        min_val = nn_output
                 self.game.setTile(*min_key)
+
+        elif self.type == "alphabeta":
+            max_depth = 6
+            game_copy = copy.deepcopy(self.game)
+            move = None
+            score, move = self.alphabeta(game_copy, 0, max_depth, -1000, 1000, move, self.is_black)
+            self.game.setTile(*move)
+
+    def alphabeta(self, game, depth, max_depth, alpha, beta, chosen_move, player):
+        #base case
+        if depth == max_depth:
+            v = game.black_score
+        else:
+            game.game_board.updateValidMoves()
+            moves_list = game.game_board.valid_moves
+            #base case
+            if (moves_list == {}):
+                v = game.black_score
+            else:
+                mover_black = game.game_board.black_turn
+
+                #alpha beta for max node
+                if mover_black:
+                    v = -1000
+                    best_move = None
+                    for move in moves_list.keys():
+
+                        if best_move == None:
+                            best_move = move
+
+                        game_copy = copy.deepcopy(game)
+                        game_copy.setTile(*move)
+                        new_v, new_move = self.alphabeta(game_copy, depth+1, max_depth, alpha, beta, move, False)
+
+                        #update if better move
+                        if v < new_v:
+                            v = new_v
+                            best_move = move
+                        alpha = max(alpha, v)
+
+                        #check alpha beta condition
+                        if beta <= alpha:
+                            break
+                    chosen_move = best_move
+
+                #alpha beta for min node
+                else:
+                    v = 1000
+                    best_move = None
+                    for move in moves_list.keys():
+
+                        if best_move == None:
+                            best_move = move
+
+                        game_copy = copy.deepcopy(game)
+                        game_copy.setTile(*move)
+                        new_v, new_move = self.alphabeta(game_copy, depth+1, max_depth, alpha, beta, move, True)
+
+                        #update if better move
+                        if v > new_v:
+                            v = new_v
+                            best_move = move
+                        beta = min(beta, v)
+
+                        #check alpha beta condition
+                        if beta <= alpha:
+                            break
+                    chosen_move = best_move
+
+        return v, chosen_move
+
+
+
+
+
 
     def calcMaxScore(self, possible_states):
         max_score = 0
@@ -81,9 +208,16 @@ class Player(object):
 
     def getNNInputs(self):
         nn_inputs = {}
+
         for coord in self.game.game_board.valid_moves.keys():
             board_copy = copy.deepcopy(self.game.game_board)
             board_copy.addTile(coord[0], coord[1])
             board_vector = board_copy.boardToVector()
             nn_inputs[coord] = board_vector
         return nn_inputs
+
+     # Simple function to return the board vector, to make training easier
+    def getBoardVector(self):
+        board_copy = copy.deepcopy(self.game.game_board)
+        board_vector = board_copy.boardToVector()
+        return board_vector

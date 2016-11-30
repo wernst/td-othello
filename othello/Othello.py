@@ -18,9 +18,13 @@ class Othello(object):
     #Gets valid moves and places a tile on the board
     def setTile(self, row, col):
         self.game_board.updateValidMoves()
-        points = self.game_board.addTile(row, col)
-        self.updateScore(points)
-        self.game_board.switchTurns()
+        if (row, col) in self.game_board.valid_moves.keys():
+            points = self.game_board.addTile(row, col)
+            self.updateScore(points)
+            self.game_board.switchTurns()
+        else:
+            print("INVALID MOVE")
+
     #Updates an input string to board coordinates
     def moveToCoords(self, move):
         move = move.upper()
@@ -37,6 +41,11 @@ class Othello(object):
             str_moves.append(row+col)
         return str_moves
 
+    def validMoveStringify(self, move):
+        row = string.ascii_uppercase[move[0]]
+        col = str(move[1]+1)
+        return row+col
+
     #Validates user input
     def validateMoveInput(self, move):
         #too long or too short
@@ -52,9 +61,23 @@ class Othello(object):
         return True
 
     def updateScore(self, points):
-        if self.game_board.black_turn:
-            self.black_score += points
-            self.white_score -= (points-1)
-        else:
-            self.white_score += points
-            self.black_score -= (points-1)
+        if points > 0:
+            if self.game_board.black_turn:
+                self.black_score += points
+                self.white_score -= (points-1)
+            else:
+                self.white_score += points
+                self.black_score -= (points-1)
+
+    def isGameOver(self):
+        self.game_board.updateValidMoves()
+
+
+        if self.game_board.valid_moves == {}:
+            self.game_board.switchTurns()
+            #check for winner
+            self.game_board.updateValidMoves()
+            if self.game_board.valid_moves == {}:
+                return True
+
+        return False
