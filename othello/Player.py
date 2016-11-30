@@ -1,6 +1,4 @@
-import string, copy
-
-import string, copy, random
+import string, copy, random, sys
 
 
 class Player(object):
@@ -119,6 +117,79 @@ class Player(object):
                         min_key = coord
                         min_val = nn_output
                 self.game.setTile(*min_key)
+
+        elif self.type == "alphabeta":
+            max_depth = 6
+            game_copy = copy.deepcopy(self.game)
+            move = None
+            score, move = self.alphabeta(game_copy, 0, max_depth, -1000, 1000, move, self.is_black)
+            self.game.setTile(*move)
+
+    def alphabeta(self, game, depth, max_depth, alpha, beta, chosen_move, player):
+        #base case
+        if depth == max_depth:
+            v = game.black_score
+        else:
+            game.game_board.updateValidMoves()
+            moves_list = game.game_board.valid_moves
+            #base case
+            if (moves_list == {}):
+                v = game.black_score
+            else:
+                mover_black = game.game_board.black_turn
+
+                #alpha beta for max node
+                if mover_black:
+                    v = -1000
+                    best_move = None
+                    for move in moves_list.keys():
+
+                        if best_move == None:
+                            best_move = move
+
+                        game_copy = copy.deepcopy(game)
+                        game_copy.setTile(*move)
+                        new_v, new_move = self.alphabeta(game_copy, depth+1, max_depth, alpha, beta, move, False)
+
+                        #update if better move
+                        if v < new_v:
+                            v = new_v
+                            best_move = move
+                        alpha = max(alpha, v)
+
+                        #check alpha beta condition
+                        if beta <= alpha:
+                            break
+                    chosen_move = best_move
+
+                #alpha beta for min node
+                else:
+                    v = 1000
+                    best_move = None
+                    for move in moves_list.keys():
+
+                        if best_move == None:
+                            best_move = move
+
+                        game_copy = copy.deepcopy(game)
+                        game_copy.setTile(*move)
+                        new_v, new_move = self.alphabeta(game_copy, depth+1, max_depth, alpha, beta, move, True)
+
+                        #update if better move
+                        if v > new_v:
+                            v = new_v
+                            best_move = move
+                        beta = min(beta, v)
+
+                        #check alpha beta condition
+                        if beta <= alpha:
+                            break
+                    chosen_move = best_move
+
+        return v, chosen_move
+
+
+
 
 
     def calcMaxScore(self, possible_states):

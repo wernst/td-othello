@@ -248,21 +248,21 @@ class NeuralNetwork(object):
                 self.bwin += 1
                 self.train(pstateVector, 1, cstateVector, True)
                 self.reset()
-                # print("black wins")
+                # print("black wins\n")
 
             elif(game.black_score < game.white_score):
                 #game is over, update matrix and reset elegibility matrix
                 self.wwin += 1
                 self.train(pstateVector, 0, cstateVector, True)
                 self.reset()
-                # print("white wins")
+                # print("white wins\n")
 
 
             elif(game.black_score == game.white_score):
                 #game is over, update matrix and reset elegibility matrix
                 self.train(pstateVector, 0.5, cstateVector, True)
                 self.reset()
-                # print("tie")
+                # print("tie\n")
 
 
         print("black wins: {}").format(self.bwin)
