@@ -22,8 +22,8 @@ def main():
     global nn
     #playGui()
     #learn(5, "nn_random")
-    continue_learn("nn5-nn_random.pk1", 5, "nn_random")
-    #runGames("nn50000_nnrand", 200)
+    #continue_learn("nn50000_posVal.pk1", 5, "nn_random")
+    runGames("nn50000_nnrand.pk1", 200)
 
 
 #===============================================================================
@@ -49,7 +49,7 @@ def continue_learn(nn_file_in, episodes, p_type):
 #runs a certain number of game iterations
 def runGames(nn_file, iterations):
     global nn, bWin, wWin, ties
-    nn.load(nn_file)
+    nn.load(nn_file, "nn_random")
     for i in xrange(iterations):
         print(i)
         play0()
