@@ -21,9 +21,9 @@ ties = 0
 def main():
     global nn
     #playGui()
-    #learn(5, "nn_random")
+    learn(5, "nn_random")
     #continue_learn("nn50000_posVal.pk1", 5, "nn_random")
-    runGames("nn50000_nnrand.pk1", 200)
+    #runGames("nn50000_nnrand.pk1", 200)
 
 
 #===============================================================================
