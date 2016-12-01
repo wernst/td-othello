@@ -43,7 +43,7 @@ class Player(object):
                 #generate random number
                 #decider = int.from_bytes(os.urandom(8), byteorder="big") / ((1 << 64) - 1)
                 decider = random.random()
-                if(decider > .5):
+                if(decider < self.nn.curExplorationRate):
                     rand = random.randrange(0, len(nn_inputs.keys()))
                     max_key = nn_inputs.keys()[rand]
                     self.game.setTile(*max_key)
@@ -61,7 +61,7 @@ class Player(object):
                 #generate random number
                 #decider = int.from_bytes(os.urandom(8), byteorder="big") / ((1 << 64) - 1)
                 decider = random.random()
-                if(decider > .5):
+                if(decider < self.nn.curExplorationRate):
                     rand = random.randrange(0, len(nn_inputs.keys()))
                     min_key = nn_inputs.keys()[rand]
                     self.game.setTile(*min_key)

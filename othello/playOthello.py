@@ -11,8 +11,8 @@ import sys
 import Tkinter
 
 #sys.path.append("/anaconda/bin")
-nn = NeuralNetwork(50, 1.0, 0.9, 0.001)
-nn2 = NeuralNetwork(50, 1.0, 0.9, 0.001)
+nn = NeuralNetwork(50, 1.0, 0.9, 0.001, 0.1, 2000) #LAST TWO ARE EXPLORATION AND TOTALITERATIONS
+nn2 = NeuralNetwork(50, 1.0, 0.9, 0.001, 0.1, 20)
 bWin = 0
 wWin = 0
 ties = 0
@@ -21,7 +21,8 @@ ties = 0
 def main():
     global nn
     #playGui()
-    #learn("nn10.pk1", 10, "nn_random")
+    #learn(5, "nn_random")
+    continue_learn("nn5-nn_random.pk1", 5, "nn_random")
     #runGames("nn50000_nnrand", 200)
 
 
@@ -30,16 +31,20 @@ def main():
 #===============================================================================
 
 #trains neural network
-def learn(nn_file, episodes=1000, p_type="nn_random"):
+def learn(episodes=1000, p_type="nn_random"):
     global nn
-    nn.learn(episodes, p_type)
-    nn.save(nn_file)
+    while(nn.numIterations < nn.totalIterations):
+        nn.learn(episodes, p_type)
+        nn_name = "nn" + str(nn.numIterations) + "-" + p_type + ".pk1"
+        nn.save(nn_name, p_type)
 
-def continue_learn(nn_file_in, nn_file_out, episodes, p_type):
+def continue_learn(nn_file_in, episodes, p_type):
     global nn
-    nn.load(nn_file_in)
-    nn.learn(episodes, p_type)
-    nn.save(nn_file_out)
+    nn.load(nn_file_in, p_type)
+    while(nn.numIterations < nn.totalIterations):
+        nn.learn(episodes, p_type)
+        nn_name = "nn" + str(nn.numIterations) + "-" + p_type + ".pk1"
+        nn.save(nn_name, p_type)
 
 #runs a certain number of game iterations
 def runGames(nn_file, iterations):
