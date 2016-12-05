@@ -11,7 +11,24 @@ class Player(object):
     def makeMove(self, index = None):
         nn_inputs = self.getNNInputs()
 
-        if self.type == "random":
+        if self.type == "human_cl":
+            #Print valid moves
+            print("Valid Moves: {}").format(self.game.validMovesStringify())
+            move = raw_input("Choose move (q to quit): ")
+
+            #validate input
+            is_valid_move = self.game.validateMoveInput(move)
+
+            if is_valid_move:
+                if move == "q" :
+                    self.game.quit()
+                else:
+                    move = self.game.moveToCoords(move)
+                    self.game.setTile(move[0], move[1])
+
+        elif self.type == "human_gui":
+            pass
+        elif self.type == "random":
             if index == None:
                 rand = random.randrange(0, len(nn_inputs.keys()))
             else:
@@ -116,6 +133,7 @@ class Player(object):
                     if nn_output < min_val:
                         min_key = coord
                         min_val = nn_output
+                print(min_key)
                 self.game.setTile(*min_key)
 
         elif self.type == "alphabeta":

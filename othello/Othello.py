@@ -14,6 +14,7 @@ class Othello(object):
         self.game_board = Board()
         self.black_score = 2
         self.white_score = 2
+        self.game_over = False
 
     #Gets valid moves and places a tile on the board
     def setTile(self, row, col):
@@ -75,10 +76,14 @@ class Othello(object):
 
 
         if self.game_board.valid_moves == {}:
+            print("SWITCHING TURNS")
             self.game_board.switchTurns()
             #check for winner
             self.game_board.updateValidMoves()
             if self.game_board.valid_moves == {}:
-                return True
+                self.game_over = True
 
         return False
+
+    def quit(self):
+        self.game_over = True

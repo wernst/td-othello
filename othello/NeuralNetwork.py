@@ -237,8 +237,8 @@ class NeuralNetwork(object):
                     pstateVector = white_player.getBoardVector()
                     white_player.makeMove()
                     cstateVector = white_player.getBoardVector()
-
-                if game.isGameOver():
+                game.isGameOver()
+                if game.game_over:
                     break
                 else:
                     self.train(pstateVector, 0, cstateVector, False)
