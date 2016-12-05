@@ -44,9 +44,13 @@ class GameBoard(tk.Frame):
 
     def resetGame(self):
         self.game.start()
+        self.game_over_message.config(text="")
+        self.canvas.bind("<Button-1>", self.clickMove)
 
     def quitGame(self):
         self.game.game_over = True
+        self.endGame()
+    def endGame(self):
         #self.canvas.unbind("<Configure>")
         self.canvas.unbind("<Button-1>")
         if(self.game.black_score > self.game.white_score):
@@ -118,15 +122,17 @@ class GameBoard(tk.Frame):
                         self.black_player.makeMove()
                         board_arr = self.game.game_board.boardToVector().tolist()[0]
 
-                        if self.black_player.type.find("human") == -1:
-                            time.sleep(2)
+                        # if self.black_player.type.find("human") == -1:
+                        #     time.sleep(2)
                         self.refreshBoard(board_arr)
                     else:
                         # print("White's Turn")
                         self.white_player.makeMove()
                         board_arr = self.game.game_board.boardToVector().tolist()[0]
-                        if self.white_player.type.find("human") == -1:
-                            time.sleep(2)
+                        # if self.white_player.type.find("human") == -1:
+                        #     time.sleep(2)
                         self.refreshBoard(board_arr)
+                else:
+                    self.endGame()
             self.parent.update_idletasks()
             self.parent.update()

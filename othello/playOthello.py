@@ -23,7 +23,7 @@ def main():
     global nn
     #playGui()
     #learn("nn10.pk1", 10, "nn_random")
-    #runGames("nn4000.pk1", 200)
+    #runGames("nn50000_nnrand.pk1", 200)
     playGui("nn50000_nnrand.pk1")
     #runGameWithOutput("nn2000.pk1")
     #play1(True)
@@ -151,8 +151,8 @@ def playGui(nn_file=None):
     game = Othello()
     if nn_file != None:
         nn.load(nn_file)
-    black_player = Player(nn, game, True, "nn")
-    white_player = Player(nn, game, False, "human_gui")
+    black_player = Player(nn, game, True, "human_gui")
+    white_player = Player(nn, game, False, "nn")
     gui_board = GameBoard(root, game, black_player, white_player)
     gui_board.play()
 
