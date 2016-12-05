@@ -1,0 +1,8 @@
+README:
+
+	VALUES TO USE FOR FINAL NN:
+		-Lambda: Between 0.9 and 1
+		-NUM_LAYERS:
+		-Learning Rate: 0.0001 for large set, 0.001 
+		-Exploration Rate: 0.3
+

@@ -9,10 +9,10 @@ import numpy as np
 import random
 import sys
 import Tkinter
+import multiprocessing
 
 #sys.path.append("/anaconda/bin")
-nn = NeuralNetwork(50, 1.0, 0.9, 0.001, 0.3, 300000) #LAST TWO ARE EXPLORATION AND TOTALITERATIONS
-nn2 = NeuralNetwork(50, 1.0, 0.9, 0.001, 0.1, 20)
+nn = NeuralNetwork(50, 1.0, 1.0, 0.01, 0.5, 200000)#LAST TWO ARE EXPLORATION AND TOTALITERATIONS
 bWin = 0
 wWin = 0
 ties = 0
@@ -20,11 +20,32 @@ ties = 0
 
 def main():
     global nn
-    #playGui()
+    #RUNGAMES MULTI PROCESS
+    # num_layers = [20, 30, 40, 50, 60, 70]
+    # jobs = []
+    # for num in num_layers:
+    #     filename = "nn_random" + str(num).replace("0.", "_")
+    #     p = multiprocessing.Process(target=runGames, args=(filename, 500, "nn_random",))
+    #     jobs.append(p)
+    #     p.start()
+
+    # LEARN MULTI PROCESS
+    xprs = [0.1, 0.5]
+    jobs = []
+    for xpr in xprs:
+        nn.ExplorationRate = xpr
+        p = multiprocessing.Process(target=learn, args=(10000, "nn_random",))
+        jobs.append(p)
+        p.start()
+
+    for j in jobs:
+        j.join()
+
+
+
     #learn(10000, "nn_random")
     #continue_learn("nn50000_posVal.pk1", 5, "nn_random")
-    #runGames("nn10000-nn_random.pk1", 100, "nn_random")
-    runGameWithOutput("nn10000-nn_random.pk1", "nn_random")
+    #runGames("nn4000-nn_random.pk1", 100, "nn_random")
 
 
 #===============================================================================
@@ -34,10 +55,12 @@ def main():
 #trains neural network
 def learn(episodes=1000, p_type="nn_random"):
     global nn
+    folder = "Demo_"+ p_type + str(nn.ExplorationRate)
     while(nn.numIterations < nn.totalIterations):
+        nn.learningRate = 0.001 if nn.numIterations >= 10000 else 0.01
         nn.learn(episodes, p_type)
-        nn_name = "nn" + str(nn.numIterations) + "-" + p_type + ".pk1"
-        nn.save(nn_name, p_type)
+        nn_name = "nn" + str(nn.numIterations) + "-" + p_type + str(nn.ExplorationRate)+ ".pk1"
+        nn.save(nn_name, folder)
 
 def continue_learn(nn_file_in, episodes, p_type):
     global nn
@@ -50,20 +73,22 @@ def continue_learn(nn_file_in, episodes, p_type):
 #runs a certain number of game iterations
 def runGames(nn_file, iterations, p_type):
     global nn, nn2, bWin, wWin, ties
-    nn.load(nn_file, "nn_random")
+    nn.load("nn5000-" + nn_file + ".pk1" ,"Layers_" + nn_file)
     #nn2.load("nn1000-nn_random.pk1", "nn_random")
     for i in xrange(iterations):
-        print(i)
+        #print(i)
         play0()
+    print(nn_file + " RESULTS:")
     print("black wins: {}").format(bWin)
     print("white wins: {}").format(wWin)
     print("ties: {}").format(ties)
-    print("\nwin pct: {}").format(bWin/(iterations*1.0))
+    print("\nwin pct: {}\n").format(bWin/(iterations*1.0))
+    print("===============================================================\n")
 
 
-def runGameWithOutput(nn_file, p_type):
+def runGameWithOutput(nn_file):
     global nn
-    nn.load(nn_file, p_type)
+    nn.load(nn_file)
     playVerbose()
 
 #Tests a board state (input inside the function)
@@ -152,7 +177,6 @@ def prototypePresention():
 def playGui():
     top = Tkinter.Tk()
     top.mainloop()
-
 def playVerbose():
     continue_play = False
     game = Othello()
@@ -175,9 +199,9 @@ def playVerbose():
                 break
 
         #print score
-        print("Black - {}\tWhite - {}").format(game.black_score, game.white_score)
+        #print("Black - {}\tWhite - {}").format(game.black_score, game.white_score)
         #print board
-        print(game.game_board)
+        #print(game.game_board)
 
         #if coninuing play
         if continue_play:
@@ -231,8 +255,8 @@ def playVerbose():
             print("\n==========================================================\n")
 
     #Game Over
-    print("Black - {}\tWhite - {}").format(game.black_score, game.white_score)
-    print(game.game_board)
+    # print("Black - {}\tWhite - {}").format(game.black_score, game.white_score)
+    # print(game.game_board)
 
     #Check score
     if(game.black_score > game.white_score):

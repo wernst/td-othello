@@ -161,7 +161,7 @@ class NeuralNetwork(object):
     #This can actually be moved to the play class.
     def learn(self, num_episode = 1000, p_type = "nn"):
         for i in xrange(num_episode):
-            print(self.numIterations)
+            #print(self.numIterations)
             game = Othello()
             black_player = Player(self, game, True, p_type)
             white_player = Player(self, game, False, p_type)
