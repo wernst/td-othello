@@ -12,7 +12,7 @@ import Tkinter
 import multiprocessing
 
 #sys.path.append("/anaconda/bin")
-nn = NeuralNetwork(50, 1.0, 1.0, 0.01, 0.5, 200000)#LAST TWO ARE EXPLORATION AND TOTALITERATIONS
+nn = NeuralNetwork(50, 1.0, 1.0, 0.01, 0.5, 100000)#LAST TWO ARE EXPLORATION AND TOTALITERATIONS
 bWin = 0
 wWin = 0
 ties = 0
@@ -21,22 +21,24 @@ ties = 0
 def main():
     global nn
     #RUNGAMES MULTI PROCESS
-    # num_layers = [20, 30, 40, 50, 60, 70]
-    # jobs = []
-    # for num in num_layers:
-    #     filename = "nn_random" + str(num).replace("0.", "_")
-    #     p = multiprocessing.Process(target=runGames, args=(filename, 500, "nn_random",))
-    #     jobs.append(p)
-    #     p.start()
-
-    # LEARN MULTI PROCESS
+    iterations = [5000, 15000, 20000, 30000, 50000, 75000]
     xprs = [0.1, 0.5]
     jobs = []
     for xpr in xprs:
-        nn.ExplorationRate = xpr
-        p = multiprocessing.Process(target=learn, args=(10000, "nn_random",))
-        jobs.append(p)
-        p.start()
+        for iteration in iterations:
+            filename = "nn_random" + str(xpr)
+            p = multiprocessing.Process(target=runGames, args=(filename, 1000, iteration, "nn_random",))
+            jobs.append(p)
+            p.start()
+
+    # LEARN MULTI PROCESS
+    # xprs = [0.1, 0.5]
+    # jobs = []
+    # for xpr in xprs:
+    #     nn.ExplorationRate = xpr
+    #     p = multiprocessing.Process(target=learn, args=(5000, "nn_random",))
+    #     jobs.append(p)
+    #     p.start()
 
     for j in jobs:
         j.join()
@@ -55,9 +57,9 @@ def main():
 #trains neural network
 def learn(episodes=1000, p_type="nn_random"):
     global nn
-    folder = "Demo_"+ p_type + str(nn.ExplorationRate)
+    folder = "Demo2_"+ p_type + str(nn.ExplorationRate)
     while(nn.numIterations < nn.totalIterations):
-        nn.learningRate = 0.001 if nn.numIterations >= 10000 else 0.01
+        nn.learningRate = 0.001 if nn.numIterations >= 50000 else 0.01
         nn.learn(episodes, p_type)
         nn_name = "nn" + str(nn.numIterations) + "-" + p_type + str(nn.ExplorationRate)+ ".pk1"
         nn.save(nn_name, folder)
@@ -67,18 +69,19 @@ def continue_learn(nn_file_in, episodes, p_type):
     nn.load(nn_file_in, p_type)
     while(nn.numIterations < nn.totalIterations):
         nn.learn(episodes, p_type)
-        nn_name = "nn" + str(nn.numIterations) + "-" + p_type + ".pk1"
+        nn_name = "nn" + str(nn.ExplorationRate) + "-" + p_type + ".pk1"
         nn.save(nn_name, p_type)
 
 #runs a certain number of game iterations
-def runGames(nn_file, iterations, p_type):
+def runGames(nn_file, iterations, nnIteration, p_type):
     global nn, nn2, bWin, wWin, ties
-    nn.load("nn5000-" + nn_file + ".pk1" ,"Layers_" + nn_file)
+    nn.load("nn"+ str(nnIteration) +"-" + nn_file + ".pk1" ,"Demo2_" + nn_file)
     #nn2.load("nn1000-nn_random.pk1", "nn_random")
     for i in xrange(iterations):
         #print(i)
         play0()
-    print(nn_file + " RESULTS:")
+    print("===============================================================\n")
+    print("\nRESULTS:" + nn_file + " "+ str(nn.numIterations) + "\n")
     print("black wins: {}").format(bWin)
     print("white wins: {}").format(wWin)
     print("ties: {}").format(ties)
