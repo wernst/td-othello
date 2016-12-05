@@ -28,8 +28,10 @@ class Board(object):
             self.board[3][4] = BLACK_VAL
             self.board[4][3] = BLACK_VAL
 
-            self.valid_moves = {}
             self.black_turn = True
+            self.valid_moves = {}
+            self.updateValidMoves()
+
         else:
             board_len = sum(len(x) for x in board_arr)
             if board_len != 64:
@@ -37,8 +39,10 @@ class Board(object):
                 sys.exit(1)
             else:
                 self.board = board_arr
-                self.valid_moves = {}
                 self.black_turn = black_turn
+                self.valid_moves = {}
+                self.updateValidMoves()
+
 
     """Valid move: adjacent to other color, same color on that diagonal/row/col"""
     #Updates our current memory of valid moves

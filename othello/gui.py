@@ -41,6 +41,8 @@ class GameBoard(tk.Frame):
             board_arr = self.game.game_board.boardToVector().tolist()[0]
             print(event.x, event.y)
             self.canvas.delete("square")
+            self.canvas.delete("piece")
+            #self.game.game_board.updateValidMoves()
             for i in range(len(board_arr)):
                 row = i/8
                 col = i%8
@@ -48,10 +50,18 @@ class GameBoard(tk.Frame):
                 y1 = (row * self.size)
                 x2 = x1 + self.size
                 y2 = y1 + self.size
-                color = "black" if board_arr[i] == 1 else "white" if board_arr[i] == -1 else "lawn green"
-                self.canvas.create_rectangle(x1, y1, x2, y2, outline="black", fill=color, tags="square")
-            for name in self.pieces:
-                self.placepiece(name, self.pieces[name][0], self.pieces[name][1])
+                # color = "black" if board_arr[i] == 1 else "white" if board_arr[i] == -1 else "lawn green"
+                # self.canvas.create_rectangle(x1, y1, x2, y2, outline="black", fill=color, tags="square")
+                if (i/8, i%8) in self.game.game_board.valid_moves.keys():
+                    self.canvas.create_rectangle(x1, y1, x2, y2, outline="black", fill="yellow", tags="square")
+                else:
+                    self.canvas.create_rectangle(x1, y1, x2, y2, outline="black", fill="lawn green", tags="square")
+                if board_arr[i] == 1:
+                    self.canvas.create_oval(x1, y1, x2, y2, outline="black", fill="black", tags="piece")
+                elif board_arr[i] == -1:
+                    self.canvas.create_oval(x1, y1, x2, y2, outline="black", fill="white", tags="piece")
+            # for name in self.pieces:
+            #     self.placepiece(name, self.pieces[name][0], self.pieces[name][1])
             self.canvas.tag_raise("piece")
             self.canvas.tag_lower("square")
 
@@ -61,6 +71,8 @@ class GameBoard(tk.Frame):
         ysize = int((event.height-1) / self.rows)
         self.size = min(xsize, ysize)
         self.canvas.delete("square")
+        self.canvas.delete("piece")
+        #self.game.game_board.updateValidMoves()
         for i in range(len(board_arr)):
             row = i/8
             col = i%8
@@ -68,10 +80,19 @@ class GameBoard(tk.Frame):
             y1 = (row * self.size)
             x2 = x1 + self.size
             y2 = y1 + self.size
-            color = "black" if board_arr[i] == 1 else "white" if board_arr[i] == -1 else "lawn green"
-            self.canvas.create_rectangle(x1, y1, x2, y2, outline="black", fill=color, tags="square")
-        for name in self.pieces:
-            self.placepiece(name, self.pieces[name][0], self.pieces[name][1])
+            # color = "black" if board_arr[i] == 1 else "white" if board_arr[i] == -1 else "lawn green"
+            # self.canvas.create_rectangle(x1, y1, x2, y2, outline="black", fill=color, tags="square")
+            # print(self.game.game_board.valid_moves.keys())
+            if (i/8, i%8) in self.game.game_board.valid_moves.keys():
+                self.canvas.create_rectangle(x1, y1, x2, y2, outline="black", fill="yellow", tags="square")
+            else:
+                self.canvas.create_rectangle(x1, y1, x2, y2, outline="black", fill="lawn green", tags="square")
+            if board_arr[i] == 1:
+                self.canvas.create_oval(x1, y1, x2, y2, outline="black", fill="black", tags="piece")
+            elif board_arr[i] == -1:
+                self.canvas.create_oval(x1, y1, x2, y2, outline="black", fill="white", tags="piece")
+        # for name in self.pieces:
+        #     self.placepiece(name, self.pieces[name][0], self.pieces[name][1])
         self.canvas.tag_raise("piece")
         self.canvas.tag_lower("square")
 

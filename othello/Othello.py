@@ -24,6 +24,7 @@ class Othello(object):
             self.game_board.switchTurns()
         else:
             print("INVALID MOVE")
+        self.game_board.updateValidMoves()
 
     #Updates an input string to board coordinates
     def moveToCoords(self, move):
