@@ -8,7 +8,8 @@ from Board import Board
 import numpy as np
 import random
 import sys
-import Tkinter
+from gui import GameBoard
+import Tkinter as tk
 
 #sys.path.append("/anaconda/bin")
 nn = NeuralNetwork(50, 1.0, 0.9, 0.001)
@@ -23,6 +24,8 @@ def main():
     #playGui()
     #learn("nn10.pk1", 10, "nn_random")
     #runGames("nn50000_nnrand", 200)
+    playGui()
+    #runGameWithOutput("nn2000.pk1")
 
 
 #===============================================================================
@@ -143,8 +146,15 @@ def prototypePresention():
 #===============================================================================
 
 def playGui():
-    top = Tkinter.Tk()
-    top.mainloop()
+    root = tk.Tk()
+    #root.resizable(width = False, height = False)
+    game = Othello()
+    black_player = Player(nn, game, True)
+    #white_player = Player(nn, game, False, "random")
+    white_player = "human"
+    gui_board = GameBoard(root, game, black_player, white_player)
+    gui_board.play()
+
 def playVerbose():
     continue_play = False
     game = Othello()
