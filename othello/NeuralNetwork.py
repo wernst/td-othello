@@ -5,7 +5,6 @@ np.set_printoptions(threshold='nan', precision=5)
 from Othello import Othello
 from Player import Player
 import pickle, sys, os
-from numba import autojit
 
 
 inputUnits = 64
@@ -31,18 +30,14 @@ class NeuralNetwork(object):
         self.numIterations = 0
 
     def calcExplorationRate(self):
-        return (self.startExplorationRate - (self.startExplorationRate)*(self.numIterations / self.totalIterations))
+        self.curExplorationRate = self.startExplorationRate - (self.startExplorationRate)*(self.numIterations / self.totalIterations))
 
-
-    @autojit
     def sigmoid(self, x):
         return 1/(1+np.exp(-1*x))
 
-    @autojit
     def sigmoid_prime(self, x):
         return self.sigmoid(x)*(1-self.sigmoid(x))
 
-    @autojit
     def getValue(self, stateVec):
         z2 = self.calcHiddenSum(stateVec)
         a2 = self.sigmoid(z2)
@@ -51,16 +46,12 @@ class NeuralNetwork(object):
 
         return outputValue
 
-    @autojit
     def calcHiddenSum(self, stateVec):
         return np.dot(stateVec, self.wMatrix1)
 
-    @autojit
     def calcOutputSum(self, hiddenVec):
         return np.dot(hiddenVec, self.wMatrix2)
 
-
-    @autojit
     def calcGradientMatrix2_2(self, stateVec):
         hiddenSum = self.calcHiddenSum(stateVec)
         hiddenVec = self.sigmoid(hiddenSum)
@@ -75,7 +66,6 @@ class NeuralNetwork(object):
         return gradMatrix.T
 
 
-    #@autojit
     def calcGradientMatrix1_2(self, stateVec):
         hiddenSum = self.calcHiddenSum(stateVec)
         hiddenVec = self.sigmoid(hiddenSum)
@@ -128,6 +118,10 @@ class NeuralNetwork(object):
             self.totalIterations = nn.totalIterations
             self.curExplorationRate = nn.curExplorationRate
             self.startExplorationRate = nn.startExplorationRate
+            self.learningRate = nn.learningRate
+            self.numHidLayers = nn.numHidLayers
+            self.gamma = nn.gamma
+            self.ld = nn.ld
 
     """ Determines how much of a reward to apply """
     def delta(self, pValue, reward, cValue, game_over):
@@ -194,6 +188,7 @@ class NeuralNetwork(object):
 
                 if game.isGameOver():
                     self.numIterations += 1
+                    self.calcExplorationRate()
                     break
                 else:
                     self.train(pstateVector, 0, cstateVector, False)
