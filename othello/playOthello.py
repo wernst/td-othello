@@ -25,7 +25,7 @@ def main():
     #learn("nn10.pk1", 10, "nn_random")
     #runGames("nn50000_nnrand.pk1", 200)
     #playGui("nn50000_nnrand.pk1")
-    runGameWithOutput("nn50000_nnrand.pk1")
+    #runGameWithOutput("nn50000_nnrand.pk1")
     #play1(True)
 
 #===============================================================================
