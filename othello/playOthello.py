@@ -8,7 +8,8 @@ from Board import Board
 import numpy as np
 import random
 import sys
-import Tkinter
+from gui import GameBoard
+import Tkinter as tk
 
 #sys.path.append("/anaconda/bin")
 nn = NeuralNetwork(50, 1.0, 0.9, 0.001)
@@ -22,8 +23,10 @@ def main():
     global nn
     #playGui()
     #learn("nn10.pk1", 10, "nn_random")
-    #runGames("nn50000_nnrand", 200)
-
+    #runGames("nn50000_nnrand.pk1", 200)
+    #playGui("nn50000_nnrand.pk1")
+    runGameWithOutput("nn50000_nnrand.pk1")
+    #play1(True)
 
 #===============================================================================
 #Testing
@@ -142,9 +145,17 @@ def prototypePresention():
 #Playing
 #===============================================================================
 
-def playGui():
-    top = Tkinter.Tk()
-    top.mainloop()
+def playGui(nn_file=None):
+    root = tk.Tk()
+    #root.resizable(width = False, height = False)
+    game = Othello()
+    if nn_file != None:
+        nn.load(nn_file)
+    black_player = Player(nn, game, True, "human_gui")
+    white_player = Player(nn, game, False, "nn")
+    gui_board = GameBoard(root, game, black_player, white_player)
+    gui_board.play()
+
 def playVerbose():
     continue_play = False
     game = Othello()
@@ -293,57 +304,27 @@ def play0():
 #plays game with one user, one agent
 def play1(player_black):
     game = Othello()
-    agent = Player(nn, game, not player_black, "alphabeta")
-    while True:
-        game.game_board.updateValidMoves()
-
-        #if no valid moves, switch turns and check for winner
-        if game.game_board.valid_moves == {}:
-            if game.game_board.black_turn:
-                print("Black cannot make any valid moves")
-            else:
-                print("White's cannot make any valid moves")
-            game.game_board.switchTurns()
-            #check for winner
-            game.game_board.updateValidMoves()
-            if game.game_board.valid_moves == {}:
-                break
+    if player_black:
+        black_player = Player(nn, game, True, "human_cl")
+        white_player = Player(nn, game, False, "alphabeta")
+    else:
+        black_player = Player(nn, game, True, "alphabeta")
+        white_player = Player(nn, game, False, "human_cl")
+    while not game.game_over:
+        game.isGameOver()
 
         #print score
         print("Black - {}\tWhite - {}").format(game.black_score, game.white_score)
         #print board
         print(game.game_board)
 
-
-        #agent's turn
-        if game.game_board.black_turn and not player_black:
-            print("Black's Turn")
-            agent.makeMove()
-        elif not game.game_board.black_turn and player_black:
-            print("White's Turn")
-            agent.makeMove()
-
-        #player's turn
-        else:
-            if player_black:
+        if not game.game_over:
+            if game.game_board.black_turn:
                 print("Black's Turn")
+                black_player.makeMove()
             else:
                 print("White's Turn")
-            #Print valid moves
-            print("Valid Moves: {}").format(game.validMovesStringify())
-
-            #Get move input
-            move = raw_input("Choose move (q to quit): ")
-
-            #validate input
-            is_valid_move = game.validateMoveInput(move)
-
-            if is_valid_move:
-                if move == "q" :
-                    break
-                else:
-                    move = game.moveToCoords(move)
-                    game.setTile(move[0], move[1])
+                white_player.makeMove()
 
         print("\n==========================================================\n")
 
@@ -362,48 +343,23 @@ def play1(player_black):
 #plays game with two users
 def play2():
     game = Othello()
-    while True:
-        game.game_board.updateValidMoves()
-
-        #if no valid moves, switch turns and check for winner
-        if game.game_board.valid_moves == {}:
+    black_player = Player(nn, game, True, "human_cl")
+    white_player = Player(nn, game, False, "human_cl")
+    while not game.game_over:
+        game.isGameOver()
+        if not game.game_over:
+            #print score
+            print("Black - {}\tWhite - {}").format(game.black_score, game.white_score)
+            #print board
+            print(game.game_board)
+            #print turn
             if game.game_board.black_turn:
-                print("Black cannot make any valid moves")
+                print("Black's Turn")
+                black_player.makeMove()
             else:
-                print("White's cannot make any valid moves")
-            game.game_board.switchTurns()
-            #check for winner
-            game.game_board.updateValidMoves()
-            if game.game_board.valid_moves == {}:
-                break
+                print("White's Turn")
+                white_player.makeMove()
 
-        #print score
-        print("Black - {}\tWhite - {}").format(game.black_score, game.white_score)
-        #print board
-        print(game.game_board)
-
-
-        #print turn
-        if game.game_board.black_turn:
-            print("Black's Turn")
-        else:
-            print("White's Turn")
-
-        #Print valid moves
-        print("Valid Moves: {}").format(game.validMovesStringify())
-
-        #Get move input
-        move = raw_input("Choose move (q to quit): ")
-
-        #validate input
-        is_valid_move = game.validateMoveInput(move)
-
-        if is_valid_move:
-            if move == "q" :
-                break
-            else:
-                move = game.moveToCoords(move)
-                game.setTile(move[0], move[1])
 
         print("\n==========================================================\n")
 
