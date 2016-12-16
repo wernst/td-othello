@@ -1,6 +1,18 @@
 import string, copy, random, sys
+import numpy as np
 
-
+"""
+Possible players:
+    human_cl - Human player that interacts with command line
+    human_gui - Human player that interacts with the gui
+    random - Computer player that plays randomly
+    greedy - Computer player that selects next best value
+    nn - Computer player that plays based on the neural network
+    nn_random - Computer player that plays based on the neural network or randomly based on some threshold value
+    nn_dec_random - Computer player that plays based on the neural network or randomly based on some increasing threshold value
+    pos_values - Computer player that plays based on a heuristic values for the board
+    alphabeta - Computer player that plays based on alpha beta pruning algorithm
+"""
 class Player(object):
     def __init__(self, nn, game, is_black, player_type = "nn"):
         self.nn = nn
@@ -60,7 +72,7 @@ class Player(object):
                 #generate random number
                 #decider = int.from_bytes(os.urandom(8), byteorder="big") / ((1 << 64) - 1)
                 decider = random.random()
-                if(decider < self.nn.curExplorationRate):
+                if(decider < .5):
                     rand = random.randrange(0, len(nn_inputs.keys()))
                     max_key = nn_inputs.keys()[rand]
                     self.game.setTile(*max_key)
@@ -78,7 +90,51 @@ class Player(object):
                 #generate random number
                 #decider = int.from_bytes(os.urandom(8), byteorder="big") / ((1 << 64) - 1)
                 decider = random.random()
-                if(decider < self.nn.curExplorationRate):
+                if(decider < .5):
+                    rand = random.randrange(0, len(nn_inputs.keys()))
+                    min_key = nn_inputs.keys()[rand]
+                    self.game.setTile(*min_key)
+                else:
+                    min_key = None
+                    min_val = 1000
+                    for coord in nn_inputs.keys():
+                        nn_output = self.nn.getValue(nn_inputs[coord])
+                        if nn_output < min_val:
+                            min_key = coord
+                            min_val = nn_output
+                    self.game.setTile(*min_key)
+
+        elif self.type == "nn_dec_random":
+            nn_inputs = self.getNNInputs()
+            initial_rand = 0.5
+            curr_it = self.nn.iteration
+            total_it = self.nn.total_iterations
+            z = 10*(curr_it-total_it)/(float(total_it))
+            threshold = (1-initial_rand)*np.exp(z)+initial_rand
+            #print(threshold)
+            if self.is_black:
+                #generate random number
+
+                decider = random.random()
+                if(decider > threshold):
+                    rand = random.randrange(0, len(nn_inputs.keys()))
+                    max_key = nn_inputs.keys()[rand]
+                    self.game.setTile(*max_key)
+                else:
+                    max_key = None
+                    max_val = -1000
+                    for coord in nn_inputs.keys():
+                        nn_output = self.nn.getValue(nn_inputs[coord])
+                        if nn_output > max_val:
+                            max_key = coord
+                            max_val = nn_output
+                    self.game.setTile(*max_key)
+
+            else:
+                #generate random number
+                #decider = int.from_bytes(os.urandom(8), byteorder="big") / ((1 << 64) - 1)
+                decider = random.random()
+                if(decider > threshold):
                     rand = random.randrange(0, len(nn_inputs.keys()))
                     min_key = nn_inputs.keys()[rand]
                     self.game.setTile(*min_key)
@@ -132,7 +188,6 @@ class Player(object):
                     if nn_output < min_val:
                         min_key = coord
                         min_val = nn_output
-                print(min_key)
                 self.game.setTile(*min_key)
 
         elif self.type == "alphabeta":

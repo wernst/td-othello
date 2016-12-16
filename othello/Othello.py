@@ -76,13 +76,12 @@ class Othello(object):
 
 
         if self.game_board.valid_moves == {}:
-            print("SWITCHING TURNS")
             self.game_board.switchTurns()
             #check for winner
             self.game_board.updateValidMoves()
-            if self.game_board.valid_moves == {}:
-                self.game_over = True
 
+            if self.game_board.valid_moves == {}:
+                return True
         return False
 
     def quit(self):

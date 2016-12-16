@@ -4,50 +4,64 @@ import numpy as np
 np.set_printoptions(threshold='nan', precision=5)
 from Othello import Othello
 from Player import Player
-import pickle, sys, os
-
+import pickle, sys, time, os
 
 inputUnits = 64
 class NeuralNetwork(object):
 
     """Initialize neural Network Parameters"""
-    def __init__(self, numHidLayers, gamma, ld, learningRate, startExplorationRate, totalIterations):
-        self.wMatrix1 = np.random.uniform(-0.5, 0.5, (inputUnits, numHidLayers)).astype(np.float32) # Weight Matrix at the Heart of the Neural Network
-        self.eMatrix1 = np.zeros((inputUnits, numHidLayers)).astype(np.float32) # eligility traces for each of the inputs of our Weight Matrix
-        self.wMatrix2 = np.random.uniform(-0.5, 0.5,(numHidLayers, 1)).astype(np.float32) # Weight Matrix at the Heart of the Neural Network
-        self.eMatrix2 = np.zeros((numHidLayers, 1)).astype(np.float32) # eligility traces for each of the inputs of our Weight Matrix
+    def __init__(self, numHidLayers, gamma, ld, learningRate):
+        self.wMatrix1 = np.random.uniform(-0.5, 0.5, (inputUnits, numHidLayers)) # Weight Matrix at the Heart of the Neural Network
+        self.eMatrix1 = np.zeros((inputUnits, numHidLayers)) # eligility traces for each of the inputs of our Weight Matrix
+        self.wMatrix2 = np.random.uniform(-0.5, 0.5,(numHidLayers, 1)) # Weight Matrix at the Heart of the Neural Network
+        self.eMatrix2 = np.zeros((numHidLayers, 1)) # eligility traces for each of the inputs of our Weight Matrix
         self.learningRate = learningRate
         self.numHidLayers = numHidLayers
         self.gamma = gamma #gamma used in calculating reward return
         self.ld = ld #used to determine how much you rely on pass
-        #Training info on wins
         self.bwin = 0
         self.wwin = 0
-        #ExplorationRate & output variables
-        self.startExplorationRate = startExplorationRate
-        self.curExplorationRate = startExplorationRate
-        self.totalIterations = totalIterations
-        self.numIterations = 0
+        self.iteration = 0
+        self.total_iterations = None
 
-    def calcExplorationRate(self):
-        self.curExplorationRate = self.startExplorationRate - (self.startExplorationRate)*(self.numIterations / self.totalIterations))
 
     def sigmoid(self, x):
         return 1/(1+np.exp(-1*x))
 
+
     def sigmoid_prime(self, x):
         return self.sigmoid(x)*(1-self.sigmoid(x))
 
+    def setTotal(self, total):
+        self.total_iterations = total
+
+
     def getValue(self, stateVec):
+        # print("State Matrix:")
+        # print(stateVec.shape)
+        # print("W1 Matrix:")
+        # print(self.wMatrix1)
         z2 = self.calcHiddenSum(stateVec)
+        # print("Hidden Layer Sums:")
+        # print(z2)
         a2 = self.sigmoid(z2)
+        # print("Activated Hidden Layer:")
+        # print(a2)
+        # print("W2 Matrix:")
+        # print(self.wMatrix2)
         z3 = self.calcOutputSum(a2)
+        # print("output value:")
+        # print(z3)
         outputValue = self.sigmoid(z3)
+        # print("activated output value")
+        # print(outputValue)
 
         return outputValue
 
+
     def calcHiddenSum(self, stateVec):
         return np.dot(stateVec, self.wMatrix1)
+
 
     def calcOutputSum(self, hiddenVec):
         return np.dot(hiddenVec, self.wMatrix2)
@@ -64,7 +78,6 @@ class NeuralNetwork(object):
 
 
         return gradMatrix.T
-
 
     def calcGradientMatrix1_2(self, stateVec):
         hiddenSum = self.calcHiddenSum(stateVec)
@@ -92,20 +105,32 @@ class NeuralNetwork(object):
 
 
 
+
     """Save our weight matrix into a loadable files, prevents retraining"""
-    def save(self, filename, p_type):
-        if not os.path.exists(p_type):
-            os.makedirs(p_type)
-        filePath = p_type + "/" + filename
+    def save(self, filename, p_type, op_type, ld_val):
+        pathToFile = p_type + "/" + str(ld_val) + "/" + op_type + "/NetworkFiles"
+        if not os.path.exists(pathToFile):
+            os.makedirs(pathToFile)
+        filePath = pathToFile + "/" + filename
         with open(filePath, "wb") as f:
             pickle.dump(self, f)
 
+    """Save our weight matrix into a loadable files, prevents retraining"""
+    def save2(self, filename, dirname):
+        if not os.path.exists(dirname):
+            os.makedirs(dirname)
+        filePath = dirname + "/" + filename
+        with open(filePath, "wb") as f:
+            pickle.dump(self, f)
+
+
     """Load our Weight Matrix into out layer variable"""
-    def load(self, filename, p_type):
-        if not os.path.exists(p_type):
+    def load(self, filename, p_type, op_type, ld_val):
+        pathToFile = p_type + "/" + str(ld_val) + "/" + op_type + "/NetworkFiles"
+        if not os.path.exists(pathToFile):
             print("No such file or directory")
-        print(filename)
-        filePath = p_type + "/" + filename
+        #print(filename)
+        filePath = pathToFile + "/" + filename
         with open(filePath, "rb") as f:
             # print(self.wMatrix1)
             # print("-------------")
@@ -114,14 +139,21 @@ class NeuralNetwork(object):
             self.eMatrix1 = nn.eMatrix1
             self.wMatrix2 = nn.wMatrix2
             self.eMatrix2 = nn.eMatrix2
-            self.numIterations = nn.numIterations
-            self.totalIterations = nn.totalIterations
-            self.curExplorationRate = nn.curExplorationRate
-            self.startExplorationRate = nn.startExplorationRate
-            self.learningRate = nn.learningRate
-            self.numHidLayers = nn.numHidLayers
-            self.gamma = nn.gamma
-            self.ld = nn.ld
+
+    """Load our Weight Matrix into out layer variable"""
+    def load2(self, filename, dirname):
+        if not os.path.exists(dirname):
+            print("No such file or directory")
+        #print(filename)
+        filePath = dirname + "/" + filename
+        with open(filePath, "rb") as f:
+            # print(self.wMatrix1)
+            # print("-------------")
+            nn = pickle.load(f)
+            self.wMatrix1 = nn.wMatrix1
+            self.eMatrix1 = nn.eMatrix1
+            self.wMatrix2 = nn.wMatrix2
+            self.eMatrix2 = nn.eMatrix2
 
     """ Determines how much of a reward to apply """
     def delta(self, pValue, reward, cValue, game_over):
@@ -133,17 +165,32 @@ class NeuralNetwork(object):
             return reward - pValue
 
     """Single Timestep in the reinforcement Learning"""
-    @autojit
+
     def train(self, pstate, reward, state, game_over):
         rewardMatrix = np.matrix([reward]*self.numHidLayers)
         pHiddenOutput = self.sigmoid(self.calcHiddenSum(pstate))
         cHiddenOutput = self.sigmoid(self.calcHiddenSum(state))
         pstateValue = self.getValue(pstate)
         cstateValue = self.getValue(state)
+        # print(pstateValue)
+        # print(cstateValue)
 
+        #not sure about the partial derivative
+        # print(self.eMatrix2)
+        # print(self.eMatrix2.shape)
+        #test = np.array([pstateValue]*self.eMatrix2.shape[0]).T
+        # print(test)
         gradientMatrix2 = self.calcGradientMatrix2_2(state)
 
+
+        #print(gradientMatrix2)
         gradientMatrix1 = self.calcGradientMatrix1_2(state)
+
+
+
+        # print(self.gamma)
+        # print(self.ld)
+        # print()
 
         self.eMatrix2 = self.gamma * self.ld * self.eMatrix2 + gradientMatrix2
         self.eMatrix1 = self.gamma * self.ld * self.eMatrix1 + gradientMatrix1
@@ -151,6 +198,10 @@ class NeuralNetwork(object):
 
 
         delta = self.delta(pstateValue, reward, cstateValue, game_over)
+        # delta1 = self.delta(pHiddenOutput, rewardMatrix, cHiddenOutput)
+        #print(delta)
+        #print(self.eMatrix2)
+        #print(self.wMatrix2)
 
         self.wMatrix2 +=  np.multiply((self.learningRate * delta), self.eMatrix2)
         self.wMatrix1 +=  np.multiply((self.learningRate * delta), self.eMatrix1)
@@ -160,17 +211,19 @@ class NeuralNetwork(object):
         # print("W2: {}").format(self.wMatrix2)
     """Basic structure of our lean iteration function, going to be implemented elsewhere"""
     #This can actually be moved to the play class.
-    def learn(self, num_episode = 1000, p_type = "nn"):
+    def learn(self, num_episode, p_type, op_type, ld_val):
         for i in xrange(num_episode):
-            print(self.numIterations)
+            #print(i)
             game = Othello()
             black_player = Player(self, game, True, p_type)
-            white_player = Player(self, game, False, p_type)
+            white_player = Player(self, game, False, op_type)
 
             game.game_board.updateValidMoves()
-            # print("Valid Moves: {}").format(game.validMovesStringify())
-            # for k, v in black_player.getNNInputs().items():
-            #     print("{}: {}").format(game.validMoveStringify(k), self.getValue(np.matrix(v)))
+            print("{}: {} vs. {}, lambda - {}:").format(self.iteration, p_type, op_type, ld_val)
+            print("Valid Moves: {}").format(game.validMovesStringify())
+            for k, v in black_player.getNNInputs().items():
+            	print("{}: {}").format(game.validMoveStringify(k), self.getValue(np.matrix(v)))
+            print("")
 
             while True:
                 #print turn
@@ -185,18 +238,14 @@ class NeuralNetwork(object):
                     pstateVector = white_player.getBoardVector()
                     white_player.makeMove()
                     cstateVector = white_player.getBoardVector()
-<<<<<<< HEAD
-                game.isGameOver()
-                if game.game_over:
-=======
 
                 if game.isGameOver():
-                    self.numIterations += 1
-                    self.calcExplorationRate()
->>>>>>> Exploration_rate
                     break
                 else:
                     self.train(pstateVector, 0, cstateVector, False)
+
+
+
 
             if(game.black_score > game.white_score):
                 #game is over, update matrix and reset elegibility matrix
@@ -219,13 +268,10 @@ class NeuralNetwork(object):
                 self.reset()
                 # print("tie\n")
 
-
+            self.iteration+=1
+        print("{}: {} vs. {}, lambda - {}:").format(self.iteration, p_type, op_type, self.ld)
         print("black wins: {}").format(self.bwin)
-        print("white wins: {}").format(self.wwin)
+        print("white wins: {}\n").format(self.wwin)
     def reset(self):
         self.eMatrix2 = np.zeros((self.numHidLayers, 1))
         self.eMatrix1 = np.zeros((inputUnits, self.numHidLayers))
-
-
-if __name__ == "__main__":
-    main()
