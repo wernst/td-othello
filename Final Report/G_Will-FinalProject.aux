@@ -2,12 +2,13 @@
 \@writefile{toc}{\contentsline {section}{\numberline {1}Introduction}{\thepage }}
 \@writefile{lof}{\contentsline {figure}{\numberline {1}{\ignorespaces Initial Board State for Othello\relax }}{\thepage }}
 \providecommand*\caption@xref[2]{\@setref\relax\@undefined{#1}}
-\newlabel{fig:neuron1}{{1}{\thepage }}
+\newlabel{fig:board1}{{1}{\thepage }}
+\citation{van2013reinforcement}
 \@writefile{lof}{\contentsline {figure}{\numberline {2}{\ignorespaces A simplistic representation of a Neural Network with 1 hidden layer and 1 output layer\relax }}{\thepage }}
 \newlabel{fig:simpleNN2}{{2}{\thepage }}
 \@writefile{toc}{\contentsline {section}{\numberline {2}Related Work}{\thepage }}
 \@writefile{toc}{\contentsline {subsection}{\numberline {2.1}TD-Gammon}{\thepage }}
-\citation{sutton1998reinforcement}
+\citation{rosenblatt1958perceptron}
 \@writefile{toc}{\contentsline {subsection}{\numberline {2.2}Othello research}{\thepage }}
 \@writefile{toc}{\contentsline {section}{\numberline {3}Methods}{\thepage }}
 \@writefile{toc}{\contentsline {subsection}{\numberline {3.1}Network Layers}{\thepage }}
@@ -24,10 +25,50 @@
 \@writefile{lof}{\contentsline {subfigure}{\numberline{(b)}{\ignorespaces {Sigmoid output value}}}{\thepage }}
 \@writefile{toc}{\contentsline {subsection}{\numberline {3.3}TD(\relax $\lambda \relax \GenericError  {               }{LaTeX Error: Bad math environment delimiter}{See the LaTeX manual or LaTeX Companion for explanation.}{Your command was ignored.\MessageBreak Type  I <command> <return>  to replace it with another command,\MessageBreak or  <return>  to continue without it.})}{\thepage }}
 \@writefile{toc}{\contentsline {subsection}{\numberline {3.4}Player Types}{\thepage }}
-\bibstyle{abbrv}
-\bibdata{references}
 \@writefile{lof}{\contentsline {figure}{\numberline {5}{\ignorespaces Graphical Representation of the exponentially decreasing learning rate\relax }}{\thepage }}
 \newlabel{fig:neuron4}{{5}{\thepage }}
 \@writefile{toc}{\contentsline {section}{\numberline {4}Results}{\thepage }}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.1}NN Dec vs NN Fixed}{\thepage }}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.2}Lambda Value Choice}{\thepage }}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.3}Opponent Types}{\thepage }}
+\newlabel{fig:subfig1}{{6a}{\thepage }}
+\newlabel{sub@fig:subfig1}{{(a)}{a}}
+\newlabel{fig:subfig1}{{6b}{\thepage }}
+\newlabel{sub@fig:subfig1}{{(b)}{b}}
+\@writefile{lof}{\contentsline {figure}{\numberline {6}{\ignorespaces Graphs for Neural Network with Fixed Exploration Rate\relax }}{\thepage }}
+\newlabel{fig:graph5}{{6}{\thepage }}
+\@writefile{lof}{\contentsline {subfigure}{\numberline{(a)}{\ignorespaces {NN-Fixed with Lambda 0.9}}}{\thepage }}
+\@writefile{lof}{\contentsline {subfigure}{\numberline{(b)}{\ignorespaces {NN-Fixed with Lambda 0.9}}}{\thepage }}
+\newlabel{fig:subfig1}{{7a}{\thepage }}
+\newlabel{sub@fig:subfig1}{{(a)}{a}}
+\newlabel{fig:subfig1}{{7b}{\thepage }}
+\newlabel{sub@fig:subfig1}{{(b)}{b}}
+\@writefile{lof}{\contentsline {figure}{\numberline {7}{\ignorespaces Graphs for Neural Network with Decreasing Exploration Rate\relax }}{\thepage }}
+\newlabel{fig:graph5}{{7}{\thepage }}
+\@writefile{lof}{\contentsline {subfigure}{\numberline{(a)}{\ignorespaces {NN-Decreasing with Lambda 0.9}}}{\thepage }}
+\@writefile{lof}{\contentsline {subfigure}{\numberline{(b)}{\ignorespaces {NN-Decreasing with Lambda 0.9}}}{\thepage }}
+\bibstyle{abbrv}
+\bibdata{references}
+\bibcite{sutton1998reinforcement}{1}
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.4}GUI implementation}{\thepage }}
 \@writefile{toc}{\contentsline {section}{\numberline {5}Discussion}{\thepage }}
 \@writefile{toc}{\contentsline {section}{\numberline {6}Acknowledgments}{\thepage }}
+\@writefile{toc}{\contentsline {section}{\numberline {7}References}{\thepage }}
+\newlabel{fig:subfig1}{{8a}{\thepage }}
+\newlabel{sub@fig:subfig1}{{(a)}{a}}
+\newlabel{fig:subfig1}{{8b}{\thepage }}
+\newlabel{sub@fig:subfig1}{{(b)}{b}}
+\@writefile{lof}{\contentsline {figure}{\numberline {8}{\ignorespaces Score of Self-Trained Neural Networks vs. Alpha-Beta\relax }}{\thepage }}
+\newlabel{fig:graph5}{{8}{\thepage }}
+\@writefile{lof}{\contentsline {subfigure}{\numberline{(a)}{\ignorespaces {NN with Lambda 0.9 vs. Alpha-Beta}}}{\thepage }}
+\@writefile{lof}{\contentsline {subfigure}{\numberline{(b)}{\ignorespaces {NN with Lambda 1.0 vs. Alpha-Beta}}}{\thepage }}
+\newlabel{fig:subfig1}{{9a}{\thepage }}
+\newlabel{sub@fig:subfig1}{{(a)}{a}}
+\newlabel{fig:subfig1}{{9b}{\thepage }}
+\newlabel{sub@fig:subfig1}{{(b)}{b}}
+\@writefile{lof}{\contentsline {figure}{\numberline {9}{\ignorespaces Score of Self-Trained Neural Networks vs. Positional-Value\relax }}{\thepage }}
+\newlabel{fig:graph5}{{9}{\thepage }}
+\@writefile{lof}{\contentsline {subfigure}{\numberline{(a)}{\ignorespaces {NN with Lambda 0.9 vs. Positional-Value}}}{\thepage }}
+\@writefile{lof}{\contentsline {subfigure}{\numberline{(b)}{\ignorespaces {NN with Lambda 1.0 vs. Positional-Value}}}{\thepage }}
+\@writefile{lof}{\contentsline {figure}{\numberline {10}{\ignorespaces Initial Board State for Othello\relax }}{\thepage }}
+\newlabel{fig:board1}{{10}{\thepage }}

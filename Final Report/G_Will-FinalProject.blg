@@ -1,0 +1,48 @@
+This is BibTeX, Version 0.99d (TeX Live 2014)
+Capacity: max_strings=35307, hash_size=35307, hash_prime=30011
+The top-level auxiliary file: G_Will-FinalProject.aux
+The style file: abbrv.bst
+Database file #1: references.bib
+Warning--can't use both volume and number fields in sutton1998reinforcement
+You've used 1 entry,
+            2118 wiz_defined-function locations,
+            502 strings with 3859 characters,
+and the built_in function-call counts, 287 in all, are:
+= -- 23
+> -- 13
+< -- 1
++ -- 5
+- -- 4
+* -- 20
+:= -- 54
+add.period$ -- 3
+call.type$ -- 1
+change.case$ -- 4
+chr.to.int$ -- 0
+cite$ -- 2
+duplicate$ -- 12
+empty$ -- 23
+format.name$ -- 4
+if$ -- 56
+int.to.chr$ -- 0
+int.to.str$ -- 1
+missing$ -- 2
+newline$ -- 8
+num.names$ -- 2
+pop$ -- 7
+preamble$ -- 1
+purify$ -- 4
+quote$ -- 0
+skip$ -- 8
+stack$ -- 0
+substring$ -- 5
+swap$ -- 3
+text.length$ -- 1
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 2
+warning$ -- 1
+while$ -- 2
+width$ -- 2
+write$ -- 13
+(There was 1 warning)

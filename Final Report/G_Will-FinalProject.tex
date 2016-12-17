@@ -42,21 +42,21 @@ Ghassan Gedeon Achi\\
 
 \begin{abstract}
 
-	\textit{This paper explores the implementation of the temporal-difference learning algorithm TD(\(\lambda\)) to train an Artificial Intelligence agent to play the board game `Othello'. The training strategies compared are: learning from self-play, learning against a fixed opponent, and learning against a random opponent. These training strategies are used on two player types, a constant semi-random player and a decreasingly semi-random player. The players are trained using a multi-layer perceptron neural network, which is updated using the TD(\(\lambda\)) algorithm. Our results show that?}
+	\textit{This paper explores the implementation of the temporal-difference learning algorithm TD(\(\lambda\)) to train an Artificial Intelligence agent to play the board game `Othello'. The training strategies compared are: learning from self-play, learning against a fixed opponent, and learning against a random opponent. These training strategies are used on two player types, a constant semi-random player and a decreasingly semi-random player. The players are trained using a multi-layer perceptron neural network, which is updated using the TD(\(\lambda\)) algorithm. Our results show that we found a combination of implementation and parameters for our Neural Network which achieved a strong level of play and was able to quite deceicevly beat an Alpha Beta Search Algorithm}
 
 \end{abstract}
 
 
-\keywords{CS701; \LaTeX;}
+\keywords{CS701; TD($\lambda$); Othello; Reinforcement Learning; Neural Networks}
 
 \section{Introduction}
 
 This paper adapts Gerald Tesauro's TD(\(\lambda\)) algorithm the game of backgammon and implements it for the game of `Othello', or as it is more commonly known `Reversi' [Cite]. The game is played on a $8*8$ board and works by having a `Black' and `White' players take turns placing pieces on the board. The initial board configuration has $4$ pieces, $2$ for each player, placed in the center of the board in a diagonal configuration see [Figure (1)] for a visual representation. In Othello, Black goes first; all subsequent moves by the players  must flank one or more of the opponent's pieces$-$meaning that you must place your piece such that it surrounds one or more of the opponent pieces either vertically, horizontally or diagonally$-$the highlighted tiles in [Figure (1)] illustrate these types of move. Flanked pieces are captured and are replaced with pieces of your own color. The game goes on until one player either has no more valid moves or the board is full. Once the game has ended the player with the most pieces wins. The project was motivated by our interest in getting some experience with the emerging field of machine learning, as well as our interest in developing an agent capable of strong play while being trained completely independently. 
 
 \begin{figure}[h!]
-  \includegraphics[width=\linewidth]{neuron.png}
+  \includegraphics[width=\linewidth]{stboard.png}
   \caption{Initial Board State for Othello}
-  \label{fig:neuron1}
+  \label{fig:board1}
 \end{figure}
 
 
@@ -77,7 +77,7 @@ In this project, we have devised two types of Network with distinct implementati
 
 Our second contribution is seeing how each of these networks perform with different Lambda (\(\lambda\)) values. The lambda value determines the rate of decay in error correction for previous time steps. A \(\lambda\) $= 0.0$ means that no feedback occurs beyond the current time step, and a $\lambda  = 1.0$ means that feedback occurs without decay arbitrarily far back in time. After some testing, we found that high lambda values yielded the best results, so we chose to test the extreme case $\lambda  = 1.0$ vs a slightly less drastic case $\lambda  = 0.9$.
 
-Our third contribution is seeing how the network learns versus various opponent. For this purpose, we created 3 additional opponent against which our network would train against. These opponents are: (1) a fully random agent whose moves are selected randomly, (2) a Positional Value opponent, where tiles have a hardcoded value based on how good or bad they are in traditional play [Cite Othello], (3) an AI agent using the Alpha-Beta search. Unfortunately, Alpha-Beta proved to be extremely slow even at a depth of $2$, so we chose to only use it as a means of testing our final networks. Thus, both NN-Fixed and NN-Decreasing were trained against opponents (1) and (2), as well as being trained against themselves, and each of these combinations was test with $\lambda  = 1.0$ as well as $\lambda  = 0.9$ . An analysis of these contributions will be covered in our Results section where we evaluate the performance of the various combination of Network types, lambda values and opponent type. All networks were trained for $125,000$ games, and we used their performance against a random agent for $500$ games was used as a measure of strength $-$this choice will be explained in the Methods section.
+Our third contribution is seeing how the network learns versus various opponent. For this purpose, we created 3 additional opponent against which our network would train against. These opponents are: (1) a fully \emph{Random} agent whose moves are selected randomly, (2) a \emph{Positional Value} opponent, where tiles have a hardcoded value based on how good or bad they are in traditional play \cite{van2013reinforcement}, (3) an AI agent using the \emph{Alpha-Beta} search. Unfortunately, Alpha-Beta proved to be extremely slow even at a depth of $2$, so we chose to only use it as a means of testing our final networks. Thus, both NN-Fixed and NN-Decreasing were trained against opponents (1) and (2), as well as being trained against themselves, and each of these combinations was test with $\lambda  = 1.0$ as well as $\lambda  = 0.9$ . An analysis of these contributions will be covered in our Results section where we evaluate the performance of the various combination of Network types, lambda values and opponent type. All networks were trained for $125,000$ games, and we used their performance against a random agent for $500$ games was used as a measure of strength $-$this choice will be explained in the Methods section. Additionally we used the score of our network against (2) \emph{Positional-Value} agent and (3) \emph{Alpha-Beta} agent as a gauge of performance over time. 
 
 Our final contribution is an implementation of a user-friendly GUI interface for the Game, where the user can choose to play against any of our trained Neural Network, or any of the other agents that we created. As of now the selection of opponent is code based, but in the future we are hoping to create a full fledged web application where the user can select the opponent of choice from a drop down menu. 
 
@@ -100,10 +100,7 @@ To evaluate the success of the program, it was tested against world-class human 
 
 \subsection{Othello research}
 
-Previous research has been done on using reinforcement learning (RL) algorithms to solve the game Othello. Work by Ree et al. explores Othello with three learning strategies: Learning by self-play, learning from playing, against a fixed opponent, and learning from playing against a fixed opponent while learning from the opponent?s moves as well. Their work examines three commonly used RL algorithms, Q-learning, Sarsa, and TD-learning. Results from their testing show that each algorithm has its own optimal training strategy. Q-learning and Sarsa performed best when trained along with a fixed opponent, while TD-learning performed best when trained through self-play. Additionally they found that learning from the opponent's as well as the player?s own moves moves generally performed worse than just learning from the player's own moves
-
-
-Here is a sample citation \cite{sutton1998reinforcement}.
+Previous research has been done on using reinforcement learning (RL) algorithms to solve the game Othello. Work by Ree et al. explores Othello with three learning strategies: Learning by self-play, learning from playing, against a fixed opponent, and learning from playing against a fixed opponent while learning from the opponent's moves as well. Their work examines three commonly used RL algorithms, Q-learning, Sarsa, and TD-learning. Results from their testing show that each algorithm has its own optimal training strategy. Q-learning and Sarsa performed best when trained along with a fixed opponent, while TD-learning performed best when trained through self-play. Additionally they found that learning from the opponent's as well as the player?s own moves moves generally performed worse than just learning from the player's own moves
 
 \section{Methods}
 
@@ -111,9 +108,9 @@ Here is a sample citation \cite{sutton1998reinforcement}.
  
 To implement the TD(\(\lambda\)) algorithm we used a Neural Network with an input layer with $64$ neurons, one hidden layer with $50$ neurons and an output layer with single neuron. The output neuron was used to evaluate the board state.
 
-Since Neural Networks require vector inputs we converted our $8*8$ board state into a vector of size $64$ with value of $0$, $1$ and $-1$, which respectively correspond to an empty tile, tile containing a Black piece and a tile containing a white piece, see [Figure (3)] for a visual representation of a board state and its corresponding input vector.
+Since Neural Networks require vector inputs we converted our $8*8$ board state into a vector of size $64$ with value of $0$, $1$ and $-1$, which respectively correspond to an empty tile, tile containing a Black piece and a tile containing a white piece.
 
-The hidden layer is comprised of $50$ neurons. This choice comes from testing various implementations of the network, and picking the network that showed strong learning performance while remaining not too computationally demanding. Since each additional hidden neuron adds 65 connections?$64$ to the input layer and $1$ to the output layer?the computational cost of adding one or more is rather steep.
+The hidden layer is comprised of $50$ neurons. This choice comes from testing various implementations of the network, and picking the network that showed strong learning performance while remaining not too computationally demanding. Since each additional hidden neuron adds 65 connections$-$$64$ to the input layer and $1$ to the output layer$-$the computational cost of adding one or more is rather steep.
  
 \subsection{Sigmoid Neurons}
 \begin{figure}[h!]
@@ -122,7 +119,7 @@ The hidden layer is comprised of $50$ neurons. This choice comes from testing va
   \label{fig:neuron4}
 \end{figure}
  
-        	Perceptron's were developed in the 1950?s and 1960?s by a scientist named Frank Rosenblatt, who was inspired by the earlier work of Warren McCulloch and Walter Pitts. These are the most basic type of Neurons you can use in a Neural Network. Perceptron's take inputs with corresponding weights, and output a value of $0$ or $1$. This work by setting a threshold, and output corresponding value for outputs below or above the determined threshold. [Figure (4)] and [Equation (1)] show the basic functioning of a Perceptron [CITE HANDWRITTEN].
+        	Perceptron's were developed in the 1950's and 1960's by a scientist named Frank Rosenblatt, who was inspired by the earlier work of Warren McCulloch and Walter Pitts. These are the most basic type of Neurons you can use in a Neural Network. Perceptron's take inputs with corresponding weights, and output a value of $0$ or $1$. This work by setting a threshold, and output corresponding value for outputs below or above the determined threshold. [Figure (3)] and [Equation (1)] show the basic functioning of a Perceptron \cite{rosenblatt1958perceptron}.
 
 \begin{equation}
 output =
@@ -134,9 +131,14 @@ output =
 \right.
 \end{equation}
 
+\begin{equation}
+output = \frac{1}{1+e^{-z}}
+\end{equation}
+
+
 
 	
-	The issue with perceptron's is that small changes in the weights can cause major changes in the output of the neuron, as such Perceptron networks for complicated task can be very hard to train. With that in mind, we chose to use Sigmoid Neurons for our implementation of the networks. Visually these look the same as Perceptron [Figure(4)], but the output of the neuron is passed into a sigmoid function [Equation ()], where $z$ is the sum of the weights multiplied by the input of the neuron. This returns a value between $0$ and $1$. A graphical representation of the outputs of Perceptron vs Sigmoid Neurons can be seen in [Figure (5)].
+	The issue with perceptron's is that small changes in the weights can cause major changes in the output of the neuron, as such Perceptron networks for complicated task can be very hard to train. With that in mind, we chose to use Sigmoid Neurons for our implementation of the networks. Visually these look the same as Perceptron [Figure(3)], but the output of the neuron is passed into a sigmoid function [Equation (2)], where $z$ is the sum of the weights multiplied by the input of the neuron. This returns a value between $0$ and $1$. A graphical representation of the outputs of Perceptron vs Sigmoid Neurons can be seen in [Figure (4)].
 	
 \begin{figure}[h!]
 \centering
@@ -214,7 +216,6 @@ From these equations, we can see that the final change for each weight is the a 
 
 Learning and Training:
 To teach the network, multiple games are played. For the results presented in this paper, the network was trained with $125,000$ games. Each epoch of training runs as follows:
-\\ \\ \\ 
 
 \begin{enumerate}
 \itemsep0em 
@@ -226,7 +227,7 @@ To teach the network, multiple games are played. For the results presented in th
 \end{enumerate}
 
 
-Note that with each game, the eligibility matrix is reset, but the weights of the network are not. This is because the eligibility matrix is supposed to keep track of previous moves in the game. For all games, the move in one game is independent of the moves of another, so we do not want to eligibility matrix remembering from past games. In this implementation of TD(?), while playing a game each move represents a time t. At each move the program executes the following:
+Note that with each game, the eligibility matrix is reset, but the weights of the network are not. This is because the eligibility matrix is supposed to keep track of previous moves in the game. For all games, the move in one game is independent of the moves of another, so we do not want to eligibility matrix remembering from past games. In this implementation of TD($\lambda$), while playing a game each move represents a time $t$. At each move the program executes the following:
 
 
 \begin{enumerate}
@@ -269,7 +270,7 @@ Where:
 At the point when $i = n$, the threshold is $1$ and chooses only from the neural network.
 
 \begin{figure}[h!]
-  \includegraphics[width=\linewidth]{neuron.png}
+  \includegraphics[width=\linewidth]{e-rate.png}
   \caption{Graphical Representation of the exponentially decreasing learning rate}
   \label{fig:neuron4}
 \end{figure}
@@ -284,56 +285,68 @@ At the point when $i = n$, the threshold is $1$ and chooses only from the neural
 \emph{Alpha-Beta} -- This player implements the alpha-beta pruning algorithm to its best possible move. The alpha-beta pruning algorithm is a tree search algorithm that minimizes the number of nodes visited in a minimax tree. It is able to forecast possible board states for $k$ timesteps in the future. It selects the move that maximizes its score at state$^{t+k}$, assuming that the other player also moves to maximize its score. This player is mainly used in testing.
 
 
-
-
 \begin{itemize}
-		
-\item	A description of the methods you are using (which itself could have
-	sub-sections). If you have created a new application, you should describe
-	which tools you have used to do so and the steps of your implementation. You
-	should also briefly describe each of the tools you used (e.g. Ruby on Rails,
-	MongoDB, D3, etc.). If you have proposed a new algorithm to solve a problem,
-	you should provide the details of your algorithm along with pseudocode. If
-	your algorithm is quite complex, you should describe its running time.  
 
-\item Description of any data you used and explanation of why you chose this
-	particular data (possibly organized into sub-sections).
-
-\item Link to a GitHub, BitBucket or other repository if relevant.
+\item The Source Code for our project can be found at the following link \emph{https://github.com/wernst/td-othello}
+\item The Repository also contains a Subset of the Networks we saved during training, a text file containing the <$Iterations$>$<$Win$ \$Percentages$>  during training for the respective networks, and finally vectorized version of the graphs found in the Results Sections. 
 
 \end{itemize}
 
-\section{Results}
+\section{Results}	In the following section we will analyze the learning performance of (1) the implementation of a exponentially decreasing exploration rate as opposed to a fixed exploration rate, (2) we will look at the effect of setting $\lambda = 0.9$ vs. setting $\lambda = 1.0$ and (3) we will look at how our Self-trained Neural Networks performed against our strongest competing Agents \emph{Alpha-Beta} and \emph{Positional-Value}. Finally, (4) we will briefly cover GUI applet that we have developed for users to have a convenient interface which they can use to play against the agent of their choice. Our best implementations reached performances against a random agent of around $90\%$.\subsection{NN Dec vs NN Fixed}	Looking at [Figure (6) and Figure (7)], we see very similar patterns in learning for the two different types of network. The results are so similar that it without looking at the Title of the graph I would be unable to distinguish the two. Given the implementation of the exponential exploration decay, we were expecting the networks to behave very similarly until we reach a game $~80,000$, at which time the exploration rate would start decreasing. We had initially hypothesized that when this happened $NN-Decreasing$ would start refining its weights to discover subtler patterns in play style that $NN-Fixed$ would be unable to find. This, however did not happen. In both models, and against all opponents, we saw very similar win percentages.	There is one aspect small difference in the models that is quite interesting, but somewhat hard to spot. If we carefully look at the difference in win percentages between [Figure (6b)] and [Figure (7b)], specifically for the $red$ line representing self-play, we notice that the line in [Figure (7b)] is much smoother than [Figure (6b)] and this starts right around the $~80,000 games$. This is likely due to the exploration going down and the Network converging towards its final (and ideally optimal) weight configuration. Overall the decreasing exploration rate does not seem to provide too much of a benefit, however if a modified form of this decaying exploration rate were implemented right after the network reaches its maximum win percentage, it could prevent the network from experiencing the sharp dips that can be seen throughout the training. This theorized $adaptive$ exploration rate $\epsilon$ is one possible avenue for future research.
 
-This section should include the following:
+\begin{figure}[p]
+\centering
+\subfloat[NN-Fixed with Lambda 0.9]{\hspace*{-0.8cm}\includegraphics[width=0.66\linewidth, keepaspectratio]{NN-Fixed-9.png}\label{fig:subfig1}}
+\subfloat[NN-Fixed with Lambda 0.9]{\includegraphics[width=0.66\linewidth, keepaspectratio]{NN-Fixed-1.png}\label{fig:subfig1}}
+\caption{Graphs for Neural Network with Fixed Exploration Rate}
+\label{fig:graph5}
+\end{figure}\subsection{Lambda Value Choice}During the course of training, both Networks$-NN-Decreasing$ and $NN-Fixed-$ with $\lambda = 0.9$ performances suffered right around reaching the $50,000$ iteration mark, see [Figure (6)] and [Figure (7)]. This decrease in performance seems to happen right after the network reached optimal performance, but our Networks with  $\lambda = 1.0$   didn't seem to suffer from the same issue. During the period of decline, the values of our networks with $\lambda = 0.9$ approached $1$. By the end of training, the evaluation of almost every board state would output a value $> 0.99$. Although we are unsure of exactly why this occurs, we did notice that this pattern occurred earlier with larger $\alpha$ values. Although the goal of the TD($\lambda$) algorithm is to converge to the global minimum of the function approximator, this convergence has only been proven for linear networks and linearly independent sets. In the general case, there is no guarantee that the algorithm will converge even to a local minimum [6]. This finding seems to suggest that for our implementation of the Neural Network a $\lambda = 1.0$ is optimal, but as we experienced over the semester, working with Neural Networks can be tricky. We did not notice the issue with a $\lambda = 0.9$ until our final run, specifically because this convergence only happened fairly late into the training.
 
-\begin{itemize}
+\begin{figure}[p]
+\centering
+\subfloat[NN-Decreasing with Lambda 0.9]{\hspace*{-0.8cm}\includegraphics[width=0.66\linewidth, keepaspectratio]{NN-Decreasing-9.png}\label{fig:subfig1}}
+\subfloat[NN-Decreasing with Lambda 0.9]{\includegraphics[width=0.66\linewidth, keepaspectratio]{NN-Decreasing-1.png}\label{fig:subfig1}}
+\caption{Graphs for Neural Network with Decreasing Exploration Rate}
+\label{fig:graph5}
+\end{figure}
+\subsection{Opponent Types}	Having established that the $\lambda = 0.9$ causes a detrimental form of convergences in our network, let us now turn our attention back to [Figures (6b)] and [Figure (7b)] to examine the way that the various opponents it trained against affected the Learning Rate. 
+\emph{Positional-Value} $-$ Immediately it becomes clear that the network struggles to learn when playing against Positional Value. We had expected that the network would have a hard time beating the agent in the early stages of the game, but we have expected the network (Especially $NN-Decreasing$) to eventually find a weight combination that would allow it to defeat the $Positional-Value$ agent and start learning from playing against it. However, we notice that the performance against $Random$, stagnates around or even below the $50\%$. When we examined the output, we noticed that $Positional-Value$ was winning a significant percentage of the games, which means that neither of our NN were receiving any reward and as such the network was unable to optimize its weight to find a combination that worked best.
+\emph{Random} $-$ We were rather surprised at how well our network learned from a fully random opponent. We had not expected that our Neural Networks would learn almost as well against a fully random opponent, as it would against itself. This seems to confirm that high exploration rate allow for quicker learning. It should be noted that in the latter stages of training, the Networks training against a random opponent experienced more spikes and dips in learning that those learning from self-play.
+\emph{Self-Play} $-$ as we had expected this showed the best results, reaching a win percentage against Random of around $90\%$. Since this model seemed worked best, we decided to conduct  further experiments and displayed our Networks score vs. both the \emph{Positional-Value} agent, and \emph{Alpha-Beta}  with a max depth of $4$ at various intervals in our training, see [Figure (8)] and [Figure (9)]. In Othello the score can quickly switch since a single move can cause a significant of the board to switch colors. As such, scores are not always the best indicator of learning, but we were curious to see if we noticed any patterns in the data. It should be noted that the $32$-point threshold-indicated by the blue line in the figures$-$ are not a hard minimum on winning scores, as one can win with less than the threshold if he still controls the most number of pieces on the board and the opponent is out of moves. However, in our experience this happened very rarely, and we decided that the potential information loss was still worth the risk. Unfortunately, no subtle pattern emerged, but on a general case, we noticed that our data-points were generally above the $32$-point threshold against $Alpha Beta$, which we were quite impressed with. We theorize that our models moves are much superior to $Alpha-Beta$ in the early games, since $Alpha-Beta$ has the advantage of looking $4$ moves ahead during the end game. 
+	Against \emph{Positional-Value} [Figure (9)], the results were quite poor, and this seems to further reinforce what seemed to be true in training, which is that \emph{Positional-Value} is a very strong opponent, which is rather suprising since it simply uses hardcoded inputs.
 
-	
-	\item Details and explanations of results obtained (which itself could have
-		sub-sections). This is where you should provide tables, graphs, and/or
-		figures that illustrate your results. If you have created a new
-		application, include screenshots of it in action. You should also provide a
-		link to your application if it is web-based.
+\begin{figure}[p]
+\centering
+\subfloat[NN with Lambda 0.9 vs. Alpha-Beta]{\hspace*{-0.8cm}\includegraphics[width=0.66\linewidth, keepaspectratio]{Alpha-Beta-9.png}\label{fig:subfig1}}
+\subfloat[NN with Lambda 1.0 vs. Alpha-Beta]{\includegraphics[width=0.66\linewidth, keepaspectratio]{Alpha-Beta-1.png}\label{fig:subfig1}}
+\caption{Score of Self-Trained Neural Networks vs. Alpha-Beta}
+\label{fig:graph5}
+\end{figure}\subsection{GUI implementation}	The final contribution that we are making with this paper, is a user-friendly environment in which the player can play against an agent of his choice. The Layout of the applet can be seen in [Figure (10)] \textbf{ADD IMAGE BELOW IF YOU CAN WILL}. We hope to be able to get the applet online soon. Once this happens, the applet's url will be linked from the following addresses:\begin{itemize}
+\itemsep0em \item http://www.cs.middlebury.edu/~wernst\item http://www.cs.middlebury.edu/~ggedeonachi\end{itemize}
 
-\end{itemize}
 
-You should entitle these sections and sub-sections with names that describe the
-key points (for example, instead of ``methods we use'', the heading
-``Statistical-Based Learning'' would be more informative). The Methods and
-Results sections should together be approximately 3--4 pages in length.
+\begin{figure}[p]
+\centering
+\subfloat[NN with Lambda 0.9 vs. Positional-Value]{\hspace*{-0.8cm}\includegraphics[width=0.66\linewidth, keepaspectratio]{Pos-Val-9.png}\label{fig:subfig1}}
+\subfloat[NN with Lambda 1.0 vs. Positional-Value]{\includegraphics[width=0.66\linewidth, keepaspectratio]{Pos-Val-1.png}\label{fig:subfig1}}
+\caption{Score of Self-Trained Neural Networks vs. Positional-Value}
+\label{fig:graph5}
+\end{figure}
+
+\begin{figure}[h!]
+  \includegraphics[width=\linewidth]{stboard.png}
+  \caption{Initial Board State for Othello}
+  \label{fig:board1}
+\end{figure}
+
+
 
 
 \section{Discussion}
 
-This section should begin with a brief summary of your results. Next, provide a
-more detailed synopsis of your results: What new knowledge do they offer? What
-lessons did you learn? What is the main take-away message of your work?
-Finally, you should provide a brief critique of your own work: Point out the
-specific attributes that you feel are extremely positive and note any
-weaknesses or limitations. Discuss how your project could be improved. You can
-also discuss possible extensions of your work. This section should be
-approximately 1 page in length.
+In this project we compare two  $\lambda$ values ($0.9$ and $1.0$) in their ability to train an Othello player using the TD($\lambda$) algorithm. We found that both values worked best training with self-play. Using self play as the training paradigm, $\lambda  = 1$ worked best for our TD($\lambda$) implementation on training an Othello player. This version of the algorithm is most similar to Monte Carlo methods [1].
+
+For future work with respect to our implementation, we would like to continue to explore combinations of ? values, ? values, network setups, and randomness to determine which results in the best training inputs. Using more advanced network techniques, such as changing of ? values and ? values through the training process is another possibility. We also would like to determine what caused our network during training to inflate all its outputs toward $1,$ when $? < 1$. In general, we feel that this method of learning could be expanded to number of board games.
 
 
 %ACKNOWLEDGMENTS are optional

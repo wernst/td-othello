@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2014) (preloaded format=pdflatex 2014.5.25)  16 DEC 2016 15:59
+This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2014) (preloaded format=pdflatex 2014.5.25)  17 DEC 2016 01:22
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -487,11 +487,7 @@ Now handling font encoding U ...
    defining Unicode char U+2122 (decimal 8482)
    defining Unicode char U+2423 (decimal 9251)
 ))
-(./G_Will-FinalProject.aux
-
-LaTeX Warning: Label `fig:neuron4' multiply defined.
-
-)
+(./G_Will-FinalProject.aux)
 \openout1 = `G_Will-FinalProject.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 16.
@@ -506,7 +502,8 @@ LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 16.
 LaTeX Font Info:    ... okay on input line 16.
 LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 16.
 LaTeX Font Info:    ... okay on input line 16.
- (/usr/local/texlive/2014/texmf-dist/tex/context/base/supp-pdf.mkii
+
+(/usr/local/texlive/2014/texmf-dist/tex/context/base/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
 \scratchcounter=\count119
 \scratchdimen=\dimen131
@@ -586,29 +583,36 @@ Overfull \hbox (17.42432pt too wide) in paragraph at lines 45--46
 ference
  []
 
-<neuron.png, id=1, 353.32pt x 152.57pt>
-File: neuron.png Graphic file (type png)
- <use neuron.png>
-Package pdftex.def Info: neuron.png used on input line 57.
-(pdftex.def)             Requested size: 240.0pt x 103.63681pt.
+<stboard.png, id=1, 291.0875pt x 288.07625pt>
+File: stboard.png Graphic file (type png)
+ <use stboard.png>
+Package pdftex.def Info: stboard.png used on input line 57.
+(pdftex.def)             Requested size: 240.0pt x 237.52077pt.
 
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-<simpleNN.png, id=3, 561.09625pt x 240.9pt>
+<simpleNN.png, id=2, 561.09625pt x 240.9pt>
 File: simpleNN.png Graphic file (type png)
  <use simpleNN.png>
 Package pdftex.def Info: simpleNN.png used on input line 67.
 (pdftex.def)             Requested size: 240.0pt x 103.04094pt.
 
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+
 Overfull \hbox (2.79707pt too wide) in paragraph at lines 72--73
 \T1/aer/m/n/9 propagates this er-ror through the net-work. Back-propagation
  []
 
-[1{/usr/local/texlive/2014/texmf-var/fonts/map/pdftex/updmap/pdftex.map}
+
+Underfull \vbox (badness 3396) has occurred while \output is active []
+
+ [1{/usr/local/texlive/2014/texmf-var/fonts/map/pdftex/updmap/pdftex.map}
 
 
- <./neuron.png> <./simpleNN.png>]
+ <./stboard.png>]
 Overfull \hbox (2.2742pt too wide) in paragraph at lines 74--75
 []\T1/aer/m/n/9 Othello is a de-ter-min-is-tic game, un-like Backgam-mon where
  []
@@ -620,6 +624,13 @@ aer/m/n/9 ) val-ues. The lambda
  []
 
 
+LaTeX Warning: Citation `van2013reinforcement' on page \thepage  undefined on i
+nput line 80.
+
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+
 Overfull \hbox (7.14128pt too wide) in paragraph at lines 89--90
 \T1/aer/m/n/9 TD-Gammon. TD-Gammon, de-vel-oped in 1992, is a backgam-
  []
@@ -629,7 +640,7 @@ Overfull \hbox (2.95909pt too wide) in paragraph at lines 93--94
 []\T1/aer/m/n/9 The TD gam-mon pro-gram runs as fol-lows: at each timestep
  []
 
-
+[2 <./simpleNN.png>]
 Overfull \hbox (1.57155pt too wide) in paragraph at lines 99--100
 \T1/aer/m/n/9 and a 2-ply look ahead. Play-ing Kent Gould-ing, Kit Woolsey,
  []
@@ -639,70 +650,154 @@ Overfull \hbox (2.8228pt too wide) in paragraph at lines 99--100
 \T1/aer/m/n/9 Wilcox Snellings, for-mer World Cup Cham-pion Joe Sylvester,
  []
 
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
- [2]
-
-LaTeX Warning: Citation `sutton1998reinforcement' on page \thepage  undefined o
-n input line 106.
-
+<neuron.png, id=21, 353.32pt x 152.57pt>
 File: neuron.png Graphic file (type png)
-<use neuron.png>
-Package pdftex.def Info: neuron.png used on input line 120.
+ <use neuron.png>
+Package pdftex.def Info: neuron.png used on input line 117.
 (pdftex.def)             Requested size: 240.0pt x 103.63681pt.
- <sigmoid.png, id=22, 454.69875pt x 303.63437pt>
+
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+
+LaTeX Warning: Citation `rosenblatt1958perceptron' on page \thepage  undefined 
+on input line 122.
+
+<sigmoid.png, id=22, 454.69875pt x 303.63437pt>
 File: sigmoid.png Graphic file (type png)
-
-<use sigmoid.png>
-Package pdftex.def Info: sigmoid.png used on input line 143.
+ <use sigmoid.png>
+Package pdftex.def Info: sigmoid.png used on input line 145.
 (pdftex.def)             Requested size: 120.0pt x 80.12914pt.
- <perceptron.png, id=23, 449.68pt x 310.15875pt>
-File: perceptron.png Graphic file (type png)
 
-<use perceptron.png>
-Package pdftex.def Info: perceptron.png used on input line 144.
+<perceptron.png, id=23, 449.68pt x 310.15875pt>
+File: perceptron.png Graphic file (type png)
+ <use perceptron.png>
+Package pdftex.def Info: perceptron.png used on input line 146.
 (pdftex.def)             Requested size: 120.0pt x 82.76906pt.
- [3 <./sigmoid.png> <./perceptron.png>]
-Overfull \hbox (18.43619pt too wide) detected at line 202
+ [3 <./neuron.png> <./sigmoid.png> <./perceptron.png>]
+Overfull \hbox (18.43619pt too wide) detected at line 204
 | \OML/cmm/m/it/9 ^^N[] \OT1/cmr/m/n/9 = [] = []
  []
 
+[4] <e-rate.png, id=38, 694.595pt x 291.0875pt>
+File: e-rate.png Graphic file (type png)
+ <use e-rate.png>
+Package pdftex.def Info: e-rate.png used on input line 273.
+(pdftex.def)             Requested size: 240.0pt x 100.5763pt.
 
-Underfull \hbox (badness 10000) in paragraph at lines 215--218
+<NN-Fixed-9.png, id=39, 578.16pt x 433.62pt>
+File: NN-Fixed-9.png Graphic file (type png)
+ <use NN-Fixed-9.png>
+Package pdftex.def Info: NN-Fixed-9.png used on input line 306.
+(pdftex.def)             Requested size: 158.40088pt x 118.79926pt.
 
+<NN-Fixed-1.png, id=40, 578.16pt x 433.62pt>
+File: NN-Fixed-1.png Graphic file (type png)
+ <use NN-Fixed-1.png>
+Package pdftex.def Info: NN-Fixed-1.png used on input line 307.
+(pdftex.def)             Requested size: 158.40088pt x 118.79926pt.
+
+Overfull \hbox (54.03947pt too wide) in paragraph at lines 306--308
+ [][][] 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 215--218
+Overfull \hbox (24.55688pt too wide) in paragraph at lines 314--315
+[]\T1/aer/m/n/9 During the course of train-ing, both Networks$\OMS/cmsy/m/n/9 ^
+^@\OML/cmm/m/it/9 NN \OMS/cmsy/m/n/9 ^^@ \OML/cmm/m/it/9 Decreasing$
+ []
 
+[5 <./e-rate.png>] <NN-Decreasing-9.png, id=47, 578.16pt x 433.62pt>
+File: NN-Decreasing-9.png Graphic file (type png)
+
+<use NN-Decreasing-9.png>
+Package pdftex.def Info: NN-Decreasing-9.png used on input line 318.
+(pdftex.def)             Requested size: 158.40088pt x 118.79926pt.
+ <NN-Decreasing-1.png, id=48, 578.16pt x 433.62pt>
+File: NN-Decreasing-1.png Graphic file (type png)
+
+<use NN-Decreasing-1.png>
+Package pdftex.def Info: NN-Decreasing-1.png used on input line 319.
+(pdftex.def)             Requested size: 158.40088pt x 118.79926pt.
+
+Overfull \hbox (54.03947pt too wide) in paragraph at lines 318--320
+ [][][] 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 215--218
+Underfull \vbox (badness 1558) has occurred while \output is active []
 
+ [6 <./NN-Fixed-9.png> <./NN-Fixed-1.png> <./NN-Decreasing-9.png> <./NN-Decreas
+ing-1.png>]
+<Alpha-Beta-9.png, id=56, 602.25pt x 451.6875pt>
+File: Alpha-Beta-9.png Graphic file (type png)
+ <use Alpha-Beta-9.png>
+Package pdftex.def Info: Alpha-Beta-9.png used on input line 339.
+(pdftex.def)             Requested size: 158.40088pt x 118.80063pt.
+
+Underfull \hbox (badness 1960) in paragraph at lines 339--339
+[]\T1/aer/m/n/9 (a) |NN with Lambda 0.9 vs.
  []
 
-[4]
-File: neuron.png Graphic file (type png)
- <use neuron.png>
-Package pdftex.def Info: neuron.png used on input line 272.
-(pdftex.def)             Requested size: 240.0pt x 103.63681pt.
+<Alpha-Beta-1.png, id=57, 602.25pt x 451.6875pt>
+File: Alpha-Beta-1.png Graphic file (type png)
+ <use Alpha-Beta-1.png>
+Package pdftex.def Info: Alpha-Beta-1.png used on input line 340.
+(pdftex.def)             Requested size: 158.40088pt x 118.80063pt.
 
-No file G_Will-FinalProject.bbl.
-[5] (./G_Will-FinalProject.aux)
+Overfull \hbox (54.03947pt too wide) in paragraph at lines 339--341
+ [][][] 
+ []
 
-LaTeX Warning: There were multiply-defined labels.
+<Pos-Val-9.png, id=58, 602.25pt x 451.6875pt>
+File: Pos-Val-9.png Graphic file (type png)
+ <use Pos-Val-9.png>
+Package pdftex.def Info: Pos-Val-9.png used on input line 357.
+(pdftex.def)             Requested size: 158.40088pt x 118.80063pt.
+
+Underfull \hbox (badness 1960) in paragraph at lines 357--357
+[]\T1/aer/m/n/9 (a) |NN with Lambda 0.9 vs.
+ []
+
+<Pos-Val-1.png, id=59, 602.25pt x 451.6875pt>
+File: Pos-Val-1.png Graphic file (type png)
+ <use Pos-Val-1.png>
+Package pdftex.def Info: Pos-Val-1.png used on input line 358.
+(pdftex.def)             Requested size: 158.40088pt x 118.80063pt.
+
+Overfull \hbox (54.03947pt too wide) in paragraph at lines 357--359
+ [][][] 
+ []
+
+
+Underfull \hbox (badness 1552) in paragraph at lines 359--359
+[]\T1/aer/m/n/9 Figure 9: |Score of Self-Trained Neu-ral Net-works vs.
+ []
+
+File: stboard.png Graphic file (type png)
+<use stboard.png>
+Package pdftex.def Info: stboard.png used on input line 364.
+(pdftex.def)             Requested size: 240.0pt x 237.52077pt.
+
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+(./G_Will-FinalProject.bbl) [7 <./Alpha-Beta-9.png> <./Alpha-Beta-1.png> <./Pos
+-Val-9.png> <./Pos-Val-1.png>] [8
+
+] (./G_Will-FinalProject.aux)
+
+LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
 
  ) 
 Here is how much of TeX's memory you used:
- 4562 strings out of 493117
- 64240 string characters out of 6135433
- 144260 words of memory out of 5000000
- 7907 multiletter control sequences out of 15000+600000
- 52113 words of font info for 69 fonts, out of 8000000 for 9000
+ 4615 strings out of 493117
+ 65258 string characters out of 6135433
+ 145151 words of memory out of 5000000
+ 7950 multiletter control sequences out of 15000+600000
+ 51463 words of font info for 67 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 53i,10n,92p,1294b,430s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 53i,10n,92p,1469b,430s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/local/texlive/2014/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/local/t
 exlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx9.pfb></usr/local/tex
 live/2014/texmf-dist/fonts/type1/public/amsfonts/cmextra/cmex9.pfb></usr/local/
@@ -719,10 +814,10 @@ st/fonts/type1/public/amsfonts/cm/cmti9.pfb></usr/local/texlive/2014/texmf-dist
 /fonts/type1/urw/helvetic/uhvb8a.pfb></usr/local/texlive/2014/texmf-dist/fonts/
 type1/urw/helvetic/uhvr8a.pfb></usr/local/texlive/2014/texmf-dist/fonts/type1/u
 rw/times/utmb8a.pfb>
-Output written on G_Will-FinalProject.pdf (5 pages, 308391 bytes).
+Output written on G_Will-FinalProject.pdf (8 pages, 1250904 bytes).
 PDF statistics:
- 90 PDF objects out of 1000 (max. 8388607)
- 59 compressed objects within 1 object stream
+ 120 PDF objects out of 1000 (max. 8388607)
+ 67 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
- 21 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 71 words of extra memory for PDF output out of 10000 (max. 10000000)
 
