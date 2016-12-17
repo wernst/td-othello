@@ -3,7 +3,7 @@
 
 from Othello import Othello
 from Player import Player
-from NeuralNetwork import NeuralNetwork
+from NeuralNetwork2 import NeuralNetwork2
 from Board import Board
 import numpy as np
 import random
@@ -29,7 +29,7 @@ def main():
     #     plotLearning("nn_dec_random", lf, opponent_type2)
     player_type = ["nn_random", "nn_dec_random"]
     agent_type = ["pos_values", "alphabeta"]
-    ld_val = [9, 1]
+    ld_val = [9,1]
     for at in agent_type:
         for ld in ld_val:
             plotVSAgent(player_type, ld, at)
@@ -38,8 +38,8 @@ def main():
 #===============================================================================
 
 def train():
-    nn = NeuralNetwork(50, 1.0, 0.9, 0.001)
-    nn2 = NeuralNetwork(50, 1.0, 1.0, 0.001)
+    nn = NeuralNetwork2(50, 1.0, 0.9, 0.001)
+    nn2 = NeuralNetwork2(50, 1.0, 1.0, 0.001)
     jobs = []
     player_type = ["nn_random"]
     player_type2 = ["nn_dec_random"]
@@ -116,7 +116,7 @@ def plotLearning(p_type, ld_val, opponent_type):
 
     plt.xlabel('Number of Games Trained')
     plt.ylabel('Win Percentage vs. Random Agent (500 games)')
-    plt.title('Performance of Learning for ' + p_name + " and Lambda:" + ld_name)
+    plt.title('Performance of Learning for ' + p_name + " and Lambda: " + ld_name)
     pathToFile =  p_type + "/" + str(ld_val) + "/"
 
     for index, op_type in enumerate(opponent_type):
@@ -149,7 +149,7 @@ def plotLearning(p_type, ld_val, opponent_type):
 
 def plotVSAgent(player_type, ld_val, agent_type):
 
-    nn = NeuralNetwork(50, 1.0, 0.9, 0.001)
+    nn = NeuralNetwork2(50, 1.0, 0.9, 0.001)
 
     ld_name = "0.9" if ld_val == 9 else "1.0"
 
@@ -158,8 +158,10 @@ def plotVSAgent(player_type, ld_val, agent_type):
 
     minorLocatorX = AutoMinorLocator()
     minorLocatorY = AutoMinorLocator()
+
     fig = plt.figure()
     ax = fig.add_subplot(1,1,1)
+
 
     ax.xaxis.set_minor_locator(minorLocatorX)
     ax.yaxis.set_minor_locator(minorLocatorY)
@@ -170,26 +172,29 @@ def plotVSAgent(player_type, ld_val, agent_type):
     plt.ylabel('Black Score vs '+ agent_type)
     plt.title('Performance of Self-Trained NN with Lambda: ' + ld_name + 'vs. ' + agent_type)
     pathToFile = agent_type + "/" + str(ld_val) + "/"
+
     if not os.path.exists(pathToFile):
         os.makedirs(pathToFile)
 
     for index, p_type in enumerate(player_type):
         numGames = []
         blackScore = []
-        for iteration in range(1000, 124000, 2000):
+        for iteration in range(1000, 126000, 4000):
             p_name = "NN-Fixed" if p_type == "nn_random" else "NN-Decreasing"
-
             nn_name = str(ld_val) + "-" + p_type + "_" + str(iteration) + ".pkl"
+
             try:
                 nn.load(nn_name, p_type, p_type, ld_val)
             except:
                 break
+
             blackScore.append(int(calcBlackScore(nn, agent_type)))
             numGames.append(iteration)
         plt.plot(numGames, blackScore, marker=markers[index], c=colours[index])
         plt.axis([0, 124000, 0, 64])
         plt.grid(which='major', color='k', linestyle='--', alpha=0.8)
         plt.grid(which='minor', color='b', alpha=0.5)
+
     p1 = plt.Rectangle((0, 0), 0.1, 0.1, fc=colours[0])
     p2 = plt.Rectangle((0, 0), 0.1, 0.1, fc=colours[1])
     plt.legend((p1, p2), (player_type[0], player_type[1]), loc='best')

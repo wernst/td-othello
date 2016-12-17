@@ -7,7 +7,7 @@ from Player import Player
 import pickle, sys, time, os
 
 inputUnits = 64
-class NeuralNetwork(object):
+class NeuralNetwork2(object):
 
     """Initialize neural Network Parameters"""
     def __init__(self, numHidLayers, gamma, ld, learningRate):
