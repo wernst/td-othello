@@ -4,13 +4,14 @@
 from Othello import Othello
 from Player import Player
 from NeuralNetwork2 import NeuralNetwork2
-from Board import Board
 import numpy as np
 import random
 import sys, os
+from gui import GameBoard
+import Tkinter as tk
 import multiprocessing as pool
-import matplotlib.pyplot as plt
-from matplotlib.ticker import AutoMinorLocator
+#import matplotlib.pyplot as plt
+#from matplotlib.ticker import AutoMinorLocator
 
 #sys.path.append("/anaconda/bin")
 
@@ -27,12 +28,14 @@ def main():
     #     plotLearning("nn_random", lf, opponent_type)
     # for lf in learn_From:
     #     plotLearning("nn_dec_random", lf, opponent_type2)
-    player_type = ["nn_random", "nn_dec_random"]
-    agent_type = ["pos_values", "alphabeta"]
-    ld_val = [9,1]
-    for at in agent_type:
-        for ld in ld_val:
-            plotVSAgent(player_type, ld, at)
+    # player_type = ["nn_random", "nn_dec_random"]
+    # agent_type = ["pos_values", "alphabeta"]
+    # ld_val = [9,1]
+    # for at in agent_type:
+    #     for ld in ld_val:
+    #         plotVSAgent(player_type, ld, at)
+    playGui("GO")
+
 #===============================================================================
 #Train
 #===============================================================================
@@ -359,7 +362,7 @@ def prototypePresention():
     while(True):
         nn_type = raw_input("(1) For Random NeuralNetwork, (2) For Pre-Trained NerualNetwork, (q) to quit\n")
         if(nn_type == "1"):
-            nn = NeuralNetwork(16, 0.7, 0.9, 0.5)
+            nn = NeuralNetwork2(16, 0.7, 0.9, 0.5)
         elif(nn_type == "2"):
             nn.load("nn1000.pk1")
         else:
@@ -381,7 +384,17 @@ def prototypePresention():
 #===============================================================================
 #Playing
 #===============================================================================
-
+def playGui(nn_file=None):
+    root = tk.Tk()
+    nn = NeuralNetwork2(16, 0.7, 0.9, 0.5)
+    #root.resizable(width = False, height = False)
+    game = Othello()
+    if nn_file != None:
+        nn.load("1-nn_dec_random_120000.pkl", "nn_dec_random", "nn_dec_random", 1)
+    black_player = Player(nn, game, True, "nn")
+    white_player = Player(nn, game, False, "human_gui")
+    gui_board = GameBoard(root, game, black_player, white_player)
+    gui_board.play()
 
 def playVerbose(nn_black, nn_white):
     continue_play = False

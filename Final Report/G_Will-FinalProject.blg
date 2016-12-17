@@ -3,46 +3,44 @@ Capacity: max_strings=35307, hash_size=35307, hash_prime=30011
 The top-level auxiliary file: G_Will-FinalProject.aux
 The style file: abbrv.bst
 Database file #1: references.bib
-Warning--can't use both volume and number fields in sutton1998reinforcement
-You've used 1 entry,
+You've used 2 entries,
             2118 wiz_defined-function locations,
-            502 strings with 3859 characters,
-and the built_in function-call counts, 287 in all, are:
-= -- 23
-> -- 13
+            513 strings with 4203 characters,
+and the built_in function-call counts, 735 in all, are:
+= -- 76
+> -- 20
 < -- 1
-+ -- 5
-- -- 4
-* -- 20
-:= -- 54
-add.period$ -- 3
-call.type$ -- 1
-change.case$ -- 4
++ -- 9
+- -- 6
+* -- 44
+:= -- 117
+add.period$ -- 7
+call.type$ -- 2
+change.case$ -- 9
 chr.to.int$ -- 0
 cite$ -- 2
-duplicate$ -- 12
-empty$ -- 23
-format.name$ -- 4
-if$ -- 56
+duplicate$ -- 34
+empty$ -- 65
+format.name$ -- 6
+if$ -- 163
 int.to.chr$ -- 0
-int.to.str$ -- 1
+int.to.str$ -- 2
 missing$ -- 2
-newline$ -- 8
-num.names$ -- 2
-pop$ -- 7
+newline$ -- 13
+num.names$ -- 4
+pop$ -- 10
 preamble$ -- 1
-purify$ -- 4
+purify$ -- 7
 quote$ -- 0
-skip$ -- 8
+skip$ -- 26
 stack$ -- 0
-substring$ -- 5
-swap$ -- 3
+substring$ -- 52
+swap$ -- 12
 text.length$ -- 1
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 2
-warning$ -- 1
-while$ -- 2
-width$ -- 2
-write$ -- 13
-(There was 1 warning)
+type$ -- 8
+warning$ -- 0
+while$ -- 8
+width$ -- 3
+write$ -- 25
