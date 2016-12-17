@@ -81,7 +81,9 @@ class Othello(object):
             self.game_board.updateValidMoves()
 
             if self.game_board.valid_moves == {}:
+                self.game_over = True
                 return True
+        self.game_over = False
         return False
 
     def quit(self):

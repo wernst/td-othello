@@ -21,6 +21,7 @@ ties = 0
 
 
 def main():
+    nn = NeuralNetwork2(50, 1.0, 0.9, 0.001)
     # opponent_type = ["nn_random", "pos_values", "random"]
     # opponent_type2 = ["nn_dec_random", "pos_values", "random"]
     # learn_From = [9, 1]
@@ -391,8 +392,8 @@ def playGui(nn_file=None):
     game = Othello()
     if nn_file != None:
         nn.load("1-nn_dec_random_120000.pkl", "nn_dec_random", "nn_dec_random", 1)
-    black_player = Player(nn, game, True, "nn")
-    white_player = Player(nn, game, False, "human_gui")
+    black_player = Player(nn, game, True, "human_gui")
+    white_player = Player(nn, game, False, "nn")
     gui_board = GameBoard(root, game, black_player, white_player)
     gui_board.play()
 
