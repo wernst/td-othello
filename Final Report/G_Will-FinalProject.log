@@ -1,41 +1,41 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2014) (preloaded format=pdflatex 2014.5.25)  17 DEC 2016 01:25
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015) (preloaded format=pdflatex 2015.5.24)  20 DEC 2016 12:47
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
  %&-line parsing enabled.
 **G_Will-FinalProject.tex
 (./G_Will-FinalProject.tex
-LaTeX2e <2014/05/01>
-Babel <3.9k> and hyphenation patterns for 78 languages loaded.
+LaTeX2e <2015/01/01>
+Babel <3.9l> and hyphenation patterns for 79 languages loaded.
 (./sig-alternate-05-2015.cls
-(/usr/local/texlive/2014/texmf-dist/tex/latex/graphics/epsfig.sty
+(/usr/local/texlive/2015/texmf-dist/tex/latex/graphics/epsfig.sty
 Package: epsfig 1999/02/16 v1.7a (e)psfig emulation (SPQR)
 
-(/usr/local/texlive/2014/texmf-dist/tex/latex/graphics/graphicx.sty
-Package: graphicx 2014/04/25 v1.0g Enhanced LaTeX Graphics (DPC,SPQR)
+(/usr/local/texlive/2015/texmf-dist/tex/latex/graphics/graphicx.sty
+Package: graphicx 2014/10/28 v1.0g Enhanced LaTeX Graphics (DPC,SPQR)
 
-(/usr/local/texlive/2014/texmf-dist/tex/latex/graphics/keyval.sty
-Package: keyval 2014/05/08 v1.15 key=value parser (DPC)
+(/usr/local/texlive/2015/texmf-dist/tex/latex/graphics/keyval.sty
+Package: keyval 2014/10/28 v1.15 key=value parser (DPC)
 \KV@toks@=\toks14
 )
-(/usr/local/texlive/2014/texmf-dist/tex/latex/graphics/graphics.sty
-Package: graphics 2009/02/05 v1.0o Standard LaTeX Graphics (DPC,SPQR)
+(/usr/local/texlive/2015/texmf-dist/tex/latex/graphics/graphics.sty
+Package: graphics 2014/10/28 v1.0p Standard LaTeX Graphics (DPC,SPQR)
 
-(/usr/local/texlive/2014/texmf-dist/tex/latex/graphics/trig.sty
+(/usr/local/texlive/2015/texmf-dist/tex/latex/graphics/trig.sty
 Package: trig 1999/03/16 v1.09 sin cos tan (DPC)
 )
-(/usr/local/texlive/2014/texmf-dist/tex/latex/latexconfig/graphics.cfg
+(/usr/local/texlive/2015/texmf-dist/tex/latex/latexconfig/graphics.cfg
 File: graphics.cfg 2010/04/23 v1.9 graphics configuration of TeX Live
 )
-Package graphics Info: Driver file: pdftex.def on input line 91.
+Package graphics Info: Driver file: pdftex.def on input line 94.
 
-(/usr/local/texlive/2014/texmf-dist/tex/latex/pdftex-def/pdftex.def
+(/usr/local/texlive/2015/texmf-dist/tex/latex/pdftex-def/pdftex.def
 File: pdftex.def 2011/05/27 v0.06d Graphics/color for pdfTeX
 
-(/usr/local/texlive/2014/texmf-dist/tex/generic/oberdiek/infwarerr.sty
+(/usr/local/texlive/2015/texmf-dist/tex/generic/oberdiek/infwarerr.sty
 Package: infwarerr 2010/04/08 v1.3 Providing info/warning/error messages (HO)
 )
-(/usr/local/texlive/2014/texmf-dist/tex/generic/oberdiek/ltxcmds.sty
+(/usr/local/texlive/2015/texmf-dist/tex/generic/oberdiek/ltxcmds.sty
 Package: ltxcmds 2011/11/09 v1.22 LaTeX kernel commands for general use (HO)
 )
 \Gread@gobject=\count79
@@ -46,10 +46,10 @@ Package: ltxcmds 2011/11/09 v1.22 LaTeX kernel commands for general use (HO)
 \epsfxsize=\dimen104
 \epsfysize=\dimen105
 )
-(/usr/local/texlive/2014/texmf-dist/tex/latex/amsfonts/amssymb.sty
+(/usr/local/texlive/2015/texmf-dist/tex/latex/amsfonts/amssymb.sty
 Package: amssymb 2013/01/14 v3.01 AMS font symbols
 
-(/usr/local/texlive/2014/texmf-dist/tex/latex/amsfonts/amsfonts.sty
+(/usr/local/texlive/2015/texmf-dist/tex/latex/amsfonts/amsfonts.sty
 Package: amsfonts 2013/01/14 v3.01 Basic AMSFonts support
 \@emptytoks=\toks15
 \symAMSa=\mathgroup4
@@ -57,24 +57,24 @@ Package: amsfonts 2013/01/14 v3.01 Basic AMSFonts support
 LaTeX Font Info:    Overwriting math alphabet `\mathfrak' in version `bold'
 (Font)                  U/euf/m/n --> U/euf/b/n on input line 106.
 ))
-(/usr/local/texlive/2014/texmf-dist/tex/latex/amsmath/amsmath.sty
+(/usr/local/texlive/2015/texmf-dist/tex/latex/amsmath/amsmath.sty
 Package: amsmath 2013/01/14 v2.14 AMS math features
 \@mathmargin=\skip41
 
 For additional information on amsmath, use the `?' option.
-(/usr/local/texlive/2014/texmf-dist/tex/latex/amsmath/amstext.sty
+(/usr/local/texlive/2015/texmf-dist/tex/latex/amsmath/amstext.sty
 Package: amstext 2000/06/29 v2.01
 
-(/usr/local/texlive/2014/texmf-dist/tex/latex/amsmath/amsgen.sty
+(/usr/local/texlive/2015/texmf-dist/tex/latex/amsmath/amsgen.sty
 File: amsgen.sty 1999/11/30 v2.0
 \@emptytoks=\toks16
 \ex@=\dimen106
 ))
-(/usr/local/texlive/2014/texmf-dist/tex/latex/amsmath/amsbsy.sty
+(/usr/local/texlive/2015/texmf-dist/tex/latex/amsmath/amsbsy.sty
 Package: amsbsy 1999/11/29 v1.2d
 \pmbraise@=\dimen107
 )
-(/usr/local/texlive/2014/texmf-dist/tex/latex/amsmath/amsopn.sty
+(/usr/local/texlive/2015/texmf-dist/tex/latex/amsmath/amsopn.sty
 Package: amsopn 1999/12/14 v2.01 operator names
 )
 \inf@bad=\count80
@@ -125,7 +125,7 @@ m.org ******
 Questions on the style, SIGS policies, etc. to Adrienne Griscti griscti@acm.org
 
 \ACM@basesize=\count92
-(/usr/local/texlive/2014/texmf-dist/tex/latex/comment/comment.sty
+(/usr/local/texlive/2015/texmf-dist/tex/latex/comment/comment.sty
 \CommentStream=\write3
 
 Excluding comment 'comment') Excluding comment 'CCSXML'
@@ -133,7 +133,7 @@ Excluding comment 'comment') Excluding comment 'CCSXML'
 \@maxsep=\dimen116
 \@dblmaxsep=\dimen117
 
-(/usr/local/texlive/2014/texmf-dist/tex/generic/oberdiek/ifpdf.sty
+(/usr/local/texlive/2015/texmf-dist/tex/generic/oberdiek/ifpdf.sty
 Package: ifpdf 2011/01/30 v2.3 Provides the ifpdf switch (HO)
 Package ifpdf Info: pdfTeX in PDF mode is detected.
 )
@@ -160,11 +160,11 @@ LaTeX Warning: You have requested document class `sig-alternate-05-2015',
 
 Document Class: sig-alternate 2013/05/12 v2.7 based on acmproc.cls V1.3 <Nov. 3
 0 '99>
-(/usr/local/texlive/2014/texmf-dist/tex/latex/base/latexsym.sty
+(/usr/local/texlive/2015/texmf-dist/tex/latex/base/latexsym.sty
 Package: latexsym 1998/08/17 v2.2e Standard LaTeX package (lasy symbols)
 \symlasy=\mathgroup6
 LaTeX Font Info:    Overwriting symbol font `lasy' in version `bold'
-(Font)                  U/lasy/m/n --> U/lasy/b/n on input line 47.
+(Font)                  U/lasy/m/n --> U/lasy/b/n on input line 52.
 )
 \@acmtitlebox=\box28
 \titlenotecount=\count102
@@ -191,39 +191,41 @@ LaTeX Info: Redefining \cite on input line 1410.
 \copyrtyr=\toks32
 \acmcopyr=\toks33
 \boilerplate=\toks34
-(/usr/local/texlive/2014/texmf-dist/tex/latex/url/url.sty
+(/usr/local/texlive/2015/texmf-dist/tex/latex/url/url.sty
 \Urlmuskip=\muskip11
 Package: url 2013/09/16  ver 3.4  Verb mode for urls, etc.
 ) (./acmcopyright.sty
 Package: acmcopyright 2014/06/29 v1.2 Copyright statemens for ACM classes
 
-(/usr/local/texlive/2014/texmf-dist/tex/latex/xkeyval/xkeyval.sty
-Package: xkeyval 2014/05/09 v2.6d package option processing (HA)
+(/usr/local/texlive/2015/texmf-dist/tex/latex/xkeyval/xkeyval.sty
+Package: xkeyval 2014/12/03 v2.7a package option processing (HA)
 
-(/usr/local/texlive/2014/texmf-dist/tex/generic/xkeyval/xkeyval.tex
+(/usr/local/texlive/2015/texmf-dist/tex/generic/xkeyval/xkeyval.tex
+(/usr/local/texlive/2015/texmf-dist/tex/generic/xkeyval/xkvutils.tex
 \XKV@toks=\toks35
 \XKV@tempa@toks=\toks36
+)
 \XKV@depth=\count110
-File: xkeyval.tex 2014/05/09 v2.6d key=value parser (HA)
+File: xkeyval.tex 2014/12/03 v2.7a key=value parser (HA)
 )))
 \copyrightetc=\toks37
 
-(/usr/local/texlive/2014/texmf-dist/tex/latex/base/fontenc.sty
+(/usr/local/texlive/2015/texmf-dist/tex/latex/base/fontenc.sty
 Package: fontenc 2005/09/27 v1.99g Standard LaTeX package
 
-(/usr/local/texlive/2014/texmf-dist/tex/latex/base/t1enc.def
+(/usr/local/texlive/2015/texmf-dist/tex/latex/base/t1enc.def
 File: t1enc.def 2005/09/27 v1.99g Standard LaTeX file
-LaTeX Font Info:    Redeclaring font encoding T1 on input line 43.
+LaTeX Font Info:    Redeclaring font encoding T1 on input line 48.
 )
-LaTeX Font Info:    Try loading font information for T1+aer on input line 100.
+LaTeX Font Info:    Try loading font information for T1+aer on input line 105.
 
-(/usr/local/texlive/2014/texmf-dist/tex/latex/ae/t1aer.fd
+(/usr/local/texlive/2015/texmf-dist/tex/latex/ae/t1aer.fd
 File: t1aer.fd 1997/11/16 Font definitions for T1/aer.
 )))
-(/usr/local/texlive/2014/texmf-dist/tex/latex/caption/caption.sty
+(/usr/local/texlive/2015/texmf-dist/tex/latex/caption/caption.sty
 Package: caption 2013/05/02 v3.3-89 Customizing captions (AR)
 
-(/usr/local/texlive/2014/texmf-dist/tex/latex/caption/caption3.sty
+(/usr/local/texlive/2015/texmf-dist/tex/latex/caption/caption3.sty
 Package: caption3 2013/05/02 v1.6-88 caption3 kernel (AR)
 Package caption3 Info: TeX engine: e-TeX on input line 57.
 \captionmargin=\dimen123
@@ -247,7 +249,7 @@ Package caption Info: \@makecaption = \long macro:#1#2-> \vskip 10pt \setbox \@
 tempboxa \hbox {\textbf {#1: #2}} \ifdim \wd \@tempboxa >\hsize \textbf {#1: #2
 }\par \else \hbox to\hsize {\hfil \box \@tempboxa \hfil } \fi .
 \c@ContinuedFloat=\count111
-) (/usr/local/texlive/2014/texmf-dist/tex/latex/subfig/subfig.sty
+) (/usr/local/texlive/2015/texmf-dist/tex/latex/subfig/subfig.sty
 Package: subfig 2005/06/28 ver: 1.3 subfig package
 \c@KVtest=\count112
 \sf@farskip=\skip46
@@ -263,27 +265,27 @@ Package: subfig 2005/06/28 ver: 1.3 subfig package
 \sf@top=\skip49
 \sf@bottom=\skip50
 )
-(/usr/local/texlive/2014/texmf-dist/tex/latex/base/fontenc.sty
+(/usr/local/texlive/2015/texmf-dist/tex/latex/base/fontenc.sty
 Package: fontenc 2005/09/27 v1.99g Standard LaTeX package
 
-(/usr/local/texlive/2014/texmf-dist/tex/latex/base/t1enc.def
+(/usr/local/texlive/2015/texmf-dist/tex/latex/base/t1enc.def
 File: t1enc.def 2005/09/27 v1.99g Standard LaTeX file
-LaTeX Font Info:    Redeclaring font encoding T1 on input line 43.
+LaTeX Font Info:    Redeclaring font encoding T1 on input line 48.
 ))
-(/usr/local/texlive/2014/texmf-dist/tex/latex/base/inputenc.sty
-Package: inputenc 2014/04/30 v1.2b Input encoding file
+(/usr/local/texlive/2015/texmf-dist/tex/latex/base/inputenc.sty
+Package: inputenc 2015/03/17 v1.2c Input encoding file
 \inpenc@prehook=\toks38
 \inpenc@posthook=\toks39
 
-(/usr/local/texlive/2014/texmf-dist/tex/latex/base/utf8.def
-File: utf8.def 2008/04/05 v1.1m UTF-8 support for inputenc
+(/usr/local/texlive/2015/texmf-dist/tex/latex/base/utf8.def
+File: utf8.def 2014/09/29 v1.1m UTF-8 support for inputenc
 Now handling font encoding OML ...
 ... no UTF-8 mapping file for font encoding OML
 Now handling font encoding T1 ...
 ... processing UTF-8 mapping file for font encoding T1
 
-(/usr/local/texlive/2014/texmf-dist/tex/latex/base/t1enc.dfu
-File: t1enc.dfu 2008/04/05 v1.1m UTF-8 support for inputenc
+(/usr/local/texlive/2015/texmf-dist/tex/latex/base/t1enc.dfu
+File: t1enc.dfu 2014/09/29 v1.1m UTF-8 support for inputenc
    defining Unicode char U+00A1 (decimal 161)
    defining Unicode char U+00A3 (decimal 163)
    defining Unicode char U+00AB (decimal 171)
@@ -432,8 +434,8 @@ File: t1enc.dfu 2008/04/05 v1.1m UTF-8 support for inputenc
 Now handling font encoding OT1 ...
 ... processing UTF-8 mapping file for font encoding OT1
 
-(/usr/local/texlive/2014/texmf-dist/tex/latex/base/ot1enc.dfu
-File: ot1enc.dfu 2008/04/05 v1.1m UTF-8 support for inputenc
+(/usr/local/texlive/2015/texmf-dist/tex/latex/base/ot1enc.dfu
+File: ot1enc.dfu 2014/09/29 v1.1m UTF-8 support for inputenc
    defining Unicode char U+00A1 (decimal 161)
    defining Unicode char U+00A3 (decimal 163)
    defining Unicode char U+00B8 (decimal 184)
@@ -463,8 +465,8 @@ File: ot1enc.dfu 2008/04/05 v1.1m UTF-8 support for inputenc
 Now handling font encoding OMS ...
 ... processing UTF-8 mapping file for font encoding OMS
 
-(/usr/local/texlive/2014/texmf-dist/tex/latex/base/omsenc.dfu
-File: omsenc.dfu 2008/04/05 v1.1m UTF-8 support for inputenc
+(/usr/local/texlive/2015/texmf-dist/tex/latex/base/omsenc.dfu
+File: omsenc.dfu 2014/09/29 v1.1m UTF-8 support for inputenc
    defining Unicode char U+00A7 (decimal 167)
    defining Unicode char U+00B6 (decimal 182)
    defining Unicode char U+00B7 (decimal 183)
@@ -566,7 +568,7 @@ LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 16.
 LaTeX Font Info:    ... okay on input line 16.
 LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 16.
 LaTeX Font Info:    ... okay on input line 16.
- (/usr/local/texlive/2014/texmf-dist/tex/context/base/supp-pdf.mkii
+ (/usr/local/texlive/2015/texmf-dist/tex/context/base/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
 \scratchcounter=\count119
 \scratchdimen=\dimen131
@@ -579,11 +581,11 @@ LaTeX Font Info:    ... okay on input line 16.
 \MPnumerator=\count123
 \makeMPintoPDFobject=\count124
 \everyMPtoPDFconversion=\toks41
-) (/usr/local/texlive/2014/texmf-dist/tex/generic/oberdiek/pdftexcmds.sty
+) (/usr/local/texlive/2015/texmf-dist/tex/generic/oberdiek/pdftexcmds.sty
 Package: pdftexcmds 2011/11/29 v0.20 Utility functions of pdfTeX for LuaTeX (HO
 )
 
-(/usr/local/texlive/2014/texmf-dist/tex/generic/oberdiek/ifluatex.sty
+(/usr/local/texlive/2015/texmf-dist/tex/generic/oberdiek/ifluatex.sty
 Package: ifluatex 2010/03/01 v1.3 Provides the ifluatex switch (HO)
 Package ifluatex Info: LuaTeX not detected.
 )
@@ -592,22 +594,22 @@ Package pdftexcmds Info: \pdf@primitive is available.
 Package pdftexcmds Info: \pdf@ifprimitive is available.
 Package pdftexcmds Info: \pdfdraftmode found.
 )
-(/usr/local/texlive/2014/texmf-dist/tex/latex/oberdiek/epstopdf-base.sty
+(/usr/local/texlive/2015/texmf-dist/tex/latex/oberdiek/epstopdf-base.sty
 Package: epstopdf-base 2010/02/09 v2.5 Base part for package epstopdf
 
-(/usr/local/texlive/2014/texmf-dist/tex/latex/oberdiek/grfext.sty
+(/usr/local/texlive/2015/texmf-dist/tex/latex/oberdiek/grfext.sty
 Package: grfext 2010/08/19 v1.1 Manage graphics extensions (HO)
 
-(/usr/local/texlive/2014/texmf-dist/tex/generic/oberdiek/kvdefinekeys.sty
+(/usr/local/texlive/2015/texmf-dist/tex/generic/oberdiek/kvdefinekeys.sty
 Package: kvdefinekeys 2011/04/07 v1.3 Define keys (HO)
 ))
-(/usr/local/texlive/2014/texmf-dist/tex/latex/oberdiek/kvoptions.sty
+(/usr/local/texlive/2015/texmf-dist/tex/latex/oberdiek/kvoptions.sty
 Package: kvoptions 2011/06/30 v3.11 Key value format for package options (HO)
 
-(/usr/local/texlive/2014/texmf-dist/tex/generic/oberdiek/kvsetkeys.sty
+(/usr/local/texlive/2015/texmf-dist/tex/generic/oberdiek/kvsetkeys.sty
 Package: kvsetkeys 2012/04/25 v1.16 Key value parser (HO)
 
-(/usr/local/texlive/2014/texmf-dist/tex/generic/oberdiek/etexcmds.sty
+(/usr/local/texlive/2015/texmf-dist/tex/generic/oberdiek/etexcmds.sty
 Package: etexcmds 2011/02/16 v1.5 Avoid name clashes with e-TeX commands (HO)
 Package etexcmds Info: Could not find \expanded.
 (etexcmds)             That can mean that you are not using pdfTeX 1.50 or
@@ -619,7 +621,7 @@ Package grfext Info: Graphics extension search list:
 G,.JBIG2,.JB2,.eps]
 (grfext)             \AppendGraphicsExtensions on input line 452.
 
-(/usr/local/texlive/2014/texmf-dist/tex/latex/latexconfig/epstopdf-sys.cfg
+(/usr/local/texlive/2015/texmf-dist/tex/latex/latexconfig/epstopdf-sys.cfg
 File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Liv
 e
 ))
@@ -628,17 +630,17 @@ Package caption Info: subfig package v1.3 is loaded.
 Package caption Info: End \AtBeginDocument code.
 LaTeX Font Info:    Try loading font information for U+msa on input line 41.
 
-(/usr/local/texlive/2014/texmf-dist/tex/latex/amsfonts/umsa.fd
+(/usr/local/texlive/2015/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
 LaTeX Font Info:    Try loading font information for U+msb on input line 41.
 
-(/usr/local/texlive/2014/texmf-dist/tex/latex/amsfonts/umsb.fd
+(/usr/local/texlive/2015/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
 LaTeX Font Info:    Try loading font information for U+lasy on input line 41.
 
-(/usr/local/texlive/2014/texmf-dist/tex/latex/base/ulasy.fd
+(/usr/local/texlive/2015/texmf-dist/tex/latex/base/ulasy.fd
 File: ulasy.fd 1998/08/17 v2.2e LaTeX symbol font definitions
 )
 Overfull \hbox (17.42432pt too wide) in paragraph at lines 45--46
@@ -661,37 +663,26 @@ File: simpleNN.png Graphic file (type png)
 Package pdftex.def Info: simpleNN.png used on input line 67.
 (pdftex.def)             Requested size: 240.0pt x 103.04094pt.
 
+Underfull \vbox (badness 3396) has occurred while \output is active []
 
-LaTeX Warning: `!h' float specifier changed to `!ht'.
+ [1{/usr/local/texlive/2015/texmf-var/fonts/map/pdftex/updmap/pdftex.map}
 
 
+ <./stboard.png>]
 Overfull \hbox (2.79707pt too wide) in paragraph at lines 72--73
 \T1/aer/m/n/9 propagates this er-ror through the net-work. Back-propagation
  []
 
 
-Underfull \vbox (badness 3396) has occurred while \output is active []
-
- [1{/usr/local/texlive/2014/texmf-var/fonts/map/pdftex/updmap/pdftex.map}
-
-
- <./stboard.png>]
-Overfull \hbox (2.2742pt too wide) in paragraph at lines 74--75
-[]\T1/aer/m/n/9 Othello is a de-ter-min-is-tic game, un-like Backgam-mon where
+Overfull \hbox (2.1582pt too wide) in paragraph at lines 76--77
+\T1/aer/m/n/9 trained with dis-tinct im-ple-men-ta-tions of the ex-plo-ration r
+ate.
  []
 
 
-Overfull \hbox (2.78464pt too wide) in paragraph at lines 78--79
-\T1/aer/m/n/9 works per-form with dif-fer-ent Lambda ($\OML/cmm/m/it/9 ^^U$\T1/
-aer/m/n/9 ) val-ues. The lambda
- []
-
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
-
-Overfull \hbox (7.14128pt too wide) in paragraph at lines 89--90
-\T1/aer/m/n/9 TD-Gammon. TD-Gammon, de-vel-oped in 1992, is a backgam-
+Overfull \hbox (4.56706pt too wide) in paragraph at lines 80--81
+\T1/aer/m/n/9 are se-lected ran-domly, (2) a \T1/aer/m/it/9 Po-si-tional Value 
+\T1/aer/m/n/9 op-po-nent, where
  []
 
 
@@ -699,17 +690,7 @@ Overfull \hbox (2.95909pt too wide) in paragraph at lines 93--94
 []\T1/aer/m/n/9 The TD gam-mon pro-gram runs as fol-lows: at each timestep
  []
 
-[2 <./simpleNN.png>]
-Overfull \hbox (1.57155pt too wide) in paragraph at lines 99--100
-\T1/aer/m/n/9 and a 2-ply look ahead. Play-ing Kent Gould-ing, Kit Woolsey,
- []
-
-
-Overfull \hbox (2.8228pt too wide) in paragraph at lines 99--100
-\T1/aer/m/n/9 Wilcox Snellings, for-mer World Cup Cham-pion Joe Sylvester,
- []
-
-<neuron.png, id=20, 353.32pt x 152.57pt>
+[2 <./simpleNN.png>] <neuron.png, id=21, 353.32pt x 152.57pt>
 File: neuron.png Graphic file (type png)
  <use neuron.png>
 Package pdftex.def Info: neuron.png used on input line 117.
@@ -718,64 +699,60 @@ Package pdftex.def Info: neuron.png used on input line 117.
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-<sigmoid.png, id=21, 454.69875pt x 303.63437pt>
+<sigmoid.png, id=22, 454.69875pt x 303.63437pt>
 File: sigmoid.png Graphic file (type png)
  <use sigmoid.png>
 Package pdftex.def Info: sigmoid.png used on input line 145.
 (pdftex.def)             Requested size: 120.0pt x 80.12914pt.
 
-<perceptron.png, id=22, 449.68pt x 310.15875pt>
+<perceptron.png, id=23, 449.68pt x 310.15875pt>
 File: perceptron.png Graphic file (type png)
  <use perceptron.png>
 Package pdftex.def Info: perceptron.png used on input line 146.
 (pdftex.def)             Requested size: 120.0pt x 82.76906pt.
- [3 <./neuron.png> <./sigmoid.png> <./perceptron.png>]
-Overfull \hbox (18.43619pt too wide) detected at line 204
-| \OML/cmm/m/it/9 ^^N[] \OT1/cmr/m/n/9 = [] = []
- []
-
-[4] <e-rate.png, id=37, 694.595pt x 291.0875pt>
+ [3 <./neuron.png> <./sigmoid.png> <./perceptron.png>] [4]
+<e-rate.png, id=37, 908.39375pt x 378.41376pt>
 File: e-rate.png Graphic file (type png)
  <use e-rate.png>
-Package pdftex.def Info: e-rate.png used on input line 273.
-(pdftex.def)             Requested size: 240.0pt x 100.5763pt.
+Package pdftex.def Info: e-rate.png used on input line 272.
+(pdftex.def)             Requested size: 240.0pt x 99.97313pt.
 
 <NN-Fixed-9.png, id=38, 578.16pt x 433.62pt>
 File: NN-Fixed-9.png Graphic file (type png)
  <use NN-Fixed-9.png>
-Package pdftex.def Info: NN-Fixed-9.png used on input line 306.
+Package pdftex.def Info: NN-Fixed-9.png used on input line 305.
 (pdftex.def)             Requested size: 158.40088pt x 118.79926pt.
 
 <NN-Fixed-1.png, id=39, 578.16pt x 433.62pt>
 File: NN-Fixed-1.png Graphic file (type png)
  <use NN-Fixed-1.png>
-Package pdftex.def Info: NN-Fixed-1.png used on input line 307.
+Package pdftex.def Info: NN-Fixed-1.png used on input line 306.
 (pdftex.def)             Requested size: 158.40088pt x 118.79926pt.
 
-Overfull \hbox (54.03947pt too wide) in paragraph at lines 306--308
+Overfull \hbox (54.03947pt too wide) in paragraph at lines 305--307
  [][][] 
  []
 
 
-Overfull \hbox (24.55688pt too wide) in paragraph at lines 314--315
-[]\T1/aer/m/n/9 During the course of train-ing, both Networks$\OMS/cmsy/m/n/9 ^
-^@\OML/cmm/m/it/9 NN \OMS/cmsy/m/n/9 ^^@ \OML/cmm/m/it/9 Decreasing$
+Overfull \hbox (17.10051pt too wide) in paragraph at lines 313--314
+[]\T1/aer/m/n/9 During the course of train-ing, both Net-works $\OMS/cmsy/m/n/9
+ ^^@$ \T1/aer/m/it/9 NN-Decreasing
  []
 
 [5 <./e-rate.png>] <NN-Decreasing-9.png, id=46, 578.16pt x 433.62pt>
 File: NN-Decreasing-9.png Graphic file (type png)
 
 <use NN-Decreasing-9.png>
-Package pdftex.def Info: NN-Decreasing-9.png used on input line 318.
+Package pdftex.def Info: NN-Decreasing-9.png used on input line 317.
 (pdftex.def)             Requested size: 158.40088pt x 118.79926pt.
  <NN-Decreasing-1.png, id=47, 578.16pt x 433.62pt>
 File: NN-Decreasing-1.png Graphic file (type png)
 
 <use NN-Decreasing-1.png>
-Package pdftex.def Info: NN-Decreasing-1.png used on input line 319.
+Package pdftex.def Info: NN-Decreasing-1.png used on input line 318.
 (pdftex.def)             Requested size: 158.40088pt x 118.79926pt.
 
-Overfull \hbox (54.03947pt too wide) in paragraph at lines 318--320
+Overfull \hbox (54.03947pt too wide) in paragraph at lines 317--319
  [][][] 
  []
 
@@ -787,50 +764,61 @@ ing-1.png>]
 <Alpha-Beta-9.png, id=55, 602.25pt x 451.6875pt>
 File: Alpha-Beta-9.png Graphic file (type png)
  <use Alpha-Beta-9.png>
-Package pdftex.def Info: Alpha-Beta-9.png used on input line 339.
+Package pdftex.def Info: Alpha-Beta-9.png used on input line 338.
 (pdftex.def)             Requested size: 158.40088pt x 118.80063pt.
 
-Underfull \hbox (badness 1960) in paragraph at lines 339--339
+Underfull \hbox (badness 1960) in paragraph at lines 338--338
 []\T1/aer/m/n/9 (a) |NN with Lambda 0.9 vs.
  []
 
 <Alpha-Beta-1.png, id=56, 602.25pt x 451.6875pt>
 File: Alpha-Beta-1.png Graphic file (type png)
  <use Alpha-Beta-1.png>
-Package pdftex.def Info: Alpha-Beta-1.png used on input line 340.
+Package pdftex.def Info: Alpha-Beta-1.png used on input line 339.
 (pdftex.def)             Requested size: 158.40088pt x 118.80063pt.
 
-Overfull \hbox (54.03947pt too wide) in paragraph at lines 339--341
+Overfull \hbox (54.03947pt too wide) in paragraph at lines 338--340
  [][][] 
  []
 
-<Pos-Val-9.png, id=57, 602.25pt x 451.6875pt>
+<gui.png, id=57, 284.06125pt x 408.52625pt>
+File: gui.png Graphic file (type png)
+ <use gui.png>
+Package pdftex.def Info: gui.png used on input line 353.
+(pdftex.def)             Requested size: 200.75073pt x 288.72168pt.
+
+<Pos-Val-9.png, id=58, 602.25pt x 451.6875pt>
 File: Pos-Val-9.png Graphic file (type png)
  <use Pos-Val-9.png>
-Package pdftex.def Info: Pos-Val-9.png used on input line 357.
+Package pdftex.def Info: Pos-Val-9.png used on input line 358.
 (pdftex.def)             Requested size: 158.40088pt x 118.80063pt.
 
-Underfull \hbox (badness 1960) in paragraph at lines 357--357
+Underfull \hbox (badness 1960) in paragraph at lines 358--358
 []\T1/aer/m/n/9 (a) |NN with Lambda 0.9 vs.
  []
 
-<Pos-Val-1.png, id=58, 602.25pt x 451.6875pt>
+<Pos-Val-1.png, id=59, 602.25pt x 451.6875pt>
 File: Pos-Val-1.png Graphic file (type png)
  <use Pos-Val-1.png>
-Package pdftex.def Info: Pos-Val-1.png used on input line 358.
+Package pdftex.def Info: Pos-Val-1.png used on input line 359.
 (pdftex.def)             Requested size: 158.40088pt x 118.80063pt.
 
-Overfull \hbox (54.03947pt too wide) in paragraph at lines 357--359
+Overfull \hbox (54.03947pt too wide) in paragraph at lines 358--360
  [][][] 
  []
 
 
-Underfull \hbox (badness 1552) in paragraph at lines 359--359
+Underfull \hbox (badness 1552) in paragraph at lines 360--360
 []\T1/aer/m/n/9 Figure 9: |Score of Self-Trained Neu-ral Net-works vs.
  []
 
-(./G_Will-FinalProject.bbl [7 <./Alpha-Beta-9.png> <./Alpha-Beta-1.png> <./Pos-
-Val-9.png> <./Pos-Val-1.png>]) [8
+[7 <./gui.png> <./Alpha-Beta-9.png> <./Alpha-Beta-1.png> <./Pos-Val-9.png> <./P
+os-Val-1.png>] (./G_Will-FinalProject.bbl
+Overfull \hbox (5.40742pt too wide) in paragraph at lines 377--1
+[]\T1/aer/m/n/9 The au-thors would like to thank Pro-fes-sor Daniel Scharstein
+ []
+
+) [8
 
 ] (./G_Will-FinalProject.aux)
 
@@ -838,33 +826,32 @@ LaTeX Warning: There were multiply-defined labels.
 
  ) 
 Here is how much of TeX's memory you used:
- 4614 strings out of 493117
- 65233 string characters out of 6135433
- 145266 words of memory out of 5000000
- 7949 multiletter control sequences out of 15000+600000
- 51463 words of font info for 67 fonts, out of 8000000 for 9000
+ 4617 strings out of 493089
+ 65514 string characters out of 6134842
+ 144570 words of memory out of 5000000
+ 7978 multiletter control sequences out of 15000+600000
+ 45321 words of font info for 59 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 53i,10n,92p,1469b,430s stack positions out of 5000i,500n,10000p,200000b,80000s
-{/usr/local/texlive/2014/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/local/t
-exlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx9.pfb></usr/local/tex
-live/2014/texmf-dist/fonts/type1/public/amsfonts/cmextra/cmex9.pfb></usr/local/
-texlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi5.pfb></usr/local/te
-xlive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb></usr/local/texl
-ive/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi9.pfb></usr/local/texliv
-e/2014/texmf-dist/fonts/type1/public/amsfonts/cm/cmr5.pfb></usr/local/texlive/2
-014/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb></usr/local/texlive/2014
-/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb></usr/local/texlive/2014/te
-xmf-dist/fonts/type1/public/amsfonts/cm/cmsy5.pfb></usr/local/texlive/2014/texm
-f-dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb></usr/local/texlive/2014/texmf-
-dist/fonts/type1/public/amsfonts/cm/cmsy9.pfb></usr/local/texlive/2014/texmf-di
-st/fonts/type1/public/amsfonts/cm/cmti9.pfb></usr/local/texlive/2014/texmf-dist
-/fonts/type1/urw/helvetic/uhvb8a.pfb></usr/local/texlive/2014/texmf-dist/fonts/
-type1/urw/helvetic/uhvr8a.pfb></usr/local/texlive/2014/texmf-dist/fonts/type1/u
-rw/times/utmb8a.pfb>
-Output written on G_Will-FinalProject.pdf (8 pages, 1252094 bytes).
+ 53i,10n,92p,1524b,430s stack positions out of 5000i,500n,10000p,200000b,80000s
+{/usr/local/texlive/2015/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/local/t
+exlive/2015/texmf-dist/fonts/type1/public/amsfonts/cmextra/cmex9.pfb></usr/loca
+l/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi5.pfb></usr/local/
+texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb></usr/local/te
+xlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi9.pfb></usr/local/texl
+ive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmr5.pfb></usr/local/texlive
+/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb></usr/local/texlive/20
+15/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb></usr/local/texlive/2015/
+texmf-dist/fonts/type1/public/amsfonts/cm/cmsy5.pfb></usr/local/texlive/2015/te
+xmf-dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb></usr/local/texlive/2015/texm
+f-dist/fonts/type1/public/amsfonts/cm/cmsy9.pfb></usr/local/texlive/2015/texmf-
+dist/fonts/type1/public/amsfonts/cm/cmti9.pfb></usr/local/texlive/2015/texmf-di
+st/fonts/type1/urw/helvetic/uhvb8a.pfb></usr/local/texlive/2015/texmf-dist/font
+s/type1/urw/helvetic/uhvr8a.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1
+/urw/times/utmb8a.pfb>
+Output written on G_Will-FinalProject.pdf (8 pages, 1271065 bytes).
 PDF statistics:
- 120 PDF objects out of 1000 (max. 8388607)
- 67 compressed objects within 1 object stream
+ 118 PDF objects out of 1000 (max. 8388607)
+ 64 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
- 71 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 76 words of extra memory for PDF output out of 10000 (max. 10000000)
 

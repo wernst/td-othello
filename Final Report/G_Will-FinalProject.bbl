@@ -6,6 +6,32 @@ F.~Rosenblatt.
   organization in the brain.
 \newblock {\em Psychological review}, 65(6):386, 1958.
 
+\bibitem{sutton1988learning}
+R.~S. Sutton.
+\newblock Learning to predict by the methods of temporal differences.
+\newblock {\em Machine learning}, 3(1):9--44, 1988.
+
+\bibitem{sutton1989implementation}
+R.~S. Sutton.
+\newblock Implementation details of the td () procedure for the case of vector
+  predictions and backpropagation.
+\newblock {\em GTE Lab., Waltham, MA, Tech. Rep. TN87-509.1}, 1989.
+
+\bibitem{sutton1998reinforcement}
+R.~S. Sutton and A.~G. Barto.
+\newblock {\em Reinforcement learning: An introduction}, volume~1.
+\newblock MIT press Cambridge, 1998.
+
+\bibitem{tesauro1992practical}
+G.~Tesauro.
+\newblock Practical issues in temporal difference learning.
+\newblock In {\em Reinforcement Learning}, pages 33--53. Springer, 1992.
+
+\bibitem{tesauro1995temporal}
+G.~Tesauro.
+\newblock Temporal difference learning and td-gammon.
+\newblock {\em Communications of the ACM}, 38(3):58--68, 1995.
+
 \bibitem{van2013reinforcement}
 M.~Van Der~Ree and M.~Wiering.
 \newblock Reinforcement learning in the game of othello: learning against a
