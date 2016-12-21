@@ -1,7 +1,7 @@
 # TD-Othello README
 ## CS 701 Fall 2016 Seminar Project, Middlebury College
 
-######How to play:
+######How to play (in othello/playOthello.py):
     1. Load a neural network. These networks are loaded with the following inputs:
         - filename
         - training player

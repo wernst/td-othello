@@ -15,13 +15,11 @@ ties = 0
 
 
 def main():
-    #playGui("GO")
     nn = NeuralNetwork(50, 1.0, 0.9, 0.001)
     nn.load("1-nn_dec_random_120000.pkl", "nn_dec_random", "nn_dec_random", 1)
     #play0(nn, None)
     #play1(nn, None, True)
     #play2()
-    #playVerbose(nn, None)
     playGui(nn)
 
 
