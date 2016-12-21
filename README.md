@@ -1,5 +1,5 @@
 # TD-Othello README
-## CS 701 Fall 2016 Seminar Project
+## CS 701 Fall 2016 Seminar Project, Middlebury College
 
 ######How to play:
     1. Load a neural network. These networks are loaded with the following inputs:
