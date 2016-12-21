@@ -57,7 +57,7 @@ class GameBoard(tk.Frame):
         self.endGame()
 
 
-    """Ends the game, players cannot move and the game over message appears"""
+    """Ends the game, players cannot move and the gameover message appears"""
     def endGame(self):
         #self.canvas.unbind("<Configure>")
         self.canvas.unbind("<Button-1>")
@@ -151,13 +151,15 @@ class GameBoard(tk.Frame):
                         # if self.black_player.type.find("human") == -1:
                         #     time.sleep(2)
                         self.refreshBoard(board_arr)
+                        self.game.isGameOver()
                     else:
                         self.white_player.makeMove()
                         board_arr = self.game.game_board.boardToVector().tolist()[0]
                         # if self.white_player.type.find("human") == -1:
                         #     time.sleep(2)
                         self.refreshBoard(board_arr)
-                else:
-                    self.endGame()
+                        self.game.isGameOver()
+            else:
+                self.endGame()
             self.parent.update_idletasks()
             self.parent.update()

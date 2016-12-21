@@ -7,18 +7,19 @@ from Player import Player
 import pickle, sys, time, os
 
 inputUnits = 64
+
 class NeuralNetwork(object):
 
     """Initialize neural Network Parameters"""
     def __init__(self, numHidLayers, gamma, ld, learningRate):
-        self.wMatrix1 = np.random.uniform(-0.5, 0.5, (inputUnits, numHidLayers)) # Weight Matrix at the Heart of the Neural Network
-        self.eMatrix1 = np.zeros((inputUnits, numHidLayers)) # eligility traces for each of the inputs of our Weight Matrix
-        self.wMatrix2 = np.random.uniform(-0.5, 0.5,(numHidLayers, 1)) # Weight Matrix at the Heart of the Neural Network
-        self.eMatrix2 = np.zeros((numHidLayers, 1)) # eligility traces for each of the inputs of our Weight Matrix
+        self.wMatrix1 = np.random.uniform(-0.5, 0.5, (inputUnits, numHidLayers)) #weight matrix from input to hidden layer
+        self.eMatrix1 = np.zeros((inputUnits, numHidLayers)) # eligility traces from hidden to input layer
+        self.wMatrix2 = np.random.uniform(-0.5, 0.5,(numHidLayers, 1)) #weight matrix from hidden to output layer
+        self.eMatrix2 = np.zeros((numHidLayers, 1)) # eligility traces from hidden to input layer
         self.learningRate = learningRate
-        self.numHidLayers = numHidLayers
-        self.gamma = gamma #gamma used in calculating reward return
-        self.ld = ld #used to determine how much you rely on pass
+        self.numHidLayers = numHidLayers #number of hidden units in the hidden layer
+        self.gamma = gamma
+        self.ld = ld #lambda
         self.bwin = 0
         self.wwin = 0
         self.iteration = 0
@@ -37,24 +38,10 @@ class NeuralNetwork(object):
 
 
     def getValue(self, stateVec):
-        # print("State Matrix:")
-        # print(stateVec.shape)
-        # print("W1 Matrix:")
-        # print(self.wMatrix1)
         z2 = self.calcHiddenSum(stateVec)
-        # print("Hidden Layer Sums:")
-        # print(z2)
         a2 = self.sigmoid(z2)
-        # print("Activated Hidden Layer:")
-        # print(a2)
-        # print("W2 Matrix:")
-        # print(self.wMatrix2)
         z3 = self.calcOutputSum(a2)
-        # print("output value:")
-        # print(z3)
         outputValue = self.sigmoid(z3)
-        # print("activated output value")
-        # print(outputValue)
 
         return outputValue
 
@@ -66,11 +53,10 @@ class NeuralNetwork(object):
     def calcOutputSum(self, hiddenVec):
         return np.dot(hiddenVec, self.wMatrix2)
 
-    def calcGradientMatrix2_2(self, stateVec):
+    def calcGradientMatrix2(self, stateVec):
         hiddenSum = self.calcHiddenSum(stateVec)
         hiddenVec = self.sigmoid(hiddenSum)
         outputSum = self.calcOutputSum(hiddenVec)
-        #outputValue = self.sigmoid(outputSum)
         outputDelta = self.sigmoid_prime(outputSum)
 
         gradMatrix = outputDelta * hiddenVec
@@ -79,15 +65,11 @@ class NeuralNetwork(object):
 
         return gradMatrix.T
 
-    def calcGradientMatrix1_2(self, stateVec):
+    def calcGradientMatrix1(self, stateVec):
         hiddenSum = self.calcHiddenSum(stateVec)
         hiddenVec = self.sigmoid(hiddenSum)
         outputSum = self.calcOutputSum(hiddenVec)
-        #outputValue = self.sigmoid(outputSum)
         outputDelta = self.sigmoid_prime(outputSum)
-        # print(outputDelta)
-        # print(hiddenSum)
-        # print(hiddenSum[0])
 
 
         hiddenVecPrime = np.empty([1, self.numHidLayers])
@@ -108,7 +90,7 @@ class NeuralNetwork(object):
 
     """Save our weight matrix into a loadable files, prevents retraining"""
     def save(self, filename, p_type, op_type, ld_val):
-        pathToFile = p_type + "/" + str(ld_val) + "/" + op_type + "/NetworkFiles"
+        pathToFile = "../" + p_type + "/" + str(ld_val) + "/" + op_type + "/NetworkFiles"
         if not os.path.exists(pathToFile):
             os.makedirs(pathToFile)
         filePath = pathToFile + "/" + filename
@@ -116,7 +98,7 @@ class NeuralNetwork(object):
             pickle.dump(self, f)
 
     """Save our weight matrix into a loadable files, prevents retraining"""
-    def save2(self, filename, dirname):
+    def save_simple(self, filename, dirname):
         if not os.path.exists(dirname):
             os.makedirs(dirname)
         filePath = dirname + "/" + filename
@@ -126,7 +108,7 @@ class NeuralNetwork(object):
 
     """Load our Weight Matrix into out layer variable"""
     def load(self, filename, p_type, op_type, ld_val):
-        pathToFile = p_type + "/" + str(ld_val) + "/" + op_type + "/NetworkFiles"
+        pathToFile = "../" + p_type + "/" + str(ld_val) + "/" + op_type + "/NetworkFiles"
         if not os.path.exists(pathToFile):
             print("No such file or directory")
         #print(filename)
@@ -139,9 +121,13 @@ class NeuralNetwork(object):
             self.eMatrix1 = nn.eMatrix1
             self.wMatrix2 = nn.wMatrix2
             self.eMatrix2 = nn.eMatrix2
+            self.learningRate = nn.learningRate
+            self.numHidLayers = nn.numHidLayers
+            self.gamma = nn.gamma
+            self.ld = nn.ld
 
     """Load our Weight Matrix into out layer variable"""
-    def load2(self, filename, dirname):
+    def load_simple(self, filename, dirname):
         if not os.path.exists(dirname):
             print("No such file or directory")
         #print(filename)
@@ -154,11 +140,13 @@ class NeuralNetwork(object):
             self.eMatrix1 = nn.eMatrix1
             self.wMatrix2 = nn.wMatrix2
             self.eMatrix2 = nn.eMatrix2
+            self.learningRate = nn.learningRate
+            self.numHidLayers = nn.numHidLayers
+            self.gamma = nn.gamma
+            self.ld = nn.ld
 
     """ Determines how much of a reward to apply """
     def delta(self, pValue, reward, cValue, game_over):
-        # Core Error Calculation, returns the reward of the current state
-        #print(pstateValue)
         if not game_over:
             return (reward + (self.gamma * cValue) - pValue)
         else:
@@ -167,30 +155,13 @@ class NeuralNetwork(object):
     """Single Timestep in the reinforcement Learning"""
 
     def train(self, pstate, reward, state, game_over):
-        rewardMatrix = np.matrix([reward]*self.numHidLayers)
-        pHiddenOutput = self.sigmoid(self.calcHiddenSum(pstate))
-        cHiddenOutput = self.sigmoid(self.calcHiddenSum(state))
         pstateValue = self.getValue(pstate)
         cstateValue = self.getValue(state)
-        # print(pstateValue)
-        # print(cstateValue)
 
-        #not sure about the partial derivative
-        # print(self.eMatrix2)
-        # print(self.eMatrix2.shape)
-        #test = np.array([pstateValue]*self.eMatrix2.shape[0]).T
-        # print(test)
-        gradientMatrix2 = self.calcGradientMatrix2_2(state)
+        gradientMatrix2 = self.calcGradientMatrix2(state)
 
+        gradientMatrix1 = self.calcGradientMatrix1(state)
 
-        #print(gradientMatrix2)
-        gradientMatrix1 = self.calcGradientMatrix1_2(state)
-
-
-
-        # print(self.gamma)
-        # print(self.ld)
-        # print()
 
         self.eMatrix2 = self.gamma * self.ld * self.eMatrix2 + gradientMatrix2
         self.eMatrix1 = self.gamma * self.ld * self.eMatrix1 + gradientMatrix1
@@ -198,17 +169,10 @@ class NeuralNetwork(object):
 
 
         delta = self.delta(pstateValue, reward, cstateValue, game_over)
-        # delta1 = self.delta(pHiddenOutput, rewardMatrix, cHiddenOutput)
-        #print(delta)
-        #print(self.eMatrix2)
-        #print(self.wMatrix2)
 
         self.wMatrix2 +=  np.multiply((self.learningRate * delta), self.eMatrix2)
         self.wMatrix1 +=  np.multiply((self.learningRate * delta), self.eMatrix1)
 
-        #print(self.wMatrix2)
-        # print("W1: {}").format(self.wMatrix1)
-        # print("W2: {}").format(self.wMatrix2)
     """Basic structure of our lean iteration function, going to be implemented elsewhere"""
     #This can actually be moved to the play class.
     def learn(self, num_episode, p_type, op_type, ld_val):

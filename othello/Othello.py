@@ -76,13 +76,17 @@ class Othello(object):
 
 
         if self.game_board.valid_moves == {}:
+            if self.game_board.black_turn:
+                print("Black cannot make any valid moves")
+            else:
+                print("White cannot make any valid moves")
             self.game_board.switchTurns()
             #check for winner
             self.game_board.updateValidMoves()
 
             if self.game_board.valid_moves == {}:
-                return True
-        return False
+                self.game_over = True
+        return self.game_over
 
     def quit(self):
         self.game_over = True
