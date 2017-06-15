@@ -1,7 +1,7 @@
 # TD-Othello README
 ## CS 701 Fall 2016 Seminar Project, Middlebury College
 
-######How to play (in othello/playOthello.py):
+###### How to play (in othello/playOthello.py):
     1. Load a neural network. These networks are loaded with the following inputs:
         - filename
         - training player
@@ -13,8 +13,8 @@
         - play2: Plays a game with two human players in the command line
         - playGui: Plays a game with one computer player and one human player in a Tkinter GUI
 
-######TD Lambda algorithm:
+###### TD Lambda algorithm:
 TD Lambda is a temporal difference learning algorithm designed by Richard Sutton. More info on the algorithm can be found in the paper in this repository or at this link: https://webdocs.cs.ualberta.ca/~sutton/papers/sutton-89.pdf
 
-######Known bugs:
+###### Known bugs:
 With lambda < 1, the output values of the neural network approach 1 for all board states at some point during training. Performance decreases when this occurs.
